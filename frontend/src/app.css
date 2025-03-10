@@ -1,0 +1,84 @@
+.header {
+    background-color: #3CD2FF;
+    padding: 31px 34px;
+    border-radius: 0px 0px 60px 60px;
+
+    .header-upcoming {
+        display: flex;
+        justify-content: space-between;
+
+        .upcoming {
+            .prayer {
+                font-size: 26px;
+            }
+
+            .time {
+                font-family: "Inconsolata", monospace;
+                font-size: 34px;
+                font-weight: 700;
+                display: flex;
+                gap: 10px;
+
+                span {
+                    font-weight: 300;
+                }
+            }
+
+            >span {
+                color: #757575;
+                font-weight: 500;
+                margin-top: 8px;
+                display: flex;
+                gap: 4px;
+                justify-items: center;
+                font-family: "Inconsolata", monospace;
+            }
+        }
+
+        .location {
+            text-align: end;
+
+            .icon {
+                cursor: pointer;
+            }
+
+            .city {
+                font-size: 18px;
+                margin-bottom: 4px;
+                ;
+            }
+
+            .country {
+                font-size: 16px;
+            }
+        }
+    }
+
+    .calculation-method {
+        text-align: end;
+        font-size: 10px;
+        display: flex;
+        justify-items: center;
+        justify-content: end;
+        margin-top: 16px;
+        cursor: pointer;
+
+        >div:nth-child(1) {
+            padding-top: 2.5px;
+        }
+    }
+
+    .settings {
+        margin-top: -10px;
+        cursor: pointer;
+
+        img {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        img:hover {
+            transform: rotate(90deg);
+        }
+    }
+
+}
