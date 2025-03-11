@@ -5,6 +5,20 @@
     "manifest_version": 3,
     "action": {
         "default_popup": "index.html",
-        "default_icon": "hello_extensions.png"
-    }
+        "default_icon": "/asset/favicon/web-app-manifest-512x512.png"
+    },
+    "icons": [
+        {
+            "src": "/asset/favicon/web-app-manifest-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "/asset/favicon/web-app-manifest-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ],
 }
