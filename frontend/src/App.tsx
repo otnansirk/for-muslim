@@ -1,4 +1,5 @@
 import './app.css'
+import Each from './component/Each'
 import Icon from './component/Icon'
 
 const prayTime = [
@@ -90,13 +91,16 @@ function App() {
                     </div>
                     <div className='table-body'>
                         {
-                            prayTime.map((item, key) => (
-                                <div className={`table-tr ${item.upcoming && 'active'}`} key={key}>
-                                    <div className='table-td icon pray-icon'><Icon icon={item.icon} />{item.title}</div>
-                                    <div className='table-td'>{item.time}</div>
-                                    <div className='table-td icon notify-icon'><Icon icon={`notify-${item.notify}`} /></div>
-                                </div>
-                            ))
+                            <Each
+                                data={prayTime}
+                                render={(item, key) => (
+                                    <div className={`table-tr ${item.upcoming && 'active'}`} key={key}>
+                                        <div className='table-td icon pray-icon'><Icon icon={item.icon} />{item.title}</div>
+                                        <div className='table-td'>{item.time}</div>
+                                        <div className='table-td icon notify-icon'><Icon icon={`notify-${item.notify}`} /></div>
+                                    </div>
+                                )}
+                            />
                         }
                     </div>
                 </div>
