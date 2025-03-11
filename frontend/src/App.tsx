@@ -1,8 +1,9 @@
-import { useRef } from 'react'
-import './app.css'
-import Each from './component/Each'
-import Icon from './component/Icon'
+import { useRef, useState } from 'react'
+import SearchLocation from './component/search-loaction/SearchLocation'
 import { calculateMethod } from './data/calculate-method'
+import Icon from './component/Icon'
+import Each from './component/Each'
+import './app.css'
 
 const prayTime = [
     {
@@ -60,10 +61,12 @@ function App() {
     const locationRef = useRef<HTMLDivElement>(null)
     const searchLocation = () => { }
 
-
+    const [open, setOpen] = useState(false)
 
     return (
         <>
+            <SearchLocation open={open} setOpen={setOpen} />
+
             <div className='header'>
                 <div className='header-upcoming'>
                     <div className='upcoming'>
@@ -73,7 +76,7 @@ function App() {
                         <span><img src={'./assets/plus-minus.svg'} /> in 2 hours 34 minutes</span>
                     </div>
                     <div className='location'>
-                        <div className='icon'><img src={'./assets/edit.svg'} /></div>
+                        <div className='icon' onClick={() => setOpen(true)}><img src={'./assets/edit.svg'} /></div>
                         <div className='city'>Ponorogo</div>
                         <div className='country'>Indonesia</div>
                     </div>
