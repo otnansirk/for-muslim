@@ -1,0 +1,16 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Capriola&family=Inconsolata:wght@200..900&display=swap'); */
+
+
+html {
+    padding: 0;
+    font-family: "Capriola", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: #2F3744;
+    background-color: #F6F6F6;
+
+    body {
+        margin: 0 auto;
+        width: 380px;
+    }
+}

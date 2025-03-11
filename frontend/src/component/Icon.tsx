@@ -3,7 +3,7 @@ type IconProps = {
 };
 
 const Icon: React.FC<IconProps> = ({ icon }) => (
-    <img src={`./asset/${icon}.svg`} />
+    <img src={`./assets/${icon}.svg`} />
 )
 
 export default Icon

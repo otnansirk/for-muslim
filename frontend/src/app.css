@@ -8,13 +8,19 @@
         justify-content: space-between;
 
         .upcoming {
+            small {
+                color: #2F3744;
+                margin-bottom: 4px;
+                display: block;
+            }
+
             .prayer {
-                font-size: 26px;
+                font-size: 24px;
             }
 
             .time {
                 font-family: "Inconsolata", monospace;
-                font-size: 34px;
+                font-size: 32px;
                 font-weight: 700;
                 display: flex;
                 gap: 10px;
@@ -40,6 +46,14 @@
 
             .icon {
                 cursor: pointer;
+            }
+
+            .search {
+                &:focus {
+                    outline: 1px solid #5ab4cf;
+                    border-radius: 12px;
+                    padding: 4px 6px;
+                }
             }
 
             .city {
@@ -108,7 +122,7 @@
 }
 
 .body {
-    margin-top: 40px;
+    margin: 40px 12px 0px 12px;
     background-color: white;
     border-radius: 8px;
     padding: 17px 14px;
