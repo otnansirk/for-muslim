@@ -1,6 +1,8 @@
+import { useRef } from 'react'
 import './app.css'
 import Each from './component/Each'
 import Icon from './component/Icon'
+import { calculateMethod } from './data/calculate-method'
 
 const prayTime = [
     {
@@ -55,6 +57,10 @@ const prayTime = [
 
 function App() {
 
+    const locationRef = useRef<HTMLDivElement>(null)
+    const searchLocation = () => { }
+
+
 
     return (
         <>
@@ -68,15 +74,16 @@ function App() {
                     </div>
                     <div className='location'>
                         <div className='icon'><img src={'./assets/edit.svg'} /></div>
-                        <div className='search' contentEditable>
-                            <div className='city'>Ponorogo</div>
-                            <div className='country'>Indonesia</div>
-                        </div>
+                        <div className='city'>Ponorogo</div>
+                        <div className='country'>Indonesia</div>
                     </div>
                 </div>
                 <div className='calculation-method'>
-                    <div>Kementerian Agama Republik Indonesia</div>
-                    <div><img src={'./assets/dropdown.svg'} /></div>
+                    <select>
+                        <Each data={calculateMethod} render={(item, key) => (
+                            <option key={key} value={item.id}>{item.name}</option>
+                        )} />
+                    </select>
                 </div>
                 <div className='settings'><Icon icon='gear' /></div>
                 <div className='date'>

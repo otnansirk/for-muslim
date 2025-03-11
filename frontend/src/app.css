@@ -70,12 +70,25 @@
 
     .calculation-method {
         text-align: end;
-        font-size: 10px;
+        font-size: 12px;
         display: flex;
         justify-items: center;
         justify-content: end;
         margin-top: 16px;
         cursor: pointer;
+
+        select {
+            color: #2F3744;
+            text-shadow: none;
+            background: transparent;
+            border: 0px;
+            cursor: pointer;
+            max-width: 250px;
+
+            &:focus {
+                outline: none;
+            }
+        }
 
         >div:nth-child(1) {
             padding-top: 2.5px;
