@@ -9,9 +9,10 @@
 
         .upcoming {
             small {
-                color: #2F3744;
+                color: #b64103;
                 margin-bottom: 4px;
                 display: block;
+                font-size: 16px;
             }
 
             .prayer {
