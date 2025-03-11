@@ -5,20 +5,13 @@
     "manifest_version": 3,
     "action": {
         "default_popup": "index.html",
-        "default_icon": "/asset/favicon/web-app-manifest-512x512.png"
+        "default_title": "For Muslim"
     },
-    "icons": [
-        {
-            "src": "/asset/favicon/web-app-manifest-192x192.png",
-            "sizes": "192x192",
-            "type": "image/png",
-            "purpose": "maskable"
-        },
-        {
-            "src": "/asset/favicon/web-app-manifest-512x512.png",
-            "sizes": "512x512",
-            "type": "image/png",
-            "purpose": "maskable"
-        }
-    ],
+    "icons": {
+        "192": "/assets/favicon/web-app-manifest-192x192.png",
+        "512": "/assets/favicon/web-app-manifest-512x512.png"
+    },
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; font-src 'self'; style-src 'self' 'unsafe-inline';"
+    }
 }
