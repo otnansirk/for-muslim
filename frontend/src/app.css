@@ -81,4 +81,105 @@
         }
     }
 
+    .date {
+        margin: auto;
+        margin-top: 8px;
+        margin-bottom: -60px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        background-color: #F6F6F6;
+        max-width: 252px;
+        height: 65px;
+        border-radius: 100px;
+        text-align: center;
+        gap: 2px;
+
+        .hijri {
+            font-size: 16px;
+            color: #1E1E1E;
+        }
+
+        .geor {
+            font-size: 12px;
+            color: #969696;
+        }
+    }
+}
+
+.body {
+    margin-top: 40px;
+    background-color: white;
+    border-radius: 8px;
+    padding: 17px 14px;
+
+    .table-header {
+        margin-bottom: 14px;
+
+        .table-tr {
+            display: flex;
+            gap: 140px;
+            padding-left: 14px;
+            font-size: 14px;
+        }
+    }
+
+    .table-body {
+        .table-tr {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 10px;
+            font-size: 14px;
+
+            &.active {
+                color: #2F3744;
+                background-color: #3CD2FF;
+                border-radius: 100px;
+
+                .table-td {
+                    color: #1E1E1E;
+
+                    &.pray-icon {
+                        >img {
+                            filter: brightness(0.4);
+                        }
+                    }
+
+                    &.notify-icon {
+                        &:hover {
+                            background-color: #5ab4cf;
+                        }
+                    }
+
+                }
+            }
+        }
+
+        .table-td {
+            color: #969696;
+
+            &.icon {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 4px;
+
+                >img {
+                    width: 24px;
+                }
+            }
+
+            &.notify-icon {
+                cursor: pointer;
+                padding: 2px;
+
+                &:hover {
+                    background-color: #ebebeb;
+                    border-radius: 100px;
+                }
+            }
+        }
+    }
+
 }
