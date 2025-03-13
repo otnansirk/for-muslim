@@ -3,13 +3,21 @@ import { useState } from 'react';
 import Modal from '../modal/Modal';
 import './search-location.css';
 import Each from '../Each';
+import Storage from '../../utils/Storage'
 
 type ModalProps = {
     setOpen: (open: boolean) => void;
     open: boolean
 }
 
-const location = [
+type LocationProps = {
+    name: string
+    keyword: string[]
+    latitude: string
+    longitude: string
+}
+
+const location: LocationProps[] = [
     {
         name: "les Escaldes, AD",
         keyword: ["Ehskal'des-Ehndzhordani", "Escaldes", "Escaldes-Engordany", "Les Escaldes", "esukarudesu=engorudani jiao qu", "lai sai si ka er de-en ge er da", "Эскальдес-Энджордани", "エスカルデス＝エンゴルダニ教区", "萊塞斯卡爾德-恩戈爾達", "萊塞斯卡爾德－恩戈爾達"],
@@ -32,9 +40,16 @@ const SearchLocation = (props: ModalProps) => {
         setData(filtered)
     }
 
-    const onSelect = (item: object) => {
+    const onSelect = (item: LocationProps) => {
         props.setOpen(false)
         console.log(item);
+        if (item) {
+            Storage.profile.set({
+                lat: item.latitude,
+                lng: item.longitude,
+                address: item.name
+            })
+        }
     }
 
     return <Modal open={props.open} setOpen={props.setOpen}>
