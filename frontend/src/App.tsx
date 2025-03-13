@@ -62,20 +62,23 @@ function App() {
 
     const [profile, setProfile] = useState<ProfileProps | undefined>({})
     useEffect(() => {
-        Storage.profile.listen(item => console.log(item, "LISTEN"))
-
-        const fetchProfile = async () => {
-            const item = await Storage.profile.get();
+        const fetchProfile = (item: ProfileProps) => {
             const city = item?.address?.split(',')[0]?.trim()
             const countryCode = item?.address?.split(',')[1]?.trim() ?? "AD"
             const country = countries[countryCode]
 
             setProfile({ ...item, city, country });
-        };
+        }
 
-        fetchProfile();
+        (async () => {
+            const item = await Storage.profile.get();
+            fetchProfile(item as ProfileProps);
+        })();
+        Storage.profile.listen(fetchProfile);
+
     }, [])
 
+    console.log(profile, "OKEEEEE");
 
     const [open, setOpen] = useState(false)
 
