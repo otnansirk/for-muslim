@@ -1,6 +1,8 @@
-import { useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import SearchLocation from './component/search-loaction/SearchLocation'
 import { calculateMethod } from './data/calculate-method'
+import Storage, { ProfileProps } from './utils/Storage'
+import { countries } from './data/country'
 import Icon from './component/Icon'
 import Each from './component/Each'
 import './app.css'
@@ -58,8 +60,22 @@ const prayTime = [
 
 function App() {
 
-    const locationRef = useRef<HTMLDivElement>(null)
-    const searchLocation = () => { }
+    const [profile, setProfile] = useState<ProfileProps | undefined>({})
+    useEffect(() => {
+        Storage.profile.listen(item => console.log(item, "LISTEN"))
+
+        const fetchProfile = async () => {
+            const item = await Storage.profile.get();
+            const city = item?.address?.split(',')[0]?.trim()
+            const countryCode = item?.address?.split(',')[1]?.trim() ?? "AD"
+            const country = countries[countryCode]
+
+            setProfile({ ...item, city, country });
+        };
+
+        fetchProfile();
+    }, [])
+
 
     const [open, setOpen] = useState(false)
 
@@ -77,8 +93,8 @@ function App() {
                     </div>
                     <div className='location'>
                         <div className='icon' onClick={() => setOpen(true)}><img src={'./assets/edit.svg'} /></div>
-                        <div className='city'>Ponorogo</div>
-                        <div className='country'>Indonesia</div>
+                        <div className='city'>{profile?.city}</div>
+                        <div className='country'>{profile?.country}</div>
                     </div>
                 </div>
                 <div className='calculation-method'>
