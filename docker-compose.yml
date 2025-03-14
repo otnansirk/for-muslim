@@ -1,0 +1,12 @@
+services:
+  app:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    ports:
+      - "1323:1323"
+    volumes:
+      - ./backend:/app
+    environment:
+      - GO111MODULE=on
+    command: air -c .air.toml
