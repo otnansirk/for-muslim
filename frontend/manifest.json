@@ -11,9 +11,6 @@
         "192": "/assets/favicon/web-app-manifest-192x192.png",
         "512": "/assets/favicon/web-app-manifest-512x512.png"
     },
-    "content_security_policy": {
-        "extension_pages": "script-src 'self'; font-src 'self'; style-src 'self' 'unsafe-inline';"
-    },
     "permissions": [
         "storage"
     ]
