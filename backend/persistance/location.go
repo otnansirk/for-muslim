@@ -12,11 +12,10 @@ type LocationItemType struct {
     Name      	string    `json:"name"`
     City 		string    `json:"city,omitempty"`
     CountryCode string    `json:"country_code,omitempty"`
-    Keyword   	[]string  `json:"keyword"`
+    Keyword   	[]string  `json:"keyword,omitempty"`
     Latitude  	string    `json:"latitude"`
     Longitude 	string    `json:"longitude"`
 }
-
 
 func filterData(data []LocationItemType, keyword string) []LocationItemType {
 	return slices.DeleteFunc(data, func(item LocationItemType) bool {
@@ -28,8 +27,8 @@ func filterData(data []LocationItemType, keyword string) []LocationItemType {
 
 func GetLocationList(c echo.Context) error {
 	keyword := c.QueryParam("keyword")
-	var data, err = helper.ReadJSON[[]LocationItemType]("data/location.json")
-	
+	data, err := helper.ReadJSON[[]LocationItemType]("data/location.json")
+
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
 	}
@@ -39,16 +38,23 @@ func GetLocationList(c echo.Context) error {
 		filtered = filtered[:6]
 	}
 
-	for key := range data {
-		parts := strings.Split(data[key].Name, ",")
+	for key, item := range filtered {
+		filtered[key].Keyword = nil
+
+		parts := strings.Split(item.Name, ",")
 		if len(parts) > 1 {
-			data[key].Name = strings.TrimSpace(parts[0])
-			data[key].City = strings.TrimSpace(parts[0])
-			data[key].CountryCode = strings.TrimSpace(parts[1])
+			filtered[key].City = strings.TrimSpace(parts[0])
+			filtered[key].CountryCode = strings.TrimSpace(parts[1])
+			countryName, err := helper.GetCountryByCode(filtered[key].CountryCode)
+			if err == nil {
+				filtered[key].Name = strings.Replace(item.Name, filtered[key].CountryCode, countryName, -1)
+			}
+
 		} else {
-			data[key].CountryCode = "Unknown"
+			filtered[key].CountryCode = "Unknown"
 		}
 	}
+
 
 	res := helper.Response{
 		Data: filtered,
