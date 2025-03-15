@@ -61,11 +61,13 @@
             }
 
             .weather {
+                color: #767676;
                 margin-left: 2px;
                 font-size: 16px;
                 display: flex;
                 align-items: baseline;
                 gap: 6px;
+                font-weight: 500;
             }
 
             .time {
