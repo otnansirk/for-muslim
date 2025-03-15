@@ -1,11 +1,22 @@
 import { useEffect, useState } from 'react'
 import SearchLocation from './component/search-loaction/SearchLocation'
-import { calculateMethod } from './data/calculate-method'
 import Storage, { ProfileProps } from './utils/Storage'
-import { countries } from './data/country'
 import Icon from './component/Icon'
 import Each from './component/Each'
 import './app.css'
+
+const countries = {
+    "AF": "Afghanistan",
+    "AX": "Aland Islands",
+    "AL": "Albania"
+}
+
+const calculateMethod = [
+    {
+        "id": 1,
+        "name": "University of Islamic Sciences, Karachi"
+    }
+]
 
 const prayTime = [
     {
@@ -46,7 +57,7 @@ const prayTime = [
         title: "Maghrib",
         time: "04:30 am",
         notify: "off",
-        upcoming: false
+        upcoming: true
     },
     {
         id: "sholat-isha",
@@ -54,7 +65,7 @@ const prayTime = [
         title: "Isha",
         time: "04:30 am",
         notify: "on",
-        upcoming: true
+        upcoming: false
     },
 ]
 
@@ -74,7 +85,7 @@ function App() {
             const item = await Storage.profile.get();
             fetchProfile(item as ProfileProps);
         })();
-        Storage.profile.listen(fetchProfile);
+        // Storage.profile.listen(fetchProfile);
 
     }, [])
 
@@ -85,12 +96,18 @@ function App() {
     return (
         <>
             <SearchLocation open={open} setOpen={setOpen} />
+            <div className='fly-date'>
+                <div className='date'>
+                    <div className='hijri'>1 Ramadhan 1446</div>
+                    <div className='geor'>1 March 2025</div>
+                </div>
+            </div>
 
             <div className='header'>
+                <img className='bg' src='/assets/bg.svg' />
                 <div className='header-upcoming'>
                     <div className='upcoming'>
-                        <small>Upcoming</small>
-                        <div className='prayer'>Isha</div>
+                        <div className='weather'><Icon icon='weather' /> 72</div>
                         <div className='time'>07:00 <span>pm</span></div>
                         <span><img src={'./assets/plus-minus.svg'} /> in 2 hours 34 minutes</span>
                     </div>
@@ -108,11 +125,8 @@ function App() {
                     </select>
                 </div>
                 <div className='settings'><Icon icon='gear' /></div>
-                <div className='date'>
-                    <div className='hijri'>1 Ramadhan 1446</div>
-                    <div className='geor'>1 March 2025</div>
-                </div>
             </div>
+
             <div className='body'>
                 <div className='table'>
                     <div className='table-header'>
@@ -127,8 +141,10 @@ function App() {
                                 data={prayTime}
                                 render={(item, key) => (
                                     <div className={`table-tr ${item.upcoming && 'active'}`} key={key}>
-                                        <div className='table-td icon pray-icon'><Icon icon={item.icon} />{item.title}</div>
-                                        <div className='table-td'>{item.time}</div>
+                                        <div className='tr-prayer'>
+                                            <div className='table-td icon pray-icon'><Icon icon={item.icon} />{item.title}</div>
+                                            <div className='table-td'>{item.time}</div>
+                                        </div>
                                         <div className='table-td icon notify-icon'><Icon icon={`notify-${item.notify}`} /></div>
                                     </div>
                                 )}

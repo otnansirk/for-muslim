@@ -1,7 +1,50 @@
+.fly-date {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    top: 9.8rem;
+
+    .date {
+        margin: auto;
+        margin-top: -8px;
+        margin-bottom: -60px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        background-color: #eef8fb;
+        box-shadow: 0px 0px 10px #e6e6e6c2;
+        width: 252px;
+        height: 65px;
+        border-radius: 100px;
+        text-align: center;
+        gap: 2px;
+
+        .hijri {
+            font-size: 16px;
+            color: #1E1E1E;
+        }
+
+        .geor {
+            font-size: 12px;
+            color: #969696;
+        }
+    }
+}
+
 .header {
-    background-color: #3CD2FF;
-    padding: 31px 34px;
+    background-color: #3cd2fff2;
+    padding: 27px 34px;
     border-radius: 0px 0px 60px 60px;
+    position: relative;
+    overflow: hidden;
+
+    .bg {
+        position: absolute;
+        z-index: -1;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
 
     .header-upcoming {
         display: flex;
@@ -9,14 +52,20 @@
 
         .upcoming {
             small {
-                color: #b64103;
+                color: #fcff00;
                 margin-bottom: 4px;
                 display: block;
                 font-size: 16px;
+                font-weight: bold;
+                text-shadow: 1px 1px 1px #ff0000;
             }
 
-            .prayer {
-                font-size: 24px;
+            .weather {
+                margin-left: 2px;
+                font-size: 16px;
+                display: flex;
+                align-items: baseline;
+                gap: 6px;
             }
 
             .time {
@@ -108,38 +157,15 @@
             transform: rotate(90deg);
         }
     }
-
-    .date {
-        margin: auto;
-        margin-top: 8px;
-        margin-bottom: -60px;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        background-color: #F6F6F6;
-        max-width: 252px;
-        height: 65px;
-        border-radius: 100px;
-        text-align: center;
-        gap: 2px;
-
-        .hijri {
-            font-size: 16px;
-            color: #1E1E1E;
-        }
-
-        .geor {
-            font-size: 12px;
-            color: #969696;
-        }
-    }
 }
 
 .body {
     margin: 40px 12px 0px 12px;
-    background-color: white;
-    border-radius: 8px;
+    margin: 40px 12px 0px 12px;
+    background-color: #eef8fb;
+    border-radius: 14px;
     padding: 17px 14px;
+    box-shadow: 0px 0px 10px #ebebebf2;
 
     .table-header {
         margin-bottom: 14px;
@@ -160,13 +186,22 @@
             padding: 8px 10px;
             font-size: 14px;
 
+            .tr-prayer {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 220px;
+            }
+
             &.active {
                 color: #2F3744;
-                background-color: #3CD2FF;
+                background-color: #00c4ff96;
                 border-radius: 100px;
+                font-weight: bold;
+                font-size: 15px;
 
                 .table-td {
-                    color: #1E1E1E;
+                    color: #005e7a;
 
                     &.pray-icon {
                         >img {
