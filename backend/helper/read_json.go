@@ -14,7 +14,8 @@ func ReadJSON[T any](path string) (T, error) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println("Successfully Opened users.json")
+	fmt.Println("Successfully Opened", path)
+
 	defer jsonFile.Close()
 
 	byteValue, err := ioutil.ReadAll(jsonFile)
