@@ -26,7 +26,7 @@ func filterData(data []LocationItemType, keyword string) []LocationItemType {
 }
 
 func GetLocationList(c echo.Context) error {
-	keyword := c.QueryParam("keyword")
+	keyword := c.QueryParam("search")
 	data, err := helper.ReadJSON[[]LocationItemType]("data/location.json")
 
 	if err != nil {
