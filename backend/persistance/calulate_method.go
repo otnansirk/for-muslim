@@ -3,30 +3,17 @@ package persistance
 import (
 	"github.com/otnansirk/for-muslim/helper"
 	"github.com/labstack/echo/v4"
-	"encoding/json"
-	"io/ioutil"
 	"net/http"
-	"fmt"
-	"os"
 )
+type CalculateMethodType struct {
+    Id   int    `json:"id"`
+    Name string `json:"name"`
+}
 
 
-func GetList (c echo.Context) error {
-	jsonFile, err := os.Open("data/calculate-method.json")
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println("Successfully Opened users.json")
-	defer jsonFile.Close()
+func GetCalculateMethodList (c echo.Context) error {
+	var data, err = helper.ReadJSON[[]CalculateMethodType]("data/calculate-method.json")
 
-	byteValue, err := ioutil.ReadAll(jsonFile)
-	if err != nil {
-		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
-	}
-
-	var data interface{}
-
-	err = json.Unmarshal(byteValue, &data)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
 	}
