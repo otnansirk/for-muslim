@@ -25,7 +25,7 @@ func Middleware(next echo.HandlerFunc) echo.HandlerFunc {
 		res := helper.Response{
 			Data: nil,
 			Meta: helper.Meta{
-				Status: "ok",
+				Status: "ok.",
 				Message: "OK",
 			},
 		}
@@ -41,6 +41,7 @@ func main() {
 	v1.Use(Middleware)
 	v1.GET("/methods", persistance.GetCalculateMethodList)
 	v1.GET("/locations", persistance.GetLocationList)
+	v1.GET("/prayer-times", persistance.GetPrayerTime)
 
 	e.Logger.Fatal(e.Start(":1323"))
 }
