@@ -7,6 +7,7 @@ type Meta struct {
 
 // Struct untuk response utama
 type Response struct {
-	Data interface{} `json:"data"`
-	Meta Meta        `json:"meta"`
+	Data 	interface{} `json:"data,omitempty"`
+	Errors 	interface{} `json:"errors,omitempty"`
+	Meta 	Meta        `json:"meta"`
 }
