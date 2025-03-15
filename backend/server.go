@@ -8,7 +8,8 @@ import (
 func main() {
 	e := echo.New()
 
-	e.GET("/", persistance.GetList)
+	e.GET("/methods", persistance.GetCalculateMethodList)
+	e.GET("/locations", persistance.GetLocationList)
 
 	e.Logger.Fatal(e.Start(":1323"))
 }
