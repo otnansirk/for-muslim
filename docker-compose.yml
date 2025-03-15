@@ -9,4 +9,5 @@ services:
       - ./backend:/app
     environment:
       - GO111MODULE=on
+      - API_KEY=PASTE_API_KEY
     command: air -c .air.toml
