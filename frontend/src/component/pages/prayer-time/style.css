@@ -1,0 +1,55 @@
+.prayer-time {
+    display: flex;
+    justify-content: center;
+    background: transparent;
+    gap: 14px;
+    flex-wrap: wrap;
+
+    & .__pad {
+        width: 120px;
+        height: 120px;
+        padding: 4px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+        border-radius: 10px;
+        border: 1px solid #7878784c;
+        backdrop-filter: blur(15px);
+        box-shadow: #0000003e 0 3px 8px;
+        background-color: #afafaf2f;
+        position: relative;
+
+        &.active {
+            background: #3378ff6b;
+            border: 1px solid #008eec;
+            font-weight: var(--font-weight-sm);
+        }
+
+        .notify-icon {
+            width: 20px;
+            position: absolute;
+            top: 5px;
+            right: 7px;
+            cursor: pointer;
+        }
+
+        & .pad-icon {
+            width: 32px;
+        }
+
+        & .pad-time {
+            font-size: 26px;
+
+            & .time-meridiem {
+                font-size: 14px;
+                margin-left: -4px;
+            }
+        }
+
+        & .pad-name {
+            font-size: 16px;
+        }
+    }
+}
