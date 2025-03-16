@@ -1,7 +1,15 @@
 .weather {
     margin-top: 20px;
-    display: flex;
-    align-items: baseline;
-    gap: 6px;
-    font-size: 18px;
+    line-height: 1.5em;
+
+    .temperature {
+        display: flex;
+        align-items: baseline;
+        gap: 6px;
+        font-size: 18px;
+    }
+
+    .location {
+        font-size: 15px;
+    }
 }
