@@ -1,5 +1,19 @@
 .container {
-    padding-top: 30px;
     max-width: 90%;
     margin: 0 auto;
+    display: grid;
+    min-height: 100dvh;
+    grid-template: 'header' 'content' 'footer';
+
+    .header {
+        padding-top: 30px;
+    }
+
+    .content {
+        padding-top: 32px;
+    }
+
+    .footer {
+        padding-bottom: 30px;
+    }
 }

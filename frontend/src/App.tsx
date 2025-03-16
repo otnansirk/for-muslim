@@ -1,76 +1,19 @@
 import { useEffect, useState } from 'react'
 import SearchLocation from './component/search-loaction/SearchLocation'
 import Storage, { ProfileProps } from './utils/Storage'
-import Icon from './component/Icon'
-import Each from './component/Each'
-import BackgroundOverlay from './component/pages/background-overlay/BackgroundOverflay'
+import BackgroundOverlay from './component/pages/background-overlay/BackgroundOverlay'
 import './app.css'
 import Clock from './component/pages/clock/Clock'
-import Weather from './component/pages/weather/weather'
+import PrayerTime from './component/pages/prayer-time/PrayerTime'
+import Setting from './component/pages/settings/Setting'
+import Notes from './component/pages/notes/Notes'
+import Weather from './component/pages/weather/Weather'
 
 const countries = {
     "AF": "Afghanistan",
     "AX": "Aland Islands",
     "AL": "Albania"
 }
-
-const calculateMethod = [
-    {
-        "id": 1,
-        "name": "University of Islamic Sciences, Karachi"
-    }
-]
-
-const prayTime = [
-    {
-        id: "imsak",
-        icon: "imsak",
-        title: "Imsak",
-        time: "04:30 am",
-        notify: "off",
-        upcoming: false
-    },
-    {
-        id: "sholat-fajr",
-        icon: "sholat-fajr",
-        title: "Fajr",
-        time: "04:30 am",
-        notify: "off",
-        upcoming: false
-    },
-    {
-        id: "sholat-dhuhr",
-        icon: "sholat-dhuhr",
-        title: "Dhuhr",
-        time: "04:30 am",
-        notify: "off",
-        upcoming: false
-    },
-    {
-        id: "sholat-asr",
-        icon: "sholat-asr",
-        title: "Asr",
-        time: "04:30 am",
-        notify: "off",
-        upcoming: false
-    },
-    {
-        id: "sholat-maghrib",
-        icon: "sholat-maghrib",
-        title: "Maghrib",
-        time: "04:30 am",
-        notify: "off",
-        upcoming: true
-    },
-    {
-        id: "sholat-isha",
-        icon: "sholat-isha",
-        title: "Isha",
-        time: "04:30 am",
-        notify: "on",
-        upcoming: false
-    },
-]
 
 function App() {
 
@@ -102,10 +45,14 @@ function App() {
 
             <div className='container'>
                 <div className='header'>
+                    <Setting />
                     <Clock />
                     <Weather />
                 </div>
-                <div className='content'></div>
+                <div className='content'>
+                    <PrayerTime />
+                    <Notes />
+                </div>
                 <div className='footer'></div>
             </div>
 
