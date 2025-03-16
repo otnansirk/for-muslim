@@ -1,0 +1,14 @@
+.clock {
+    color: #FFF;
+    max-width: fit-content;
+    text-align: center;
+
+    .clock-digital {
+        display: flex;
+        font-size: 6em;
+    }
+
+    .clock-date {
+        line-height: 1.5em;
+    }
+}
