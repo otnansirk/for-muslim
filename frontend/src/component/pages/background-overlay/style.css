@@ -8,8 +8,7 @@
     opacity: 1;
     transition: transform .4s, opacity .4s;
 
-    .background {
-
+    .overlay {
         transform: scale(1.1);
         position: absolute;
         width: 100%;
@@ -19,5 +18,22 @@
         transition: opacity 1s var(--out-cubic);
         filter: blur(var(--bg-blur)) brightness(var(--bg-brightness));
         z-index: 1;
+    }
+
+}
+
+.background-info a {
+    position: absolute;
+    font-size: 12.5px;
+    z-index: 2;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.6);
+    font-family: var(--font-family);
+    bottom: 40px;
+    right: 40px;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
     }
 }
