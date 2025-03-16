@@ -1,0 +1,23 @@
+.notes {
+    margin-top: 5vw;
+    min-width: 50%;
+    max-width: 80%;
+    justify-self: center;
+
+    [data-pocket-editor] {
+        border-radius: 10px;
+        backdrop-filter: blur(15px);
+        box-shadow: #0000003e 0 3px 8px;
+        background-color: #65656541;
+        color: aliceblue;
+
+        & [data-selected] {
+            /* background-color: rgba(229, 229, 229, 0.506);
+            border-radius: 6px; */
+            color: aliceblue;
+            background: #3378ff6b;
+            border: 1px solid #008eec;
+        }
+    }
+
+}
