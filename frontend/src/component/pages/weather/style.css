@@ -1,0 +1,7 @@
+.weather {
+    margin-top: 20px;
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    font-size: 18px;
+}
