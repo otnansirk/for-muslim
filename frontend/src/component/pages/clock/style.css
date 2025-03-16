@@ -8,7 +8,13 @@
         font-size: 6em;
     }
 
+    .clock-hijri {
+        font-size: 16px;
+    }
+
     .clock-date {
+        font-size: 16px;
         line-height: 1.5em;
     }
+
 }
