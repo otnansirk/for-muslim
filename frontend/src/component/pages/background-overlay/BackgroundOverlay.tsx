@@ -9,7 +9,7 @@ const BackgroundOverlay = () => {
                 <div className='overlay' style={{ backgroundImage: `url(${bg})` }} />
             </div>
             <div className='background-info'>
-                <a href=''>Kris - unspalce</a>
+                <a href=''>Photo by kris - unspalce</a>
             </div>
         </div>
     )
