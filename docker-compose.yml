@@ -11,5 +11,6 @@ services:
       - GO111MODULE=on
       - API_KEY=${FM_API_KEY}
       - PRAYER_BASEURL=${FM_PRAYER_BASEURL}
+      - WEATHER_BASEURL=${FM_WEATHER_BASEURL}
+      - WEATHER_API_KEY=${FM_WEATHER_API_KEY}
     command: air -c .air.toml
-    restart: always
