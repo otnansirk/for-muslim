@@ -191,7 +191,7 @@ func GetPrayerTime(c echo.Context) error {
 	res := helper.Response{
 		Data: prayerTimes,
 		Meta: helper.Meta{
-			Status: "oks",
+			Status: "ok",
 			Message: "OK",
 		},
 	}

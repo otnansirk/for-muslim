@@ -124,7 +124,34 @@ Get of prayer times.
 		}
 	},
 	"meta": {
-		"status": "oks",
+		"status": "ok",
+		"message": "OK"
+	}
+}
+```
+
+### # Get Weather
+Get weather.
+#### [GET] `/weathers`
+
+#### Query Params
+ - **lat** <br/> 
+   Latitude
+ - **lng** <br/> 
+   Longtude
+### Response
+```
+{
+    "data": {
+		"temp": {
+			"c": 29.9,
+			"f": 29.9
+		},
+		"is_day" : true,
+		"text" : "Light rain shower"
+	},
+	"meta": {
+		"status": "ok",
 		"message": "OK"
 	}
 }
