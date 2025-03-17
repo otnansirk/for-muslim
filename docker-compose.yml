@@ -2,13 +2,13 @@ services:
   app:
     build:
       context: ./backend
-      dockerfile: ${DOCKER_FILE}
+      dockerfile: ${FM_DOCKER_FILE}
     ports:
       - "1323:1323"
     volumes:
       - ./backend:/app
     environment:
       - GO111MODULE=on
-      - API_KEY=${API_KEY}
-      - PRAYER_BASEURL=${PRAYER_BASEURL}
+      - API_KEY=${FM_API_KEY}
+      - PRAYER_BASEURL=${FM_PRAYER_BASEURL}
     command: air -c .air.toml
