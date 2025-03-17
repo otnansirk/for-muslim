@@ -1,13 +1,18 @@
 import { useEffect, useState } from 'react'
-import SearchLocation from './component/search-loaction/SearchLocation'
 import Storage, { ProfileProps } from './utils/Storage'
+
 import BackgroundOverlay from './component/pages/background-overlay/BackgroundOverlay'
-import './app.css'
-import Clock from './component/pages/clock/Clock'
+import SearchLocation from './component/search-loaction/SearchLocation'
 import PrayerTime from './component/pages/prayer-time/PrayerTime'
+import Greating from './component/pages/greating/Greating'
 import Setting from './component/pages/settings/Setting'
-import Notes from './component/pages/notes/Notes'
 import Weather from './component/pages/weather/Weather'
+import Quote from './component/pages/quotes/Quote'
+import Clock from './component/pages/clock/Clock'
+import Notes from './component/pages/notes/Notes'
+
+import './app.css'
+
 
 const countries = {
     "AF": "Afghanistan",
@@ -48,12 +53,15 @@ function App() {
                     <Setting />
                     <Clock />
                     <Weather />
+                    <Greating />
                 </div>
                 <div className='content'>
                     <PrayerTime />
                     <Notes />
                 </div>
-                <div className='footer'></div>
+                <div className='footer'>
+                    <Quote />
+                </div>
             </div>
 
         </>

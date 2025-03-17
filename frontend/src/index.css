@@ -19,6 +19,13 @@ html {
     color: #2F3744;
     overflow-x: hidden;
 
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
     body {
         margin: 0 auto;
         text-shadow: 1px 2px 6px rgba(0, 0, 0, var(--text-shadow-sm));
