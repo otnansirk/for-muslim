@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     background: transparent;
-    gap: 14px;
+    gap: 1.5vw;
     flex-wrap: wrap;
 
     & .__pad {
