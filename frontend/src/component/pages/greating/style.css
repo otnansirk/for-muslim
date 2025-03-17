@@ -1,0 +1,6 @@
+.greating {
+    font-size: 2.8em;
+    text-align: center;
+    font-weight: var(--font-weight-md);
+    letter-spacing: 1px;
+}
