@@ -1,29 +1,12 @@
-# --- STAGE 1: Build the Go app ---
-FROM golang:1.24 AS builder
+FROM golang:alpine
 
-# Set working directory
+RUN apk update && apk add --no-cache git
+RUN apk del git
+
 WORKDIR /app
 
-# Copy go.mod and go.sum
-COPY go.mod go.sum ./
-
-# Download dependencies
-RUN go mod download
-
-# Copy all source code (Tanpa git clone!)
 COPY . .
+RUN go mod tidy
 
-# Build the Go application
-RUN go build -o build .
-
-# --- STAGE 2: Create a lightweight final image ---
-FROM alpine:latest
-
-WORKDIR /root/
-
-# Copy the built binary from the builder stage
-COPY --from=builder /app/build .
-
-EXPOSE 1323
-
-CMD ["./build"]
+RUN go build -o binary
+ENTRYPOINT [ "/app/binary" ]
