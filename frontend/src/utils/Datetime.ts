@@ -1,4 +1,22 @@
 
+const date = (tz?: string) => {
+    const dateNow = Date.now();
+    const date = new Intl.DateTimeFormat('en-US', {
+        timeZone: tz,
+        weekday: "long",
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+    }).format(dateNow)
+
+    return {
+        weekday: date.split(', ')[0],
+        month: date.split(', ')[1].split(' ')[0],
+        day: date.split(', ')[1].split(' ')[1],
+        year: date.split(', ')[2]
+    }
+};
+
 const time = (hour12?: boolean, tz?: string) => {
     const date = Date.now();
     const time = new Intl.DateTimeFormat('en-US', {
@@ -18,5 +36,6 @@ const time = (hour12?: boolean, tz?: string) => {
 };
 
 export {
-    time
+    time,
+    date
 }
