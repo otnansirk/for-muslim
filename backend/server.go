@@ -8,7 +8,7 @@ import (
 	// "github.com/rs/cors"
 	"github.com/labstack/echo/v4/middleware"
 	"net/http"
-	// "strings"
+	"strings"
 	"os"
 )
 
@@ -55,9 +55,9 @@ func main() {
 
 	e := echo.New()
 	
-	// Pasang Middleware CORS lebih awal
+	allowedOrigin := strings.Split(os.Getenv("ALLOWED_ORIGIN"), ",")
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{"*"}, // Jika ingin spesifik: []string{"chrome-extension://phjhocaogljpnolpmlcmifbghflllilh"}
+		AllowOrigins: allowedOrigin,
 		AllowMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders: []string{"Content-Type", "xid"},
 	}))
