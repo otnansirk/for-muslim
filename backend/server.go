@@ -5,8 +5,7 @@ import (
 	"github.com/otnansirk/for-muslim/helper"
 	"github.com/labstack/echo/v4"
 	b64 "encoding/base64"
-	// "github.com/rs/cors"
-	"github.com/labstack/echo/v4/middleware"
+	"github.com/rs/cors"
 	"net/http"
 	"strings"
 	"os"
@@ -38,30 +37,22 @@ func Middleware(next echo.HandlerFunc) echo.HandlerFunc {
 	}
 }
 
-// func CorsMiddleware() echo.MiddlewareFunc {
+func CorsMiddleware() echo.MiddlewareFunc {
 	
-// 	allowedOrigin := strings.Split(os.Getenv("ALLOWED_ORIGIN"), ",")
-// 	corsMiddleware := cors.New(cors.Options{
-// 		AllowedOrigins: allowedOrigin,
-// 		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-// 		AllowedHeaders: []string{"Content-Type", "xid"},
-// 	})
+	allowedOrigin := strings.Split(os.Getenv("ALLOWED_ORIGIN"), ",")
+	corsMiddleware := cors.New(cors.Options{
+		AllowedOrigins: allowedOrigin,
+		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders: []string{"Content-Type", "xid"},
+	})
 
-// 	return echo.WrapMiddleware(corsMiddleware.Handler)
-// }
+	return echo.WrapMiddleware(corsMiddleware.Handler)
+}
 
 
 func main() {
-
 	e := echo.New()
-	
-	allowedOrigin := strings.Split(os.Getenv("ALLOWED_ORIGIN"), ",")
-	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: allowedOrigin,
-		AllowMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		AllowHeaders: []string{"Content-Type", "xid"},
-	}))
-
+	e.Use(CorsMiddleware())
 	v1 := e.Group("/api/v1")
 	v1.Use(Middleware)
 	v1.GET("/methods", persistance.GetCalculateMethodList)
