@@ -8,24 +8,8 @@ import Clock from './component/pages/clock/Clock'
 import Notes from './component/pages/notes/Notes'
 
 import './app.css'
-import { useEffect } from 'react'
-import RequestApi from './utils/RequestApi'
 
 function App() {
-    // console.log((new URLSearchParams({ username: "example", password: "password" })).toString());
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await RequestApi.get();
-                console.log("API Response:", response);
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
-
-        fetchData();
-
-    }, [])
     return (
         <>
             {/* <SearchLocation open={open} setOpen={setOpen} /> */}

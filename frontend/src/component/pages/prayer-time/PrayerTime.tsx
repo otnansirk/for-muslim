@@ -1,7 +1,10 @@
+import { useEffect } from "react"
 import Each from "../../Each"
 import Icon from "../../Icon"
 
 import './style.css'
+import Request from "../../../utils/Request"
+import Storage from "../../../utils/Storage"
 
 const prayTime = [
     {
@@ -61,6 +64,33 @@ const prayTime = [
 ]
 
 const PrayerTime = () => {
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await Request.get({
+                    path: "/prayer-times",
+                    query: {
+                        date: "18-03-2025",
+                        lat: "-7.759001752250615",
+                        lng: "110.36443936744945",
+                        method: "20"
+                    }
+                });
+                const res = await response.json()
+                Storage.sync.set('fajr', {
+                    time: res.data.fajr
+                })
+                console.log("API Response:", response.ok, res.data.fajr);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        fetchData();
+
+    }, [])
+
     return (
         <div className="prayer-time">
             <Each
