@@ -6,18 +6,22 @@ import Weather from './component/pages/weather/Weather'
 import Quote from './component/pages/quotes/Quote'
 import Clock from './component/pages/clock/Clock'
 import Notes from './component/pages/notes/Notes'
+import { useState } from 'react'
 
 import './app.css'
-import { useState } from 'react'
 
 function App() {
     const [latitude, setLatitude] = useState("")
     const [longitude, setLongitude] = useState("")
+    const [timezone, setTimezone] = useState("")
 
     navigator.geolocation.getCurrentPosition(
         (position) => {
+            const timezone = new Intl.DateTimeFormat("en", { timeZoneName: "long" }).resolvedOptions().timeZone;
+
             setLatitude(position.coords.latitude.toString())
             setLongitude(position.coords.longitude.toString())
+            setTimezone(timezone.toString())
         },
         (error) => {
             console.error("Error getting location:", error.message);
@@ -28,19 +32,16 @@ function App() {
 
     return (
         <>
-            {/* <SearchLocation open={open} setOpen={setOpen} /> */}
-
             <BackgroundOverlay />
 
             <div className='container'>
                 <div className='header'>
-                    {/* <Setting /> */}
                     <Clock />
                     <Weather lat={latitude} lng={longitude} />
                     <Greating />
                 </div>
                 <div className='content'>
-                    <PrayerTime />
+                    <PrayerTime lat={latitude} lng={longitude} tz={timezone} />
                     <Notes />
                 </div>
                 <div className='footer'>
