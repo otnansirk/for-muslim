@@ -58,6 +58,7 @@ func main() {
 	v1.GET("/locations", persistance.GetLocationList)
 	v1.GET("/prayer-times", persistance.GetPrayerTime)
 	v1.GET("/weathers", persistance.GetWeather)
+	v1.GET("/weathers-accu", persistance.GetWeatherAccu)
 
 	e.Logger.Fatal(e.Start(":1323"))
 }

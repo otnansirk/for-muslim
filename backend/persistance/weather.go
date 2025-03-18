@@ -15,13 +15,15 @@ type (
 
 	WeatherResponse struct {
 		Temp  Temp   `json:"temp"`
-		IsDay int   `json:"is_day"`
+		IsDay int   `json:"is_day,omitempty"`
 		Text  string `json:"text"`
 	}
 
 	Temp struct {
 		C float64 `json:"c"`
 		F float64 `json:"f"`
+		Feels_c float64 `json:"feels_c,omitempty"`
+		Feels_f float64 `json:"feels_f,omitempty"`
 	}
 )
 
@@ -70,7 +72,6 @@ func GetWeather(c echo.Context) error {
 	weatherRes, err := weather.GetWeather(c, weatherReq)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, helper.Response{
-			Errors: errors,
 			Meta: helper.Meta{
 				Status: "bad_request",
 				Message: "Failed get weather",
@@ -85,6 +86,38 @@ func GetWeather(c echo.Context) error {
 		},
 		IsDay: weatherRes.Current.IsDay,
 		Text: weatherRes.Current.Condition.Text,
+	}
+
+	res := helper.Response{
+		Data: weathersData,
+		Meta: helper.Meta{
+			Status: "ok",
+			Message: "OK",
+		},
+	}
+	return c.JSON(http.StatusOK, res)
+}
+
+func GetWeatherAccu(c echo.Context) error {
+
+	weatherRes, err := weather.GetWeatherAccu(c)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, helper.Response{
+			Meta: helper.Meta{
+				Status: "bad_request",
+				Message: "Failed get weather",
+			},
+		})
+	}
+
+	weathersData := WeatherResponse{
+		Temp: Temp{
+			C: weatherRes.Now.Temp,
+			F: (9/5 * weatherRes.Now.Temp) + 32,
+			Feels_c: weatherRes.Now.Feels,
+			Feels_f: (9/5 * weatherRes.Now.Temp) + 32,
+		},
+		Text: weatherRes.Now.Description,
 	}
 
 	res := helper.Response{
