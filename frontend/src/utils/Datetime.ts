@@ -1,19 +1,38 @@
+type DateTypes = {
+    tz?: string;
+    weekday?: "long" | "short" | "narrow" | undefined;
+    day?: "numeric" | "2-digit" | undefined;
+    month?: "long" | "short" | "narrow" | "numeric" | "2-digit" | undefined;
+    year?: "numeric" | "2-digit" | undefined;
+}
 
-const date = (tz?: string) => {
+const date = (config?: DateTypes) => {
     const dateNow = Date.now();
-    const date = new Intl.DateTimeFormat('en-US', {
-        timeZone: tz,
-        weekday: "long",
-        day: "2-digit",
-        month: "long",
-        year: "numeric",
+    const weekday = new Intl.DateTimeFormat('en-US', {
+        timeZone: config?.tz,
+        weekday: (config?.weekday) ? config.weekday : "long"
+    }).format(dateNow)
+
+    const day = new Intl.DateTimeFormat('en-US', {
+        timeZone: config?.tz,
+        day: (config?.day) ? config.day : "2-digit"
+    }).format(dateNow)
+
+    const month = new Intl.DateTimeFormat('en-US', {
+        timeZone: config?.tz,
+        month: (config?.month) ? config.month : "long"
+    }).format(dateNow)
+
+    const year = new Intl.DateTimeFormat('en-US', {
+        timeZone: config?.tz,
+        year: (config?.year) ? config.year : "numeric"
     }).format(dateNow)
 
     return {
-        weekday: date.split(', ')[0],
-        month: date.split(', ')[1].split(' ')[0],
-        day: date.split(', ')[1].split(' ')[1],
-        year: date.split(', ')[2]
+        weekday: weekday,
+        month: month,
+        day: day,
+        year: year
     }
 };
 

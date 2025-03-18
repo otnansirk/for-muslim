@@ -17,6 +17,11 @@ export type StorageType = {
     region?: string
     lang?: string
     weather?: WeatherType
+    hijri?: string
+    imsak?: {
+        notify?: string
+        time?: string
+    }
     fajr?: {
         notify?: string
         time?: string
