@@ -5,7 +5,9 @@ import (
 	"github.com/otnansirk/for-muslim/helper"
 	"github.com/labstack/echo/v4"
 	b64 "encoding/base64"
+	"github.com/rs/cors"
 	"net/http"
+	"strings"
 	"os"
 )
 
@@ -35,8 +37,21 @@ func Middleware(next echo.HandlerFunc) echo.HandlerFunc {
 	}
 }
 
+func CorsMiddleware() echo.MiddlewareFunc {
+	
+	allowedOrigin := strings.Split(os.Getenv("ALLOWED_ORIGIN"), ",")
+	corsMiddleware := cors.New(cors.Options{
+		AllowedOrigins: allowedOrigin,
+		AllowedHeaders: []string{"Content-Type", "xid"},
+	})
+
+	return echo.WrapMiddleware(corsMiddleware.Handler)
+}
+
+
 func main() {
 	e := echo.New()
+	e.Use(CorsMiddleware())
 	v1 := e.Group("/api/v1")
 	v1.Use(Middleware)
 	v1.GET("/methods", persistance.GetCalculateMethodList)
