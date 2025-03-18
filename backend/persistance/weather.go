@@ -14,6 +14,7 @@ type (
 	}
 
 	WeatherResponse struct {
+		Location Location `json:"location,omitempty"`
 		Temp  Temp   `json:"temp"`
 		IsDay int   `json:"is_day,omitempty"`
 		Text  string `json:"text"`
@@ -25,6 +26,14 @@ type (
 		Feels_c float64 `json:"feels_c,omitempty"`
 		Feels_f float64 `json:"feels_f,omitempty"`
 	}
+
+	Location struct {
+		Lat    string `json:"lat"`
+		Lng    string `json:"lng"`
+		City   string `json:"city"`
+		Region string `json:"region"`
+	}
+
 )
 
 
@@ -98,6 +107,7 @@ func GetWeather(c echo.Context) error {
 	return c.JSON(http.StatusOK, res)
 }
 
+
 func GetWeatherAccu(c echo.Context) error {
 
 	weatherRes, err := weather.GetWeatherAccu(c)
@@ -111,6 +121,12 @@ func GetWeatherAccu(c echo.Context) error {
 	}
 
 	weathersData := WeatherResponse{
+		Location: Location{
+			Lat: weatherRes.Lat,
+			Lng: weatherRes.Lon,
+			City: weatherRes.City,
+			Region: weatherRes.Region,
+		},
 		Temp: Temp{
 			C: weatherRes.Now.Temp,
 			F: (9/5 * weatherRes.Now.Temp) + 32,
