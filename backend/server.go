@@ -5,9 +5,10 @@ import (
 	"github.com/otnansirk/for-muslim/helper"
 	"github.com/labstack/echo/v4"
 	b64 "encoding/base64"
-	"github.com/rs/cors"
+	// "github.com/rs/cors"
+	"github.com/labstack/echo/v4/middleware"
 	"net/http"
-	"strings"
+	// "strings"
 	"os"
 )
 
@@ -37,29 +38,30 @@ func Middleware(next echo.HandlerFunc) echo.HandlerFunc {
 	}
 }
 
-func CorsMiddleware() echo.MiddlewareFunc {
+// func CorsMiddleware() echo.MiddlewareFunc {
 	
-	allowedOrigin := strings.Split(os.Getenv("ALLOWED_ORIGIN"), ",")
-	corsMiddleware := cors.New(cors.Options{
-		AllowedOrigins: allowedOrigin,
-		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		AllowedHeaders: []string{"Content-Type", "xid"},
-	})
+// 	allowedOrigin := strings.Split(os.Getenv("ALLOWED_ORIGIN"), ",")
+// 	corsMiddleware := cors.New(cors.Options{
+// 		AllowedOrigins: allowedOrigin,
+// 		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+// 		AllowedHeaders: []string{"Content-Type", "xid"},
+// 	})
 
-	return echo.WrapMiddleware(corsMiddleware.Handler)
-}
+// 	return echo.WrapMiddleware(corsMiddleware.Handler)
+// }
 
 
 func main() {
-	
-	corsMiddleware := cors.New(cors.Options{
-		AllowedOrigins: []string{"*"},
-		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		AllowedHeaders: []string{"Content-Type", "xid"},
-	})
 
 	e := echo.New()
-	e.Use(echo.WrapMiddleware(corsMiddleware.Handler))
+	
+	// Pasang Middleware CORS lebih awal
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"*"}, // Jika ingin spesifik: []string{"chrome-extension://phjhocaogljpnolpmlcmifbghflllilh"}
+		AllowMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders: []string{"Content-Type", "xid"},
+	}))
+
 	v1 := e.Group("/api/v1")
 	v1.Use(Middleware)
 	v1.GET("/methods", persistance.GetCalculateMethodList)
