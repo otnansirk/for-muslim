@@ -1,3 +1,12 @@
+export type WeatherType = {
+    text?: string
+    temp_c?: number
+    temp_f?: number
+    feels_c?: number
+    feels_f?: number
+    last_update?: number
+}
+
 export type StorageType = {
     name?: string
     lat?: string
@@ -5,11 +14,9 @@ export type StorageType = {
     address?: string
     city?: string
     country?: string
+    region?: string
     lang?: string
-    weather?: {
-        text?: string
-        temp?: number
-    }
+    weather?: WeatherType
     fajr?: {
         notify?: string
         time?: string
@@ -30,7 +37,6 @@ export type StorageType = {
         notify?: string
         time?: string
     }
-    prayer_time?: string
 }
 
 
@@ -54,7 +60,7 @@ class Storage {
             if (typeof chrome !== "undefined" && chrome.storage) {
                 return new Promise((resolve) => {
                     chrome.storage.sync.get(key, result => {
-                        resolve(result)
+                        resolve(result[key])
                     })
                 })
             } else {
@@ -62,8 +68,8 @@ class Storage {
                 return undefined;
             }
         },
-        listen: (callback: (item: StorageType) => void) => {
-            chrome.storage.onChanged.addListener(item => callback(item?.profile?.newValue))
+        listen: (key: string, callback: (item: StorageType) => void) => {
+            chrome.storage.onChanged.addListener(item => callback(item?.[key]?.newValue))
         }
     }
 }
