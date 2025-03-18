@@ -39,9 +39,9 @@ class Storage {
         set: <K extends keyof StorageType>(key: K, value: StorageType[K]) => {
             if (typeof chrome !== "undefined" && chrome.storage) {
                 chrome.storage.sync.get(key).then(item => {
-                    if (typeof value === 'object' && value != null) {
+                    if (typeof value === 'object' && value != null && typeof item === 'object' && item != null) {
                         const safeValue = JSON.parse(JSON.stringify(value));
-                        chrome.storage.sync.set({ [key]: { ...(item || {}), ...safeValue } });
+                        chrome.storage.sync.set({ [key]: { ...item[key], ...safeValue } });
                     } else {
                         chrome.storage.sync.set({ [key]: value });
                     }
