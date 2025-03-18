@@ -5,6 +5,7 @@ import (
 	"github.com/otnansirk/for-muslim/lib/weather"
 	"github.com/labstack/echo/v4"
 	"net/http"
+	"fmt"
 )
 
 type (
