@@ -41,7 +41,7 @@ func CorsMiddleware() echo.MiddlewareFunc {
 	
 	allowedOrigin := strings.Split(os.Getenv("ALLOWED_ORIGIN"), ",")
 	corsMiddleware := cors.New(cors.Options{
-		AllowedOrigins: []string{"*"},
+		AllowedOrigins: allowedOrigin,
 		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders: []string{"Content-Type", "xid"},
 	})
@@ -51,8 +51,15 @@ func CorsMiddleware() echo.MiddlewareFunc {
 
 
 func main() {
+	
+	corsMiddleware := cors.New(cors.Options{
+		AllowedOrigins: []string{"*"},
+		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders: []string{"Content-Type", "xid"},
+	})
+
 	e := echo.New()
-	e.Use(CorsMiddleware())
+	e.Use(echo.WrapMiddleware(corsMiddleware.Handler))
 	v1 := e.Group("/api/v1")
 	v1.Use(Middleware)
 	v1.GET("/methods", persistance.GetCalculateMethodList)
