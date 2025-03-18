@@ -132,7 +132,7 @@ Get of prayer times.
 
 ### # Get Weather
 Get weather.
-#### [GET] `/weathers`
+#### [GET] `/weathers` or `/weathers-accu`
 
 #### Query Params
  - **lat** <br/> 
