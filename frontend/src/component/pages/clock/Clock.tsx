@@ -36,9 +36,6 @@ const Clock = () => {
                 <div className="minutes">{minutes}</div>
                 <div className="meridiem">{meridiem}</div>
             </div>
-            <div className='clock-hijri'>
-                Ahad, 18 Ramadhan 1446
-            </div>
             <div className='clock-date'>
                 {weekday}, {month} {day}
             </div>
