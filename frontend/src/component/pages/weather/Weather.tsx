@@ -7,8 +7,12 @@ import Icon from '../../Icon'
 import './style.css'
 import Loader from '../../loader/Loader'
 
+type WeatherProps = {
+    lat: string
+    lng: string
+}
 
-const Weather = () => {
+const Weather = (props: WeatherProps) => {
 
     const [weather, setWeather] = useState<WeatherType | null>(null)
     const [region, setRegion] = useState<string>("")
@@ -18,7 +22,11 @@ const Weather = () => {
         const fetchData = async () => {
             try {
                 const response = await Request.get({
-                    path: "/weathers-accu"
+                    path: "/weathers",
+                    query: {
+                        lat: props.lat,
+                        lng: props.lng
+                    }
                 });
 
                 const res = await response.json()
@@ -68,7 +76,8 @@ const Weather = () => {
         Storage.sync.listen('weather', data => data && setWeather(data as WeatherType))
         Storage.sync.listen('city', city => city && setCity(city as string))
         Storage.sync.listen('region', region => region && setRegion(region as string))
-    }, [])
+
+    }, [props])
 
     return (<div className='weather'>
         {

@@ -32,5 +32,6 @@ html {
         font-family: var(--font-family) !important;
         font-weight: var(--font-weight-xs);
         color: #FFFFFF;
+        transition: all 0.5;
     }
 }
