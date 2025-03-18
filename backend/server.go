@@ -41,7 +41,7 @@ func CorsMiddleware() echo.MiddlewareFunc {
 	
 	allowedOrigin := strings.Split(os.Getenv("ALLOWED_ORIGIN"), ",")
 	corsMiddleware := cors.New(cors.Options{
-		AllowedOrigins: allowedOrigin,
+		AllowedOrigins: []string{"*"},
 		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders: []string{"Content-Type", "xid"},
 	})
