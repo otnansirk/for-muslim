@@ -89,9 +89,17 @@ func GetWeather(c echo.Context) error {
 	}
 
 	weathersData := WeatherResponse{
+		Location: Location{
+			Lat: fmt.Sprintf("%f", weatherRes.Location.Lat),
+			Lng: fmt.Sprintf("%f", weatherRes.Location.Lon),
+			City: weatherRes.Location.Name,
+			Region: weatherRes.Location.Region,
+		},
 		Temp: Temp{
 			C: weatherRes.Current.TempC,
 			F: weatherRes.Current.TempF,
+			Feels_c: weatherRes.Current.FeelslikeC,
+			Feels_f: weatherRes.Current.FeelslikeF,
 		},
 		IsDay: weatherRes.Current.IsDay,
 		Text: weatherRes.Current.Condition.Text,
