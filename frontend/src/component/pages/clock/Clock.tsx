@@ -1,18 +1,31 @@
 import { useEffect, useState } from 'react';
-import { time } from '../../../utils/Datetime';
+import { time, date } from '../../../utils/Datetime';
 import './style.css'
 
 const Clock = () => {
+    const [weekday, setWeekday] = useState<string | null>(null)
+    const [day, setDay] = useState<string | null>(null)
+    const [month, setMonth] = useState<string | null>(null)
+
     const [hours, setHours] = useState<string | null>(null)
     const [minutes, setMinutes] = useState<string | null>(null)
     const [meridiem, setMeridiem] = useState<string | null>(null)
 
     useEffect(() => {
-        const ctime = time()
-        setHours(ctime.hours)
-        setMinutes(ctime.minutes)
-        setMeridiem(ctime.meridiem.toLowerCase())
+        const setTime = () => {
+            const ctime = time()
+            const cdate = date()
+            setDay(cdate.day)
+            setWeekday(cdate.weekday)
+            setMonth(cdate.month)
 
+            setHours(ctime.hours)
+            setMinutes(ctime.minutes)
+            setMeridiem(ctime.meridiem.toLowerCase())
+        }
+
+        setTime()
+        setInterval(setTime, 1000)
     }, [])
 
     return (
@@ -24,10 +37,10 @@ const Clock = () => {
                 <div className="meridiem">{meridiem}</div>
             </div>
             <div className='clock-hijri'>
-                Ahad, Ramadhan 16, 1446
+                Ahad, 18 Ramadhan 1446
             </div>
             <div className='clock-date'>
-                Sunday, March 16
+                {weekday}, {month} {day}
             </div>
         </div>
     )

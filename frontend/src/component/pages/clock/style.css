@@ -9,8 +9,13 @@
         display: flex;
         align-items: baseline;
 
+        .seconds {
+            font-size: 0.5em;
+        }
+
         .meridiem {
             font-size: 34px;
+            margin-left: 4px;
         }
     }
 
