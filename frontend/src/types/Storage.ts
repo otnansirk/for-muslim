@@ -6,6 +6,7 @@ export type StorageType = {
     location?: LocationType
     weather?: WeatherType
     prayer?: PrayerType
+    notes?: string
 }
 
 // ======== 

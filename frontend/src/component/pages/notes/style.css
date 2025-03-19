@@ -11,6 +11,13 @@
         background-color: #65656541;
         color: aliceblue;
 
+        div,
+        p {
+            font-size: 18px;
+
+            font-weight: var(--font-weight-sm);
+        }
+
         & [data-selected] {
             /* background-color: rgba(229, 229, 229, 0.506);
             border-radius: 6px; */
