@@ -1,3 +1,4 @@
+import { WeatherType } from "./Weather"
 
 export type StorageType = {
     name?: string
@@ -19,9 +20,14 @@ export type LocationType = {
 }
 
 export type PrayerTimeType = {
-    notify?: string
+    id?: string
+    icon?: string
+    title?: string
     time?: string
+    meridiem?: string
+    notify?: string
     ringing?: boolean
+    upcoming?: boolean
 }
 
 export type PrayerType = {

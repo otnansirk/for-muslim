@@ -24,7 +24,6 @@ export const nextPrayer = (times: TimesType) => {
             return prayer.name;
         }
     }
-    console.log(prayers, "KKK");
 
     return prayers[0].name;
 }

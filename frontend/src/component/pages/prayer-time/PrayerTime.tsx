@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { firstUpper } from "../../../utils/Strings"
+import { PrayerTimeType, PrayerType, StorageType } from "../../../types/Storage"
 import { nextPrayer } from "../../../utils/Prayer"
 import { date } from "../../../utils/Datetime"
 import Request from "../../../utils/Request"
@@ -10,25 +11,16 @@ import Icon from "../../Icon"
 
 import './style.css'
 
-type TimeType = {
-    id: string
-    icon: string
-    title: string
-    time: string
-    meridiem: string
-    notify: string
-    upcoming: boolean
-}
-
 type PrayerTimeProps = {
     lat: string
     lng: string
     tz: string
 }
 
+const prayerNames = ["imsak", "fajr", "dhuhr", "asr", "maghrib", "isha"];
 const PrayerTime = (props: PrayerTimeProps) => {
-    const [prayerTimes, setPrayerTimes] = useState<TimeType[]>([]);
-    const [hijri, setHijri] = useState("");
+    const [prayerTimes, setPrayerTimes] = useState<PrayerType>();
+    const [hijri, setHijri] = useState<string | undefined>("");
 
     useEffect(() => {
         const calculateMethod = ["Asia/Jakarta"].includes(props.tz) ? "20" : "3"
@@ -48,6 +40,7 @@ const PrayerTime = (props: PrayerTimeProps) => {
                     }
                 });
                 const res = await response.json()
+
                 const times = {
                     imsak: res.data.imsak,
                     fajr: res.data.fajr,
@@ -57,38 +50,85 @@ const PrayerTime = (props: PrayerTimeProps) => {
                     isha: res.data.isha
                 };
                 const upcoming = nextPrayer(times)
-                console.log(upcoming, "UPPP");
 
-                // Chrome Storage
-                Object.keys(times).forEach((key) => {
-                    const i = key as keyof typeof times
+                Storage.sync.get("prayer", (item) => {
+                    const currentData = item as StorageType["prayer"]
 
-                    const time = {
-                        id: i,
-                        icon: i,
-                        title: firstUpper(i),
-                        time: times[i],
-                        meridiem: "",
-                        notify: "off",
-                        upcoming: upcoming === i
+                    let prayers: PrayerType = {}
+                    Object.keys(times).forEach((key) => {
+                        const i = key as keyof StorageType["prayer"]
+                        const prayerData = currentData?.[i]
+                        let time = {
+                            id: i,
+                            icon: i,
+                            title: firstUpper(i),
+                            time: times[i],
+                            ringing: false,
+                            upcoming: upcoming === i
+                        }
+
+                        if (prayerData && prayerNames.includes(i)) {
+                            time = Object.assign(time, prayerData)
+                        }
+                        prayers = Object.assign(prayers, { [i]: time })
+                    });
+
+                    const data = {
+                        ...prayers,
+                        last_update: Date.now(),
+                        hijri: res.data.hijri.readable
                     }
+                    Storage.sync.set("prayer", data);
 
-                    setPrayerTimes(state => ([...state, time]));
-                    Storage.sync.set(i, { time: times[i] });
-                });
+                    setPrayerTimes(prayers)
+                    setHijri(data.hijri)
+                })
 
-                Storage.sync.set("hijri", res.data.hijri.readable);
-                setHijri(res.data.hijri.readable)
-
-                console.log("API Response:", response.ok);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
         };
 
-        fetchData();
+        Storage.sync.get('prayer', prayer => {
+            const res = prayer as PrayerType
+            const filteredTimes = Object.fromEntries(
+                Object.entries(res ?? {}).filter(([key]) => prayerNames.includes(key))
+            );
+            setPrayerTimes(filteredTimes)
+            setHijri(res?.hijri)
+
+            if (res?.last_update) {
+                const fiveHours = 5 * 60 * 60 * 1000; // 5hr
+                const expiredAt = res?.last_update + fiveHours
+                const isExpired = expiredAt < Date.now()
+
+                if (isExpired) {
+                    fetchData();
+                }
+
+            } else {
+                fetchData();
+            }
+        })
 
     }, [props])
+
+    const notifyHandler = (key: keyof PrayerType) => {
+        if (!prayerTimes) return;
+
+        Storage.sync.set("prayer", {
+            [key]: {
+                ringing: !(prayerTimes[key] as PrayerTimeType).ringing
+            }
+        })
+        setPrayerTimes(state => ({
+            ...state,
+            [key]: {
+                ...(state?.[key] as PrayerTimeType) ?? {},
+                ringing: !(state?.[key] as PrayerTimeType).ringing,
+            }
+        }));
+    }
 
     return (
         <div className="prayer-time">
@@ -99,17 +139,22 @@ const PrayerTime = (props: PrayerTimeProps) => {
 
             <div className="times">
                 {
-                    prayerTimes.length
+                    Object.values(prayerTimes ?? {}).length
                         ? <Each
-                            data={prayerTimes}
-                            render={(item, key) => (
-                                <div className={`__pad ${item.upcoming && 'active'}`} key={key}>
-                                    <Icon className="notify-icon" icon={`notify-${item.notify}`} />
-                                    <Icon className="pad-icon" icon={item.icon} />
-                                    <div className="pad-time">{item.time} <span className="time-meridiem">{item.meridiem}</span></div>
-                                    <div className="pad-name">{item.title}</div>
-                                </div>
-                            )}
+                            data={Object.values(prayerTimes ?? {})}
+                            render={(item, key) => {
+                                const data = item as PrayerTimeType
+                                return (
+                                    <div className={`__pad ${data.upcoming && 'active'}`} key={key}>
+                                        <span onClick={() => { if (data.id) { notifyHandler(data.id as keyof PrayerType) } }}>
+                                            <Icon className="notify-icon" icon={`notify-${data.ringing ? "on" : "off"}`} />
+                                        </span>
+                                        <Icon className="pad-icon" icon={data.icon ?? ''} />
+                                        <div className="pad-time">{data.time} <span className="time-meridiem">{data.meridiem}</span></div>
+                                        <div className="pad-name">{data.title}</div>
+                                    </div>
+                                )
+                            }}
                         />
                         : <Loader />
                 }
