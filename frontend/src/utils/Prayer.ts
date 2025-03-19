@@ -1,4 +1,6 @@
-type TimesType = {
+import { PrayerTimeType } from "../types/Storage";
+
+export type TimesType = {
     imsak: string;
     fajr: string;
     dhuhr: string;
@@ -26,4 +28,11 @@ export const nextPrayer = (times: TimesType) => {
     }
 
     return prayers[0].name;
+}
+
+export const ASC = (a: [string, PrayerTimeType], b: [string, PrayerTimeType]) => {
+    const timeA: number[] = (a[1] as PrayerTimeType)?.time?.split(":").map(Number) ?? [0, 0]
+    const timeB: number[] = (b[1] as PrayerTimeType)?.time?.split(":").map(Number) ?? [0, 0]
+
+    return timeA[0] * 60 + timeA[1] - (timeB[0] * 60 + timeB[1]); // Ascending
 }

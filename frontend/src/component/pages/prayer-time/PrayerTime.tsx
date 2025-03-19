@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
-import { firstUpper } from "../../../utils/Strings"
 import { PrayerTimeType, PrayerType, StorageType } from "../../../types/Storage"
-import { nextPrayer } from "../../../utils/Prayer"
+import { ASC, nextPrayer, TimesType } from "../../../utils/Prayer"
+import { firstUpper } from "../../../utils/Strings"
 import { date } from "../../../utils/Datetime"
 import Request from "../../../utils/Request"
 import Storage from "../../../utils/Storage"
@@ -91,9 +91,24 @@ const PrayerTime = (props: PrayerTimeProps) => {
 
         Storage.sync.get('prayer', prayer => {
             const res = prayer as PrayerType
-            const filteredTimes = Object.fromEntries(
-                Object.entries(res ?? {}).filter(([key]) => prayerNames.includes(key))
-            );
+
+            const filteredTimes = Object.entries(res ?? {})
+                .filter((entry): entry is [string, PrayerTimeType] => prayerNames.includes(entry[0]))
+                .sort(ASC)
+                .reduce((acc, [key, value]) => {
+                    acc[key] = { ...(value as PrayerTimeType), };
+                    return acc;
+                }, {} as Record<string, PrayerTimeType>);
+
+            const times = Object.fromEntries(
+                Object.keys(filteredTimes).map((key) => [key, filteredTimes[key]?.time ?? ""])
+            ) as TimesType;
+
+            const upcoming = nextPrayer(times)
+            Object.entries(filteredTimes).forEach(([key, value]) => {
+                filteredTimes[key] = { ...value, upcoming: key === upcoming };
+            });
+
             setPrayerTimes(filteredTimes)
             setHijri(res?.hijri)
 
