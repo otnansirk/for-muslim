@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
 
 import Request from '../../../utils/Request'
-import Storage, { WeatherType } from '../../../utils/Storage'
+import Storage from '../../../utils/Storage'
 import Icon from '../../Icon'
 
 import './style.css'
 import Loader from '../../loader/Loader'
+import { WeatherType } from '../../../types/Weather'
+import { LocationType } from '../../../types/Storage'
 
 type WeatherProps = {
     lat: string
@@ -15,8 +17,7 @@ type WeatherProps = {
 const Weather = (props: WeatherProps) => {
 
     const [weather, setWeather] = useState<WeatherType | null>(null)
-    const [region, setRegion] = useState<string>("")
-    const [city, setCity] = useState<string>("")
+    const [location, setLocation] = useState<LocationType>()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -30,10 +31,8 @@ const Weather = (props: WeatherProps) => {
                 });
 
                 const res = await response.json()
-                Storage.sync.set('lat', res.data.location.lat)
-                Storage.sync.set('lng', res.data.location.lng)
-                Storage.sync.set('region', res.data.location.region)
-                Storage.sync.set('city', res.data.location.city)
+                Storage.sync.set('location', res.data.location)
+                setLocation(res.data.location)
 
                 const wData: WeatherType = {
                     temp_c: res.data.temp.c,
@@ -44,18 +43,16 @@ const Weather = (props: WeatherProps) => {
                     last_update: Date.now()
                 }
                 Storage.sync.set('weather', wData)
-
-                setWeather(res)
-                setRegion(res.data.location.region)
-                setCity(res.data.location.city)
+                setWeather(wData)
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
         };
 
-        Storage.sync.get('weather').then(weather => {
+        Storage.sync.get('weather', weather => {
             const res = weather as WeatherType
             setWeather(res)
+            Storage.sync.get('location', location => setLocation(location as LocationType))
 
             if (res?.last_update) {
                 const fiveHours = 5 * 60 * 60 * 1000; // 5hr
@@ -70,12 +67,6 @@ const Weather = (props: WeatherProps) => {
                 fetchData();
             }
         })
-        Storage.sync.get('city').then(city => setCity(city as string))
-        Storage.sync.get('region').then(region => setRegion(region as string))
-
-        Storage.sync.listen('weather', data => data && setWeather(data as WeatherType))
-        Storage.sync.listen('city', city => city && setCity(city as string))
-        Storage.sync.listen('region', region => region && setRegion(region as string))
 
     }, [props])
 
@@ -88,7 +79,7 @@ const Weather = (props: WeatherProps) => {
                         {weather?.text}, {weather?.feels_c}&#xb0;
                     </div>
                     <div className='location'>
-                        {city}, {region}
+                        {location?.city}, {location?.region}
                     </div>
                 </>
                 : <div className='loading'><Loader /></div>
