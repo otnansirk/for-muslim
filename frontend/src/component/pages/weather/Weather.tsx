@@ -21,6 +21,7 @@ const Weather = (props: WeatherProps) => {
 
     useEffect(() => {
         const fetchData = async () => {
+            if (!props.lat && !props.lng) return
             try {
                 const response = await Request.get({
                     path: "/weathers",
@@ -31,8 +32,8 @@ const Weather = (props: WeatherProps) => {
                 });
 
                 const res = await response.json()
-                Storage.sync.set('location', res.data.location)
-                setLocation(res.data.location)
+                Storage.sync.set('location', res.data?.location)
+                setLocation(res.data?.location)
 
                 const wData: WeatherType = {
                     temp_c: res.data.temp.c,
