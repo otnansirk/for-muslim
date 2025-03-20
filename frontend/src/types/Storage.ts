@@ -7,6 +7,7 @@ export type StorageType = {
     weather?: WeatherType
     prayer?: PrayerType
     notes?: string
+    greating?: GreatingType
 }
 
 // ======== 
@@ -40,4 +41,8 @@ export type PrayerType = {
     isha?: PrayerTimeType
     hijri?: string
     last_update?: number
+}
+
+export type GreatingType = {
+    name?: string
 }

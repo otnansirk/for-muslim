@@ -54,7 +54,22 @@ const time = (hour12?: boolean, tz?: string) => {
     }
 };
 
+const greating = (tz?: string): string => {
+    const hour = new Date().toLocaleTimeString("en-US", {
+        hour: "numeric",
+        hour12: false,
+        timeZone: tz
+    });
+
+    const hourNum = Number(hour);
+    if (hourNum >= 5 && hourNum < 12) return "Barakallahu fi yaumik"; // Semoga Allah memberkahi harimu
+    if (hourNum >= 12 && hourNum < 17) return "Jazakallahu khairan"; // Semoga Allah membalasmu dengan kebaikan
+    if (hourNum >= 17 && hourNum < 21) return "Taqabbalallahu minna wa minkum"; // Semoga Allah menerima amal kita
+    return "Barakallahu fikum"; // Semoga Allah memberkahimu
+}
+
 export {
     time,
-    date
+    date,
+    greating
 }
