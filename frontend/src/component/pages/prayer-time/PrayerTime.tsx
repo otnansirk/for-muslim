@@ -92,27 +92,27 @@ const PrayerTime = (props: PrayerTimeProps) => {
         Storage.sync.get('prayer', prayer => {
             const res = prayer as PrayerType
 
-            const filteredTimes = Object.entries(res ?? {})
-                .filter((entry): entry is [string, PrayerTimeType] => prayerNames.includes(entry[0]))
-                .sort(ASC)
-                .reduce((acc, [key, value]) => {
-                    acc[key] = { ...(value as PrayerTimeType), };
-                    return acc;
-                }, {} as Record<string, PrayerTimeType>);
-
-            const times = Object.fromEntries(
-                Object.keys(filteredTimes).map((key) => [key, filteredTimes[key]?.time ?? ""])
-            ) as TimesType;
-
-            const upcoming = nextPrayer(times)
-            Object.entries(filteredTimes).forEach(([key, value]) => {
-                filteredTimes[key] = { ...value, upcoming: key === upcoming };
-            });
-
-            setPrayerTimes(filteredTimes)
-            setHijri(res?.hijri)
-
             if (res?.last_update) {
+                const filteredTimes = Object.entries(res ?? {})
+                    .filter((entry): entry is [string, PrayerTimeType] => prayerNames.includes(entry[0]))
+                    .sort(ASC)
+                    .reduce((acc, [key, value]) => {
+                        acc[key] = { ...(value as PrayerTimeType), };
+                        return acc;
+                    }, {} as Record<string, PrayerTimeType>);
+
+                const times = Object.fromEntries(
+                    Object.keys(filteredTimes).map((key) => [key, filteredTimes[key]?.time ?? ""])
+                ) as TimesType;
+
+                const upcoming = nextPrayer(times)
+                Object.entries(filteredTimes).forEach(([key, value]) => {
+                    filteredTimes[key] = { ...value, upcoming: key === upcoming };
+                });
+
+                setPrayerTimes(filteredTimes)
+                setHijri(res?.hijri)
+
                 const fiveHours = 5 * 60 * 60 * 1000; // 5hr
                 const expiredAt = res?.last_update + fiveHours
                 const isExpired = expiredAt < Date.now()
