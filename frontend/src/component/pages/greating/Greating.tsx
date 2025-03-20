@@ -24,11 +24,11 @@ const Greating = () => {
 
     return (
         <div className="greating">
-            {greating()} {name && ","}
+            {greating()}{name && ", "}
             <label className="input-sizer" data-value={name}>
                 <input className='name' onChange={ev => onHandlerName(ev.target.value)} defaultValue={name} size={1} />
             </label>
-        </div>
+        </div >
     )
 }
 
