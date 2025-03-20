@@ -6,9 +6,8 @@
     --font-weight-xs: 200;
     --font-weight-sm: 300;
     --font-weight-md: 400;
-    --bg-image: url("/assets/images/bg1.png");
-    --bg-blur: 3px;
-    --bg-brightness: 0.8;
+    --bg-blur: 3.5px;
+    --bg-brightness: .9;
     --out-transition: cubic-bezier(.210, .61, .350, 1);
 }
 
