@@ -3,4 +3,30 @@
     text-align: center;
     font-weight: var(--font-weight-md);
     letter-spacing: 1px;
+
+
+    .input-sizer {
+        display: inline-grid;
+        min-width: 3px;
+        width: auto;
+
+        &::after {
+            content: attr(data-value) ' ';
+            visibility: hidden;
+        }
+
+
+        input {
+            font-size: 1em;
+            border: none;
+            color: white;
+            background-color: transparent;
+            padding: 0px 0px;
+
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+
 }
