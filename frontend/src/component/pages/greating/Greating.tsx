@@ -12,7 +12,7 @@ const Greating = () => {
     useEffect(() => {
         Storage.sync.get('greating', (item) => {
             const great = item as GreatingType
-            setName(great.name ?? "")
+            setName(great?.name ?? "")
         })
     }, [])
 
