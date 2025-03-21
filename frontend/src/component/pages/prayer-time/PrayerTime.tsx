@@ -64,7 +64,7 @@ const PrayerTime = (props: PrayerTimeProps) => {
                             title: firstUpper(i),
                             time: times[i],
                             ringing: false,
-                            upcoming: upcoming === i
+                            upcoming: upcoming.name === i
                         }
 
                         if (prayerData && prayerNames.includes(i)) {
@@ -106,8 +106,9 @@ const PrayerTime = (props: PrayerTimeProps) => {
                 ) as TimesType;
 
                 const upcoming = nextPrayer(times)
+
                 Object.entries(filteredTimes).forEach(([key, value]) => {
-                    filteredTimes[key] = { ...value, upcoming: key === upcoming };
+                    filteredTimes[key] = { ...value, upcoming: key === upcoming.name };
                 });
 
                 setPrayerTimes(filteredTimes)

@@ -9,7 +9,13 @@ export type TimesType = {
     isha: string;
 }
 
-export const nextPrayer = (times: TimesType) => {
+export type NextPrayerType = {
+    name: string
+    time: string
+    minutes: number
+}
+
+export const nextPrayer = (times: TimesType): NextPrayerType => {
     const now = new Date();
     const currentTime = now.getHours() * 60 + now.getMinutes();
 
@@ -19,15 +25,9 @@ export const nextPrayer = (times: TimesType) => {
             const [hours, minutes] = time.split(":").map(Number);
             return { name, time, minutes: hours * 60 + minutes };
         })
-        .sort((a, b) => a.minutes - b.minutes);
+        .sort((a, b) => a.minutes - b.minutes)
 
-    for (const prayer of prayers) {
-        if (prayer.minutes > currentTime) {
-            return prayer.name;
-        }
-    }
-
-    return prayers[0].name;
+    return prayers.find(i => i.minutes > currentTime) ?? prayers[0];
 }
 
 export const ASC = (a: [string, PrayerTimeType], b: [string, PrayerTimeType]) => {
