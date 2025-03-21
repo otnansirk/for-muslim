@@ -15,8 +15,8 @@ html {
     font-family: var(--font-family);
     font-weight: 400;
     font-style: normal;
-    color: #2F3744;
     overflow-x: hidden;
+    background-color: #2F3744;
 
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -30,7 +30,5 @@ html {
         text-shadow: 1px 2px 6px rgba(0, 0, 0, var(--text-shadow-sm));
         font-family: var(--font-family) !important;
         font-weight: var(--font-weight-xs);
-        color: #FFFFFF;
-        transition: all 0.5;
     }
 }

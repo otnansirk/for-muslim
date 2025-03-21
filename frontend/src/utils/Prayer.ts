@@ -1,6 +1,7 @@
 import { PrayerTimeType, PrayerType, TimesType } from "../types/Storage";
 import { PRAYER_NAMES } from "../constant/prayer";
 import { NextPrayerType } from "../types/Prayer";
+import { time } from "./Datetime";
 
 /**
  * Get next prayer time
@@ -8,14 +9,14 @@ import { NextPrayerType } from "../types/Prayer";
  * @returns 
  */
 export const next = (times: TimesType): NextPrayerType => {
-    const now = new Date();
-    const currentTime = now.getHours() * 60 + now.getMinutes();
+    const now = time();
+    const currentTime = parseInt(now.hours) * 60 + parseInt(now.minutes);
 
     const prayers = Object.entries(times)
         .filter(([key]) => ["imsak", "fajr", "dhuhr", "asr", "maghrib", "isha"].includes(key))
         .map(([name, time]) => {
             const [hours, minutes] = time.split(":").map(Number);
-            return { name, time, minutes: hours * 60 + minutes };
+            return { name, time, minutes: hours * 60 + minutes, minutes_current: currentTime };
         })
         .sort((a, b) => a.minutes - b.minutes)
 

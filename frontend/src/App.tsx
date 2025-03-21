@@ -7,7 +7,7 @@ import Notify from './component/pages/notify/Notify'
 // import Quote from './component/pages/quotes/Quote'
 import Clock from './component/pages/clock/Clock'
 import Notes from './component/pages/notes/Notes'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import './app.css'
 
@@ -15,19 +15,21 @@ function App() {
     const [latitude, setLatitude] = useState("")
     const [longitude, setLongitude] = useState("")
     const [timezone, setTimezone] = useState("")
+    useEffect(() => {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const timezone = new Intl.DateTimeFormat("en", { timeZoneName: "long" }).resolvedOptions().timeZone;
+                console.log(position);
 
-    navigator.geolocation.getCurrentPosition(
-        (position) => {
-            const timezone = new Intl.DateTimeFormat("en", { timeZoneName: "long" }).resolvedOptions().timeZone;
-
-            setLatitude(position.coords.latitude.toString())
-            setLongitude(position.coords.longitude.toString())
-            setTimezone(timezone.toString())
-        },
-        (error) => {
-            console.error("Error getting location:", error.message);
-        }
-    );
+                setLatitude(position.coords.latitude.toString())
+                setLongitude(position.coords.longitude.toString())
+                setTimezone(timezone.toString())
+            },
+            (error) => {
+                console.error("Error getting location:", error.message);
+            }
+        );
+    }, [])
 
     return (
         <>

@@ -3,7 +3,7 @@
     text-align: center;
     font-weight: var(--font-weight-md);
     letter-spacing: 1px;
-
+    color: #FFFFFF;
 
     .input-sizer {
         display: inline-grid;
