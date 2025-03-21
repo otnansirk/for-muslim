@@ -1,19 +1,5 @@
+import { NextPrayerType, TimesType } from "../types/Prayer";
 import { PrayerTimeType } from "../types/Storage";
-
-export type TimesType = {
-    imsak: string;
-    fajr: string;
-    dhuhr: string;
-    asr: string;
-    maghrib: string;
-    isha: string;
-}
-
-export type NextPrayerType = {
-    name: string
-    time: string
-    minutes: number
-}
 
 export const nextPrayer = (times: TimesType): NextPrayerType => {
     const now = new Date();
