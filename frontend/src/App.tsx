@@ -3,6 +3,7 @@ import BackgroundOverlay from './component/pages/background-overlay/BackgroundOv
 import PrayerTime from './component/pages/prayer-time/PrayerTime'
 import Greating from './component/pages/greating/Greating'
 import Weather from './component/pages/weather/Weather'
+import Notify from './component/pages/notify/Notify'
 // import Quote from './component/pages/quotes/Quote'
 import Clock from './component/pages/clock/Clock'
 import Notes from './component/pages/notes/Notes'
@@ -31,6 +32,7 @@ function App() {
     return (
         <>
             <BackgroundOverlay />
+            <Notify />
             <div className='container'>
                 <div className='header'>
                     <Clock />
