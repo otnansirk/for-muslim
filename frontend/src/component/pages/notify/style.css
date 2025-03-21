@@ -1,0 +1,40 @@
+.notify {
+    padding: 10px 15px;
+    display: inline-block;
+    position: fixed;
+    top: -5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 280px;
+    height: 35px;
+    border-radius: 18px;
+    border: 1px solid #7878784c;
+    backdrop-filter: blur(15px);
+    background-color: #ffffffda;
+    color: black;
+    cursor: pointer;
+    transition: all .3s;
+
+    &.active {
+        top: 8%;
+    }
+
+    .content {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        height: 35px;
+        font-size: 14px;
+        position: relative;
+
+        .desc {
+            font-size: 12px;
+            color: #858585;
+            line-height: 16px;
+        }
+    }
+
+    img {
+        width: 24px;
+    }
+}
