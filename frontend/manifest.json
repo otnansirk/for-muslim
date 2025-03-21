@@ -16,6 +16,9 @@
     "content_security_policy": {
         "extension_pages": "script-src 'self'; font-src 'self'; style-src 'self' 'unsafe-inline';"
     },
+    "background": {
+        "service_worker": "service_worker.ts"
+    },
     "permissions": [
         "storage"
     ]

@@ -28,6 +28,7 @@
     },
     "include": [
         "src",
-        "manifest.json"
+        "manifest.json",
+        "service_worker.ts"
     ]
 }
