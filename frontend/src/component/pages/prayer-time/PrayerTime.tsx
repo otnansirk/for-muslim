@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react"
-import { PrayerTimeType, PrayerType, StorageType } from "../../../types/Storage"
-import { ASC, nextPrayer, TimesType } from "../../../utils/Prayer"
+import { PrayerTimeType, PrayerType, StorageType, TimesType } from "../../../types/Storage"
+import { PRAYER_NAMES } from "../../../constant/prayer"
 import { firstUpper } from "../../../utils/Strings"
+import * as prayer from "../../../utils/Prayer"
 import { date } from "../../../utils/Datetime"
-import Request from "../../../utils/Request"
 import Storage from "../../../utils/Storage"
+import Request from "../../../utils/Request"
 import Loader from "../../loader/Loader"
 import Each from "../../Each"
 import Icon from "../../Icon"
@@ -17,7 +18,6 @@ type PrayerTimeProps = {
     tz: string
 }
 
-const prayerNames = ["imsak", "fajr", "dhuhr", "asr", "maghrib", "isha"];
 const PrayerTime = (props: PrayerTimeProps) => {
     const [prayerTimes, setPrayerTimes] = useState<PrayerType>();
     const [hijri, setHijri] = useState<string | undefined>("");
@@ -41,7 +41,7 @@ const PrayerTime = (props: PrayerTimeProps) => {
                 });
                 const res = await response.json()
 
-                const times = {
+                const times: TimesType = {
                     imsak: res.data.imsak,
                     fajr: res.data.fajr,
                     dhuhr: res.data.dhuhr,
@@ -49,7 +49,7 @@ const PrayerTime = (props: PrayerTimeProps) => {
                     maghrib: res.data.maghrib,
                     isha: res.data.isha
                 };
-                const upcoming = nextPrayer(times)
+                const upcoming = prayer.next(times)
 
                 Storage.sync.get("prayer", (item) => {
                     const currentData = item as StorageType["prayer"]
@@ -67,7 +67,7 @@ const PrayerTime = (props: PrayerTimeProps) => {
                             upcoming: upcoming.name === i
                         }
 
-                        if (prayerData && prayerNames.includes(i)) {
+                        if (prayerData && PRAYER_NAMES.includes(i)) {
                             time = Object.assign(time, prayerData)
                         }
                         prayers = Object.assign(prayers, { [i]: time })
@@ -75,11 +75,12 @@ const PrayerTime = (props: PrayerTimeProps) => {
 
                     const data = {
                         ...prayers,
+                        times,
                         last_update: Date.now(),
                         hijri: res.data.hijri.readable
                     }
-                    Storage.sync.set("prayer", data);
 
+                    Storage.sync.set("prayer", data);
                     setPrayerTimes(prayers)
                     setHijri(data.hijri)
                 })
@@ -89,41 +90,19 @@ const PrayerTime = (props: PrayerTimeProps) => {
             }
         };
 
-        Storage.sync.get('prayer', prayer => {
-            const res = prayer as PrayerType
+        Storage.sync.get('prayer', data => {
+            const prayerData = data as PrayerType
 
-            if (res?.last_update) {
-                const filteredTimes = Object.entries(res ?? {})
-                    .filter((entry): entry is [string, PrayerTimeType] => prayerNames.includes(entry[0]))
-                    .sort(ASC)
-                    .reduce((acc, [key, value]) => {
-                        acc[key] = { ...(value as PrayerTimeType), };
-                        return acc;
-                    }, {} as Record<string, PrayerTimeType>);
-
-                const times = Object.fromEntries(
-                    Object.keys(filteredTimes).map((key) => [key, filteredTimes[key]?.time ?? ""])
-                ) as TimesType;
-
-                const upcoming = nextPrayer(times)
-
-                Object.entries(filteredTimes).forEach(([key, value]) => {
-                    filteredTimes[key] = { ...value, upcoming: key === upcoming.name };
-                });
-
-                setPrayerTimes(filteredTimes)
-                setHijri(res?.hijri)
-
-                const fiveHours = 5 * 60 * 60 * 1000; // 5hr
-                const expiredAt = res?.last_update + fiveHours
-                const isExpired = expiredAt < Date.now()
-
-                if (isExpired) {
-                    fetchData();
-                }
-
-            } else {
+            if (prayer.isExpired(prayerData?.last_update ?? 0)) {
                 fetchData();
+            } else {
+                const { prayers, times } = prayer.prayer(prayerData)
+                const upcoming = prayer.next(times)
+                Object.entries(prayers).forEach(([key, value]) => {
+                    prayers[key] = { ...value, upcoming: key === upcoming.name };
+                });
+                setPrayerTimes(prayers)
+                setHijri(prayerData?.hijri)
             }
         })
 

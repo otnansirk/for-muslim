@@ -1,7 +1,13 @@
-import { NextPrayerType, TimesType } from "../types/Prayer";
-import { PrayerTimeType } from "../types/Storage";
+import { PrayerTimeType, PrayerType, TimesType } from "../types/Storage";
+import { PRAYER_NAMES } from "../constant/prayer";
+import { NextPrayerType } from "../types/Prayer";
 
-export const nextPrayer = (times: TimesType): NextPrayerType => {
+/**
+ * Get next prayer time
+ * @param times 
+ * @returns 
+ */
+export const next = (times: TimesType): NextPrayerType => {
     const now = new Date();
     const currentTime = now.getHours() * 60 + now.getMinutes();
 
@@ -16,9 +22,47 @@ export const nextPrayer = (times: TimesType): NextPrayerType => {
     return prayers.find(i => i.minutes > currentTime) ?? prayers[0];
 }
 
-export const ASC = (a: [string, PrayerTimeType], b: [string, PrayerTimeType]) => {
-    const timeA: number[] = (a[1] as PrayerTimeType)?.time?.split(":").map(Number) ?? [0, 0]
-    const timeB: number[] = (b[1] as PrayerTimeType)?.time?.split(":").map(Number) ?? [0, 0]
+/**
+ * Format data prayer from storage with 2 format
+ * @param fromSyncStorage 
+ * @returns 2 format
+ * 1. times = TimesType
+ * 2. prayers = Record<string, PrayerTimeType>
+ */
+export const prayer = (fromSyncStorage: PrayerType) => {
 
-    return timeA[0] * 60 + timeA[1] - (timeB[0] * 60 + timeB[1]); // Ascending
+    const byASC = (a: [string, PrayerTimeType], b: [string, PrayerTimeType]) => {
+        const timeA: number[] = (a[1] as PrayerTimeType)?.time?.split(":").map(Number) ?? [0, 0]
+        const timeB: number[] = (b[1] as PrayerTimeType)?.time?.split(":").map(Number) ?? [0, 0]
+
+        return timeA[0] * 60 + timeA[1] - (timeB[0] * 60 + timeB[1]); // Ascending
+    }
+
+    const prayers = Object.entries(fromSyncStorage ?? {})
+        .filter((entry): entry is [string, PrayerTimeType] => PRAYER_NAMES.includes(entry[0]))
+        .sort(byASC)
+        .reduce((acc, [key, value]) => {
+            acc[key] = { ...(value as PrayerTimeType), };
+            return acc;
+        }, {} as Record<string, PrayerTimeType>);
+
+    const times = Object.fromEntries(
+        Object.keys(prayers).map((key) => [key, prayers[key]?.time ?? ""])
+    ) as TimesType;
+
+    return {
+        times,
+        prayers
+    }
+}
+
+/**
+ * Check is expired by last update
+ * @param lastUpdate 
+ * @returns 
+ */
+export const isExpired = (lastUpdate: number) => {
+    const fiveHours = 5 * 60 * 60 * 1000; // 5hr
+    const expiredAt = lastUpdate + fiveHours
+    return expiredAt < Date.now()
 }

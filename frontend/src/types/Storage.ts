@@ -32,6 +32,15 @@ export type PrayerTimeType = {
     upcoming?: boolean
 }
 
+export type TimesType = {
+    imsak: string;
+    fajr: string;
+    dhuhr: string;
+    asr: string;
+    maghrib: string;
+    isha: string;
+}
+
 export type PrayerType = {
     imsak?: PrayerTimeType
     fajr?: PrayerTimeType
@@ -40,6 +49,7 @@ export type PrayerType = {
     maghrib?: PrayerTimeType
     isha?: PrayerTimeType
     hijri?: string
+    times?: TimesType
     last_update?: number
 }
 
