@@ -31,15 +31,16 @@ function App() {
     return (
         <>
             <BackgroundOverlay />
-
             <div className='container'>
                 <div className='header'>
                     <Clock />
-                    <Weather lat={latitude} lng={longitude} />
+                    {
+                        (latitude && longitude) && <Weather lat={latitude} lng={longitude} />
+                    }
                     <Greating />
                 </div>
                 <div className='content'>
-                    <PrayerTime lat={latitude} lng={longitude} tz={timezone} />
+                    {(latitude && longitude) && <PrayerTime lat={latitude} lng={longitude} tz={timezone} />}
                     <Notes />
                 </div>
                 {/* <div className='footer'>
