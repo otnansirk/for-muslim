@@ -19,6 +19,7 @@ export type LocationType = {
     city?: string
     country?: string
     region?: string
+    timezone?: string
 }
 
 export type PrayerTimeType = {

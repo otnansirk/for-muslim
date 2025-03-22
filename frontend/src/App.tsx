@@ -23,6 +23,11 @@ function App() {
             setLatitude(position.coords.latitude.toString())
             setLongitude(position.coords.longitude.toString())
             setTimezone(timezone.toString())
+            Storage.sync.set('location', {
+                timezone,
+                lat: position.coords.latitude.toString(),
+                lng: position.coords.longitude.toString()
+            })
         },
         (error) => {
 

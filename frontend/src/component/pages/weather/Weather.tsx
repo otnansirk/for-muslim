@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
 
-import Request from '../../../utils/Request'
+import { LocationType } from '../../../types/Storage'
+import { WeatherType } from '../../../types/Weather'
 import Storage from '../../../utils/Storage'
+import Request from '../../../utils/Request'
+import Loader from '../../loader/Loader'
 import Icon from '../../Icon'
 
 import './style.css'
-import Loader from '../../loader/Loader'
-import { WeatherType } from '../../../types/Weather'
-import { LocationType } from '../../../types/Storage'
 
 type WeatherProps = {
     lat: string
