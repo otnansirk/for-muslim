@@ -9,7 +9,7 @@ import { time } from "./Datetime";
  * @returns 
  */
 export const next = (times: TimesType): NextPrayerType => {
-    const now = time();
+    const now = time(false);
     const currentTime = parseInt(now.hours) * 60 + parseInt(now.minutes);
 
     const prayers = Object.entries(times)
@@ -19,6 +19,7 @@ export const next = (times: TimesType): NextPrayerType => {
             return { name, time, minutes: hours * 60 + minutes, minutes_current: currentTime };
         })
         .sort((a, b) => a.minutes - b.minutes)
+    console.log(prayers, "OKE");
 
     return prayers.find(i => i.minutes > currentTime) ?? prayers[0];
 }
