@@ -2,8 +2,8 @@ import { useState } from 'react';
 import Icon from '../../Icon'
 import './style.css'
 
-const Notify = () => {
-    const [active, setActive] = useState<string>("false")
+const Notify = ({ show }: { show: string }) => {
+    const [active, setActive] = useState<string>(show)
     const onclose = () => {
         setActive("")
     }

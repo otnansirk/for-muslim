@@ -4,7 +4,7 @@ type IconProps = {
 };
 
 const Icon: React.FC<IconProps> = ({ icon, className }) => (
-    <img className={className} src={`./assets/${icon}.svg`} />
+    <img className={className} src={chrome.runtime.getURL(`./assets/${icon}.svg`)} />
 )
 
 export default Icon
