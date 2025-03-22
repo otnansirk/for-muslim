@@ -7,8 +7,8 @@ import Weather from './component/pages/weather/Weather'
 import Clock from './component/pages/clock/Clock'
 import Notes from './component/pages/notes/Notes'
 import { LocationType } from './types/Storage'
-import { useEffect, useState } from 'react'
 import Storage from './utils/Storage'
+import { useState } from 'react'
 
 import './app.css'
 
@@ -17,26 +17,25 @@ function App() {
     const [latitude, setLatitude] = useState("")
     const [longitude, setLongitude] = useState("")
     const [timezone, setTimezone] = useState("")
-    useEffect(() => {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const timezone = new Intl.DateTimeFormat("en", { timeZoneName: "long" }).resolvedOptions().timeZone;
-                setLatitude(position.coords.latitude.toString())
-                setLongitude(position.coords.longitude.toString())
-                setTimezone(timezone.toString())
-            },
-            (error) => {
-                Storage.sync.get("location", (data) => {
-                    const position = data as LocationType
-                    if (position.lat && position.lng) {
-                        setLatitude(position.lat)
-                        setLongitude(position.lng)
-                    }
-                })
-                console.error("Error getting location:", error.message);
-            }
-        );
-    }, [])
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+            const timezone = new Intl.DateTimeFormat("en", { timeZoneName: "long" }).resolvedOptions().timeZone;
+            setLatitude(position.coords.latitude.toString())
+            setLongitude(position.coords.longitude.toString())
+            setTimezone(timezone.toString())
+        },
+        (error) => {
+
+            Storage.sync.get("location", (data) => {
+                const position = data as LocationType
+                if (position.lat && position.lng) {
+                    setLatitude(position.lat)
+                    setLongitude(position.lng)
+                }
+            })
+            console.error("Error getting location:", error.message);
+        }
+    );
 
     return (
         <>

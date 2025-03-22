@@ -3,20 +3,24 @@ import { StorageType } from "../types/Storage";
 class Storage {
 
     private static deepMerge = <T extends StorageType>(target: T, source: Partial<T>): T => {
-        const result: T = { ...target };
+        let result: T = { ...target };
 
-        for (const key in source) {
-            if (
-                source[key] !== null &&
-                typeof source[key] === "object" &&
-                !Array.isArray(source[key])
-            ) {
-                result[key] = this.deepMerge(target[key] ?? {}, source[key] as StorageType) as T[typeof key];
-            } else if (Array.isArray(source[key]) && Array.isArray(target[key])) {
-                result[key] = [...(target[key] as T[typeof key] & unknown[]), ...source[key]] as T[typeof key]
-            } else {
-                result[key] = source[key] as T[typeof key];
+        if (source !== null && typeof source === "object") {
+            for (const key in source) {
+                if (
+                    source[key] !== null &&
+                    typeof source[key] === "object" &&
+                    !Array.isArray(source[key])
+                ) {
+                    result[key] = this.deepMerge(target[key] ?? {}, source[key] as StorageType) as T[typeof key];
+                } else if (Array.isArray(source[key]) && Array.isArray(target[key])) {
+                    result[key] = [...(target[key] as T[typeof key] & unknown[]), ...source[key]] as T[typeof key]
+                } else {
+                    result[key] = source[key] as T[typeof key];
+                }
             }
+        } else {
+            result = source;
         }
 
         return result;
