@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { time, date } from '../../../utils/Datetime';
+
 import './style.css'
+
 
 const Clock = () => {
     const [weekday, setWeekday] = useState<string | null>(null)
@@ -11,21 +13,23 @@ const Clock = () => {
     const [minutes, setMinutes] = useState<string | null>(null)
     const [meridiem, setMeridiem] = useState<string | null>(null)
 
+    const setTime = () => {
+        const ctime = time()
+        const cdate = date()
+        setDay(cdate.day)
+        setWeekday(cdate.weekday)
+        setMonth(cdate.month)
+
+        setHours(ctime.hours)
+        setMinutes(ctime.minutes)
+        setMeridiem(ctime.meridiem.toLowerCase())
+    }
+
     useEffect(() => {
-        const setTime = () => {
-            const ctime = time()
-            const cdate = date()
-            setDay(cdate.day)
-            setWeekday(cdate.weekday)
-            setMonth(cdate.month)
-
-            setHours(ctime.hours)
-            setMinutes(ctime.minutes)
-            setMeridiem(ctime.meridiem.toLowerCase())
-        }
-
         setTime()
-        setInterval(setTime, 1000)
+
+        const interval = setInterval(setTime, 1000)
+        return () => clearInterval(interval);
     }, [])
 
     return (
