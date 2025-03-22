@@ -138,4 +138,4 @@ style.textContent = `
 `
 shadowRoot.appendChild(style)
 const root = createRoot(shadowRoot);
-root.render(<Notify show="active" />);
+root.render(<Notify />);

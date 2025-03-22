@@ -29,6 +29,6 @@
     "include": [
         "src",
         "manifest.json",
-        "service_worker.ts"
+        "src/service_worker.ts"
     ]
 }

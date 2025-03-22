@@ -6,6 +6,7 @@ import * as prayer from "../../../utils/Prayer"
 import { date } from "../../../utils/Datetime"
 import Storage from "../../../utils/Storage"
 import Request from "../../../utils/Request"
+import Alarms from "../../../utils/Alarms"
 import Loader from "../../loader/Loader"
 import Each from "../../Each"
 import Icon from "../../Icon"
@@ -108,22 +109,30 @@ const PrayerTime = (props: PrayerTimeProps) => {
 
     }, [props])
 
-    const notifyHandler = (key: keyof PrayerType) => {
+    const notifyHandler = (key: keyof PrayerType, ringing: boolean) => {
         if (!prayerTimes) return;
 
         Storage.sync.set("prayer", {
             [key]: {
-                ringing: !(prayerTimes[key] as PrayerTimeType).ringing
+                ringing: ringing
             }
         })
         setPrayerTimes(state => ({
             ...state,
             [key]: {
                 ...(state?.[key] as PrayerTimeType) ?? {},
-                ringing: !(state?.[key] as PrayerTimeType).ringing,
+                ringing: ringing,
             }
         }));
+
+        if (ringing) {
+            const notifyTimePrayer = (prayerTimes[key] as PrayerTimeType).time
+            Alarms.set(key, notifyTimePrayer)
+        } else {
+            Alarms.delete(key)
+        }
     }
+
 
     return (
         <div className="prayer-time">
@@ -141,7 +150,7 @@ const PrayerTime = (props: PrayerTimeProps) => {
                                 const data = item as PrayerTimeType
                                 return (
                                     <div className={`__pad ${data.upcoming && 'active'}`} key={key}>
-                                        <span onClick={() => { if (data.id) { notifyHandler(data.id as keyof PrayerType) } }}>
+                                        <span onClick={() => { if (data.id) { notifyHandler(data.id as keyof PrayerType, !data.ringing) } }}>
                                             <Icon className="notify-icon" icon={`notify-${data.ringing ? "on" : "off"}`} />
                                         </span>
                                         <Icon className="pad-icon" icon={data.icon ?? ''} />
