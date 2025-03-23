@@ -8,11 +8,14 @@ import './style.css'
 const Greating = () => {
 
     const [name, setName] = useState<string>("")
+    const [greatings, setGreatings] = useState<string>("")
 
     useEffect(() => {
         Storage.sync.get('greating', (item) => {
             const great = item as GreatingType
-            setName(great?.name ?? "")
+            const name = great?.name ?? ""
+            setGreatings(greating())
+            setName(name)
         })
     }, [])
 
@@ -24,7 +27,7 @@ const Greating = () => {
 
     return (
         <div className="greating">
-            {greating()}{name && ", "}
+            {greatings}{name && ", "}
             <label className="input-sizer" data-value={name}>
                 <input className='name' onChange={ev => onHandlerName(ev.target.value)} defaultValue={name} size={1} />
             </label>
