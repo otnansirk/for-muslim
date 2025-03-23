@@ -2,13 +2,15 @@
     margin-top: 20px;
     line-height: 1.5em;
     color: #FFFFFF;
-    animation: fadeIn .6s ease-in-out forwards;
+    animation: fadeIn .4s ease-in-out forwards;
 
     .temperature {
         display: flex;
         align-items: baseline;
         gap: 6px;
         font-size: 18px;
+        /* text-align: center; */
+        /* justify-content: center; */
     }
 
     .location {
