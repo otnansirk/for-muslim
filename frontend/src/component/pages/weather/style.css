@@ -2,6 +2,7 @@
     margin-top: 20px;
     line-height: 1.5em;
     color: #FFFFFF;
+    animation: fadeIn .6s ease-in-out forwards;
 
     .temperature {
         display: flex;
