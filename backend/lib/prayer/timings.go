@@ -32,6 +32,8 @@ func GetTimings(c echo.Context, req GetTimingsRequest) (TimingsResponse, error) 
 	query.Set("latitude", req.Lat)
 	query.Set("longitude", req.Lng)
 	query.Set("method", req.Method)
+	query.Set("timezonestring", "UTC")
+	query.Set("iso8601", "true")
 
 	u.RawQuery = query.Encode() 
 	resp, err := http.Get(u.String())
