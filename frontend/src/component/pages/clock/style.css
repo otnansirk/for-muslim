@@ -2,7 +2,6 @@
     color: #FFF;
     max-width: fit-content;
     text-align: center;
-    animation: fadeIn .4s ease-in-out forwards;
     margin-top: 20px;
 
     .clock-digital {

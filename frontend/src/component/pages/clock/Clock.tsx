@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { time, date } from '../../../utils/Datetime';
+import Datetime from '../../../utils/Datetime';
 
 import './style.css'
 
@@ -14,15 +14,14 @@ const Clock = () => {
     const [meridiem, setMeridiem] = useState<string | null>(null)
 
     const setTime = () => {
-        const ctime = time()
-        const cdate = date()
+        const cdate = Datetime.get()
         setDay(cdate.day)
         setWeekday(cdate.weekday)
         setMonth(cdate.month)
 
-        setHours(ctime.hours)
-        setMinutes(ctime.minutes)
-        setMeridiem(ctime.meridiem.toLowerCase())
+        setHours(cdate.hours)
+        setMinutes(cdate.minutes)
+        setMeridiem(cdate.meridiem.toLowerCase())
     }
 
     useEffect(() => {

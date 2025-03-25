@@ -4,7 +4,6 @@
     font-weight: var(--font-weight-md);
     letter-spacing: 1px;
     color: #FFFFFF;
-    animation: fadeIn .4s ease-in-out forwards;
 
     .input-sizer {
         display: inline-grid;

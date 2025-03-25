@@ -3,6 +3,7 @@
     line-height: 1.5em;
     color: #FFFFFF;
     animation: fadeIn .4s ease-in-out forwards;
+    min-height: 5rem;
 
     .temperature {
         display: flex;

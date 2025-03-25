@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { GreatingType } from '../../../types/Storage'
-import { greating } from '../../../utils/Datetime'
+import Datetime from '../../../utils/Datetime'
 import Storage from '../../../utils/Storage'
 
 import './style.css'
@@ -14,7 +14,7 @@ const Greating = () => {
         Storage.sync.get('greating', (item) => {
             const great = item as GreatingType
             const name = great?.name ?? ""
-            setGreatings(greating())
+            setGreatings(Datetime.greating())
             setName(name)
         })
     }, [])
