@@ -3,7 +3,7 @@ import { PrayerTimeType, PrayerType, StorageType, TimesType } from "../../../typ
 import { PRAYER_NAMES } from "../../../constant/prayer"
 import { firstUpper } from "../../../utils/Strings"
 import * as prayer from "../../../utils/Prayer"
-import { date } from "../../../utils/Datetime"
+import Datetime from "../../../utils/Datetime"
 import Storage from "../../../utils/Storage"
 import Request from "../../../utils/Request"
 import Alarms from "../../../utils/Alarms"
@@ -21,7 +21,6 @@ type PrayerTimeProps = {
 
 const PrayerTime = (props: PrayerTimeProps) => {
     const [prayerTimes, setPrayerTimes] = useState<PrayerType>();
-    const [hijri, setHijri] = useState<string | undefined>("");
 
     useEffect(() => {
         const calculateMethod = ["Asia/Jakarta"].includes(props.tz) ? "20" : "3"
@@ -34,7 +33,7 @@ const PrayerTime = (props: PrayerTimeProps) => {
                 const response = await Request.get({
                     path: "/prayer-times",
                     query: {
-                        date: `${date().day}-${date({ month: "2-digit" }).month}-${date().year}`,
+                        date: `${Datetime.get().day}-${Datetime.get({ month: "2-digit" }).month}-${Datetime.get().year}`,
                         lat: props.lat,
                         lng: props.lng,
                         method: calculateMethod
@@ -50,40 +49,34 @@ const PrayerTime = (props: PrayerTimeProps) => {
                     maghrib: res.data.maghrib,
                     isha: res.data.isha
                 };
-                const upcoming = prayer.next(times)
 
                 Storage.sync.get("prayer", (item) => {
                     const currentData = item as StorageType["prayer"]
-
                     let prayers: PrayerType = {}
-                    Object.keys(times).forEach((key) => {
-                        const i = key as keyof StorageType["prayer"]
-                        const prayerData = currentData?.[i]
-                        let time = {
-                            id: i,
-                            icon: i,
-                            title: firstUpper(i),
-                            time: times[i],
-                            ringing: false,
-                            upcoming: upcoming.name === i
-                        }
+                    PRAYER_NAMES.forEach((name: string) => {
+                        prayers = Object.assign(prayers, {
+                            [name]: {
+                                id: name,
+                                icon: name,
+                                title: firstUpper(name),
+                                datetime: times[name as keyof TimesType],
+                                time: Datetime.get({ timestring: times[name as keyof TimesType] }).hours + ':' + Datetime.get({ timestring: times[name as keyof TimesType] }).minutes,
+                                ringing: currentData?.[name as keyof TimesType]?.ringing ?? false,
+                                hours_in_seconds: parseInt(Datetime.get({ timestring: times[name as keyof TimesType] }).hours) * 60 + parseInt(Datetime.get({ timestring: times[name as keyof TimesType] }).minutes)
+                            }
+                        })
+                    })
 
-                        if (prayerData && PRAYER_NAMES.includes(i)) {
-                            time = Object.assign(time, prayerData)
-                        }
-                        prayers = Object.assign(prayers, { [i]: time })
-                    });
-
+                    const upcoming = prayer.next(prayers)
                     const data = {
                         ...prayers,
-                        times,
+                        upcoming,
                         last_update: Date.now(),
                         hijri: res.data.hijri.readable
                     }
 
                     Storage.sync.set("prayer", data);
-                    setPrayerTimes(prayers)
-                    setHijri(data.hijri)
+                    setPrayerTimes(data)
                 })
 
             } catch (error) {
@@ -92,18 +85,13 @@ const PrayerTime = (props: PrayerTimeProps) => {
         };
 
         Storage.sync.get('prayer', data => {
-            const prayerData = data as PrayerType
+            const prayers = data as PrayerType
 
-            if (prayer.isExpired(prayerData?.last_update ?? 0)) {
+            if (prayer.isExpired(prayers?.last_update ?? 0)) {
                 fetchData();
             } else {
-                const { prayers, times } = prayer.prayer(prayerData)
-                const upcoming = prayer.next(times)
-                Object.entries(prayers).forEach(([key, value]) => {
-                    prayers[key] = { ...value, upcoming: key === upcoming.name };
-                });
-                setPrayerTimes(prayers)
-                setHijri(prayerData?.hijri)
+                const upcoming = prayer.next(prayers)
+                setPrayerTimes({ ...prayers, upcoming })
             }
         })
 
@@ -138,24 +126,26 @@ const PrayerTime = (props: PrayerTimeProps) => {
         <div className="prayer-time">
 
             <div className='hijri-date'>
-                {hijri}
+                {prayerTimes?.hijri}
             </div>
 
             <div className="times">
                 {
-                    Object.values(prayerTimes ?? {}).length
+                    prayerTimes
                         ? <Each
-                            data={Object.values(prayerTimes ?? {})}
-                            render={(item, key) => {
-                                const data = item as PrayerTimeType
+                            data={PRAYER_NAMES}
+                            render={(name, key) => {
+                                const data = prayerTimes as PrayerType
+                                const prayer = data[name as keyof TimesType] as PrayerTimeType
+                                const isUpcoming = prayer.id === data.upcoming?.id
                                 return (
-                                    <div className={`__pad ${data.upcoming && 'active'}`} key={key}>
-                                        <span onClick={() => { if (data.id) { notifyHandler(data.id as keyof PrayerType, !data.ringing) } }}>
-                                            <Icon className="notify-icon" icon={`notify-${data.ringing ? "on" : "off"}`} />
+                                    <div className={`__pad ${isUpcoming && 'active'}`} key={key}>
+                                        <span onClick={() => { if (prayer) { notifyHandler(prayer.id as keyof PrayerType, !prayer.ringing) } }}>
+                                            <Icon className="notify-icon" icon={`notify-${prayer.ringing ? "on" : "off"}`} />
                                         </span>
-                                        <Icon className="pad-icon" icon={data.icon ?? ''} />
-                                        <div className="pad-time">{data.time} <span className="time-meridiem">{data.meridiem}</span></div>
-                                        <div className="pad-name">{data.title}</div>
+                                        <Icon className="pad-icon" icon={prayer.icon ?? ''} />
+                                        <div className="pad-time">{prayer.time} <span className="time-meridiem">{prayer.meridiem}</span></div>
+                                        <div className="pad-name">{prayer.title}</div>
                                     </div>
                                 )
                             }}

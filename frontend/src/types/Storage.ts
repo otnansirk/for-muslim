@@ -20,6 +20,7 @@ export type LocationType = {
     country?: string
     region?: string
     timezone?: string
+    timezone_offset?: number
 }
 
 export type PrayerTimeType = {
@@ -27,10 +28,10 @@ export type PrayerTimeType = {
     icon?: string
     title?: string
     time?: string
+    datetime?: string
     meridiem?: string
-    notify?: string
     ringing?: boolean
-    upcoming?: boolean
+    hours_in_seconds?: number
 }
 
 export type TimesType = {
@@ -50,7 +51,8 @@ export type PrayerType = {
     maghrib?: PrayerTimeType
     isha?: PrayerTimeType
     hijri?: string
-    times?: TimesType
+    method?: string,
+    upcoming?: PrayerTimeType
     last_update?: number
 }
 
