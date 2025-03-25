@@ -54,15 +54,16 @@ const PrayerTime = (props: PrayerTimeProps) => {
                     const currentData = item as StorageType["prayer"]
                     let prayers: PrayerType = {}
                     PRAYER_NAMES.forEach((name: string) => {
+                        const datetime = Datetime.get({ timestring: times[name as keyof TimesType] })
                         prayers = Object.assign(prayers, {
                             [name]: {
                                 id: name,
                                 icon: name,
                                 title: firstUpper(name),
                                 datetime: times[name as keyof TimesType],
-                                time: Datetime.get({ timestring: times[name as keyof TimesType] }).hours + ':' + Datetime.get({ timestring: times[name as keyof TimesType] }).minutes,
+                                time: datetime.hours + ':' + datetime.minutes,
                                 ringing: currentData?.[name as keyof TimesType]?.ringing ?? false,
-                                hours_in_seconds: parseInt(Datetime.get({ timestring: times[name as keyof TimesType] }).hours) * 60 + parseInt(Datetime.get({ timestring: times[name as keyof TimesType] }).minutes)
+                                hours_in_seconds: parseInt(datetime.hours) * 60 + parseInt(datetime.minutes)
                             }
                         })
                     })
