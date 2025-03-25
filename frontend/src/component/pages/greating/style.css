@@ -1,7 +1,7 @@
 .greating {
     font-size: 3.4em;
     text-align: center;
-    font-weight: var(--font-weight-md);
+    font-weight: var(--font-weight-xs);
     letter-spacing: 1px;
     color: #FFFFFF;
 
@@ -15,13 +15,12 @@
             visibility: hidden;
         }
 
-
         input {
             font-size: 1em;
             border: none;
             color: white;
             background-color: transparent;
-            padding: 0px 0px;
+            margin-right: -15px;
 
             &:focus {
                 outline: none;

@@ -33,6 +33,12 @@
     bottom: 25px;
     right: 40px;
     cursor: pointer;
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+
+    &.visible {
+        opacity: 1;
+    }
 
     a {
         color: rgba(255, 255, 255, 0.6);

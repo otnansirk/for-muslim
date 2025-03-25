@@ -24,11 +24,13 @@ function App() {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
                     const timezone = new Intl.DateTimeFormat("en", { timeZoneName: "long" }).resolvedOptions().timeZone;
+                    const timezone_offset = new Date().getTimezoneOffset() / 60; // 60 is munutes. convert minutes to hours
                     setLatitude(position.coords.latitude.toString())
                     setLongitude(position.coords.longitude.toString())
                     setTimezone(timezone.toString())
                     Storage.sync.set('location', {
                         timezone,
+                        timezone_offset,
                         lat: position.coords.latitude.toString(),
                         lng: position.coords.longitude.toString()
                     })
