@@ -3,6 +3,11 @@ import { BackgroundOverlayType } from '../../../types/bckground-overlay';
 
 import './style.css';
 
+const defaultBg = {
+    "author_name": "Francesco Ungaro",
+    "author_url": "https://unsplash.com/@francesco_ungaro",
+    "photos": "https://images.unsplash.com/photo-1603366615917-1fa6dad5c4fa"
+}
 
 const bg: BackgroundOverlayType[] = [
     {
@@ -66,11 +71,12 @@ const BackgroundOverlay = () => {
 
     const refreshRef = useRef(() => { })
 
-    const [currentBG, setCurrentBG] = useState<BackgroundOverlayType>()
+    const [currentBG, setCurrentBG] = useState<BackgroundOverlayType>(defaultBg)
     const [nextBG, setNextBG] = useState<BackgroundOverlayType>()
     const [isRender, setIsRender] = useState<boolean>(true)
 
     refreshRef.current = () => {
+        setIsRender(true)
         const newBg = bg[Math.floor(Math.random() * bg.length)];
         if (newBg.photos !== currentBG?.photos) {
             setNextBG(newBg);
@@ -82,22 +88,18 @@ const BackgroundOverlay = () => {
     }
 
     useEffect(() => {
-        const timeout = setTimeout(() => {
-            refreshRef.current();
-            setIsRender(false);
-        }, 50);
-
-        return () => clearTimeout(timeout);
+        refreshRef.current();
     }, [])
 
     return (
         <div className='background'>
             <div className={`background-overlay`}>
-                <div className={`overlay ${isRender ? '' : 'fade-in'}`} style={{ backgroundImage: `url(${currentBG?.photos})` }} />
+                <div className={`overlay fade-in`} style={{ backgroundImage: `url(${isRender ? currentBG.photos : currentBG?.photos})` }} />
                 {
                     nextBG && <div className={`overlay fade-in`} style={{ backgroundImage: `url(${nextBG.photos})` }} />
                 }
             </div>
+            <img style={{ display: 'none' }} src={currentBG?.photos} onLoad={() => setIsRender(false)} />
             {
                 <div className={`background-info ${currentBG && 'visible'}`}>
                     Photo by <a href={currentBG?.author_url} >{currentBG?.author_name}</a>&nbsp;
