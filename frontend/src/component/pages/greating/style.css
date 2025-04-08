@@ -1,7 +1,7 @@
 .greating {
     font-size: 3.4em;
     text-align: center;
-    font-weight: var(--font-weight-xs);
+    font-weight: var(--font-weight-md);
     letter-spacing: 1px;
     color: #FFFFFF;
 

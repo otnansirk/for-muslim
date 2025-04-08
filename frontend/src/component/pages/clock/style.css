@@ -9,6 +9,7 @@
         font-size: 8em;
         display: flex;
         align-items: baseline;
+        font-weight: var(--font-weight-lg);
 
         .seconds {
             font-size: 0.5em;
@@ -23,6 +24,7 @@
     .clock-date {
         font-size: 16px;
         line-height: 1.6em;
+        font-weight: var(--font-weight-md);
     }
 
 }

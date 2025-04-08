@@ -6,6 +6,7 @@
     --font-weight-xs: 200;
     --font-weight-sm: 300;
     --font-weight-md: 400;
+    --font-weight-lg: 500;
     --bg-blur: 5px;
     --bg-brightness: .9;
     --out-transition: cubic-bezier(.210, .61, .350, 1);
@@ -39,6 +40,6 @@ html {
         margin: 0 auto;
         text-shadow: 1px 2px 6px rgba(0, 0, 0, var(--text-shadow-sm));
         font-family: var(--font-family) !important;
-        font-weight: var(--font-weight-xs);
+        font-weight: var(--font-weight-sm);
     }
 }
