@@ -29,9 +29,9 @@
         gap: 4px;
         border-radius: 10px;
         border: 1px solid #7878784c;
-        backdrop-filter: blur(15px);
+        backdrop-filter: blur(30px);
         box-shadow: #0000003e 0 3px 8px;
-        background-color: #afafaf2f;
+        background-color: #44444441;
         position: relative;
 
         &.active {

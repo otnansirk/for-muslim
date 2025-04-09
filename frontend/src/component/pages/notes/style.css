@@ -6,9 +6,9 @@
 
     [data-pocket-editor] {
         border-radius: 10px;
-        backdrop-filter: blur(15px);
+        backdrop-filter: blur(50px);
         box-shadow: #0000003e 0 3px 8px;
-        background-color: #65656541;
+        background-color: #44444441;
         color: aliceblue;
 
         div,

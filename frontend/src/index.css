@@ -7,6 +7,7 @@
     --font-weight-sm: 300;
     --font-weight-md: 400;
     --font-weight-lg: 500;
+    --border-radius-md: 10px;
     --bg-blur: 5px;
     --bg-brightness: .9;
     --out-transition: cubic-bezier(.210, .61, .350, 1);
