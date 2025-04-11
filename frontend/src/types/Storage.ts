@@ -57,5 +57,6 @@ export type PrayerType = {
 }
 
 export type GreatingType = {
+    enable?: boolean
     name?: string
 }
