@@ -4,8 +4,9 @@ import PrayerTime from './component/pages/prayer-time/PrayerTime'
 import Greating from './component/pages/greating/Greating'
 import Weather from './component/pages/weather/Weather'
 // import Quote from './component/pages/quotes/Quote'
-import Notes from './component/pages/notes/Notes'
+import Settings from './component/settings/Settings'
 import Clock from './component/pages/clock/Clock'
+import Notes from './component/pages/notes/Notes'
 import { LocationType } from './types/Storage'
 import { useEffect, useState } from 'react'
 import Storage from './utils/Storage'
@@ -57,6 +58,7 @@ function App() {
         <>
             <BackgroundOverlay />
             <div className='container'>
+                <Settings />
                 <div className='header'>
                     <Clock />
                     {
