@@ -1,4 +1,6 @@
 .settings {
+    z-index: 1;
+
     .gear {
 
         position: fixed;
