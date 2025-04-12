@@ -48,7 +48,7 @@ class Storage {
         }
     }
 
-    private static listen = (key: string, callback: <T>(item: T) => void) => {
+    private static listen = <K extends keyof StorageType>(key: K, callback: <T>(item: T) => void) => {
         if (typeof chrome !== "undefined" && chrome.storage) {
             chrome.storage.onChanged.addListener(item => callback(item?.[key]?.newValue))
         } else {
@@ -56,10 +56,16 @@ class Storage {
         }
     }
 
+    private static watch = <K extends keyof StorageType>(key: K, callback: <T>(item: T) => void) => {
+        this.listen(key, callback)
+        this.get(key, callback)
+    }
+
     static sync = {
         set: this.set,
         get: this.get,
-        listen: this.listen
+        listen: this.listen,
+        watch: this.watch
     }
 }
 
