@@ -28,10 +28,7 @@ const Greatings = () => {
                 <Switch
                     isChecked={false}
                     ref={isEnableRef}
-                    onChange={(e) => {
-                        Storage.sync.set('greating', { enable: e.target.checked })
-                        console.log({ enable: e.target.checked }, "OOO");
-                    }}
+                    onChange={e => Storage.sync.set('greating', { enable: e.target.checked })}
                 />
             </div>
             <hr />
@@ -40,10 +37,7 @@ const Greatings = () => {
                     Name
                 </div>
                 <Input
-                    onChange={(e) => {
-                        Storage.sync.set('greating', { name: e.target.value })
-                        console.log(e.target.value)
-                    }}
+                    onChange={e => Storage.sync.set('greating', { name: e.target.value })}
                     placeholder="Name"
                     ref={nameRef}
                 />
