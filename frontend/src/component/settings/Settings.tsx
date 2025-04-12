@@ -1,6 +1,7 @@
 
 import { useState } from 'react'
 import Greatings from './greatings/Gratings'
+import DateAndTime from './clock/DateAndTime'
 import Icon from '../Icon'
 
 import './style.css'
@@ -17,6 +18,7 @@ const Settings = () => {
         </div>
         <div className={`wrapper ${openSetting}`}>
             <Greatings />
+            <DateAndTime />
         </div>
     </div>
 }
