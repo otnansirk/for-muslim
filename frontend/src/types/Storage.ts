@@ -8,6 +8,8 @@ export type StorageType = {
     prayer?: PrayerType
     notes?: string
     greating?: GreatingType
+    date?: DateType
+    time?: TimeType
 }
 
 // ======== 
@@ -59,4 +61,16 @@ export type PrayerType = {
 export type GreatingType = {
     enable?: boolean
     name?: string
+}
+
+export type DateType = {
+    enable?: boolean
+    format?: string
+}
+
+export type TimeType = {
+    enable?: boolean
+    format?: "12" | "24"
+    ampm?: boolean
+    show_seconds?: boolean
 }

@@ -50,7 +50,11 @@ class Storage {
 
     private static listen = <K extends keyof StorageType>(key: K, callback: <T>(item: T) => void) => {
         if (typeof chrome !== "undefined" && chrome.storage) {
-            chrome.storage.onChanged.addListener(item => callback(item?.[key]?.newValue))
+            chrome.storage.onChanged.addListener(item => {
+                if (item?.[key]) {
+                    callback(item?.[key]?.newValue)
+                }
+            })
         } else {
             console.error("Chrome Storage API is not available.");
         }
