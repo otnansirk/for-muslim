@@ -1,7 +1,21 @@
+import { useEffect, useRef } from "react"
+import Storage from "../../../utils/Storage"
 import Input from "../../form/input/Input"
 import Switch from "../../form/switch/Switch"
+import { GreatingType } from "../../../types/Storage"
 
 const Greatings = () => {
+    const isEnableRef = useRef<HTMLInputElement>(null)
+    const nameRef = useRef<HTMLInputElement>(null)
+
+    useEffect(() => {
+        Storage.sync.watch("greating", (item) => {
+            const data = item as GreatingType
+            nameRef.current!.value = data?.name ?? ""
+            isEnableRef.current!.checked = data?.enable ?? false
+        })
+    }, [])
+
     return <>
         <h2 className='settings-title'>
             GREATINGS
@@ -13,7 +27,11 @@ const Greatings = () => {
                 </div>
                 <Switch
                     isChecked={false}
-                    onChange={(e) => console.log(e.target.checked, "OKEEE")}
+                    ref={isEnableRef}
+                    onChange={(e) => {
+                        Storage.sync.set('greating', { enable: e.target.checked })
+                        console.log({ enable: e.target.checked }, "OOO");
+                    }}
                 />
             </div>
             <hr />
@@ -22,8 +40,12 @@ const Greatings = () => {
                     Name
                 </div>
                 <Input
-                    onChange={(ev) => console.log(ev.target.value)}
+                    onChange={(e) => {
+                        Storage.sync.set('greating', { name: e.target.value })
+                        console.log(e.target.value)
+                    }}
                     placeholder="Name"
+                    ref={nameRef}
                 />
             </div>
         </div>
