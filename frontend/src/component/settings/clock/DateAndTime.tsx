@@ -13,7 +13,7 @@ const DateAndTime = () => {
         Storage.sync.watch("date", (item) => {
             const data = item as DateType
             dateEnableRef.current!.checked = data?.enable ?? false
-            dateFormatRef.current!.value = data?.format ?? ""
+            dateFormatRef.current!.value = data?.format?.value ?? ""
         })
     }, [])
 
@@ -40,7 +40,7 @@ const DateAndTime = () => {
                 <Select
                     items={DATE_FORMAT}
                     ref={dateFormatRef}
-                    onSelect={e => Storage.sync.set('date', { format: e.target.value })}
+                    onSelect={e => Storage.sync.set('date', { format: DATE_FORMAT.find(item => item.value === e.target.value) })}
                 />
             </div>
         </div>

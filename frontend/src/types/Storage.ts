@@ -1,3 +1,4 @@
+import { ConfigDateTypes } from "./datetime"
 import { WeatherType } from "./Weather"
 
 export type StorageType = {
@@ -65,7 +66,10 @@ export type GreatingType = {
 
 export type DateType = {
     enable?: boolean
-    format?: string
+    format?: {
+        value?: string,
+        config?: ConfigDateTypes
+    }
 }
 
 export type TimeType = {

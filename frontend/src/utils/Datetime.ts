@@ -1,12 +1,4 @@
-type ConfigDateTypes = {
-    tz?: string;
-    timestring?: string;
-    hour12?: boolean;
-    weekday?: "long" | "short" | "narrow" | undefined;
-    day?: "numeric" | "2-digit" | undefined;
-    month?: "long" | "short" | "narrow" | "numeric" | "2-digit" | undefined;
-    year?: "numeric" | "2-digit" | undefined;
-}
+import { ConfigDateTypes } from "../types/datetime";
 
 class Datetime {
 
@@ -67,6 +59,13 @@ class Datetime {
         if (hourNum >= 12 && hourNum < 17) return "Jazakallahu khairan"; // Semoga Allah membalasmu dengan kebaikan
         if (hourNum >= 17 && hourNum < 21) return "Taqabbalallahu minna wa minkum"; // Semoga Allah menerima amal kita
         return "Barakallahu fikum"; // Semoga Allah memberkahimu
+    }
+
+    static format = (format: string = "weekday, month day", config: ConfigDateTypes = {}) => {
+        const datetime = this.get(config)
+        return format.replace(/weekday|day|month|year/gi, (match) => {
+            return datetime[match.toLowerCase() as keyof typeof datetime] || match
+        })
     }
 
 }
