@@ -24,6 +24,16 @@
     }
 }
 
+@keyframes hidden {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
 html {
     font-family: var(--font-family);
     font-weight: 400;
@@ -44,4 +54,21 @@ html {
         font-family: var(--font-family) !important;
         font-weight: var(--font-weight-sm);
     }
+
+    .dropshow {
+        max-height: 460px;
+        overflow: hidden;
+        visibility: visible;
+        margin-top: 0px;
+        transition: max-height .3s;
+
+        &.hidden {
+            max-height: 0;
+            visibility: hidden;
+            margin-top: -6px;
+            transition: margin-top .6s, max-height .3s, visibility .3s;
+        }
+    }
+
+
 }
