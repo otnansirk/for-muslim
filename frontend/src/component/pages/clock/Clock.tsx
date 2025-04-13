@@ -1,10 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Datetime from '../../../utils/Datetime';
 
 import './style.css'
+import Storage from '../../../utils/Storage';
+import { DateType } from '../../../types/Storage';
 
 
 const Clock = () => {
+    const dateRef = useRef<HTMLDivElement>(null)
+
     const [weekday, setWeekday] = useState<string | null>(null)
     const [day, setDay] = useState<string | null>(null)
     const [month, setMonth] = useState<string | null>(null)
@@ -27,9 +31,19 @@ const Clock = () => {
     useEffect(() => {
         setTime()
 
+        Storage.sync.watch('date', (item) => {
+            const date = item as DateType
+            if (date.enable) {
+                dateRef.current!.textContent = `${Datetime.format(date.format?.value, date.format?.config)}`
+            } else {
+                dateRef.current!.textContent = ""
+            }
+        })
+
         const interval = setInterval(setTime, 1000)
         return () => clearInterval(interval);
-    }, [])
+    }, [weekday, month, day])
+
 
     return (
         <div className='clock'>
@@ -39,9 +53,7 @@ const Clock = () => {
                 <div className="minutes">{minutes}</div>
                 <div className="meridiem">{meridiem}</div>
             </div>
-            <div className='clock-date'>
-                {weekday}, {month} {day}
-            </div>
+            <div className='clock-date' ref={dateRef} />
         </div>
     )
 }
