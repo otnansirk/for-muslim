@@ -10,7 +10,10 @@ import {
     NOTIF_SHOLAT_DESC,
     NOTIF_SHOLAT_TITLE
 } from "./constant/prayer";
+import { defaultSettings } from "./utils/Settings";
+import { StorageType } from "./types/Storage";
 import { firstUpper } from "./utils/Strings";
+import Storage from "./utils/Storage";
 
 chrome.alarms.onAlarm.addListener(alarm => {
     const title = alarm.name !== 'imsak' ? NOTIF_SHOLAT_TITLE : NOTIF_IMSAK_TITLE
@@ -49,5 +52,14 @@ chrome.alarms.onAlarm.addListener(alarm => {
 
         default:
             break;
+    }
+})
+
+chrome.runtime.onInstalled.addListener((details) => {
+    if (details.reason === 'install') {
+        defaultSettings.forEach((setting) => {
+            const [key, value] = Object.entries(setting)[0] as [keyof StorageType, StorageType[keyof StorageType]];
+            Storage.sync.set(key, value);
+        });
     }
 })

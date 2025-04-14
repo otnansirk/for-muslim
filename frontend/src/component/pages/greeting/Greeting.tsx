@@ -1,34 +1,34 @@
 import { useEffect, useRef } from 'react'
-import { GreatingType } from '../../../types/Storage'
+import { GreetingType } from '../../../types/Storage'
 import Datetime from '../../../utils/Datetime'
 import Storage from '../../../utils/Storage'
 
 import './style.css'
 
-const Greating = () => {
+const Greeting = () => {
     const nameRef = useRef<HTMLSpanElement>(null)
-    const greatingsRef = useRef<HTMLSpanElement>(null)
+    const greetingsRef = useRef<HTMLSpanElement>(null)
 
     useEffect(() => {
-        Storage.sync.watch('greating', (item) => {
-            const great = item as GreatingType
+        Storage.sync.watch('greeting', (item) => {
+            const great = item as GreetingType
             if (great?.enable) {
                 const name = great?.name ? ", " + great?.name : ""
                 nameRef.current!.textContent = name
-                greatingsRef.current!.textContent = Datetime.greating()
+                greetingsRef.current!.textContent = Datetime.greeting()
             } else {
                 nameRef.current!.textContent = ""
-                greatingsRef.current!.textContent = ""
+                greetingsRef.current!.textContent = ""
             }
         })
     }, [])
 
     return (
-        <div className="greating">
-            <span ref={greatingsRef} />
+        <div className="greeting">
+            <span ref={greetingsRef} />
             <span ref={nameRef} />
         </div >
     )
 }
 
-export default Greating
+export default Greeting

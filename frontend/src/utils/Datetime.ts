@@ -47,7 +47,7 @@ class Datetime {
         }
     }
 
-    static greating = (tz?: string): string => {
+    static greeting = (tz?: string): string => {
         const hour = new Date().toLocaleTimeString("en-US", {
             hour: "numeric",
             hour12: false,

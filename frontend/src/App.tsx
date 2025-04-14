@@ -1,7 +1,7 @@
 
 import BackgroundOverlay from './component/pages/background-overlay/BackgroundOverlay'
 import PrayerTime from './component/pages/prayer-time/PrayerTime'
-import Greating from './component/pages/greating/Greating'
+import Greeting from './component/pages/greeting/Greeting'
 import Weather from './component/pages/weather/Weather'
 // import Quote from './component/pages/quotes/Quote'
 import Settings from './component/settings/Settings'
@@ -64,7 +64,7 @@ function App() {
                     {
                         <Weather lat={latitude} lng={longitude} />
                     }
-                    <Greating />
+                    <Greeting />
                 </div>
                 <div className='content'>
                     {<PrayerTime lat={latitude} lng={longitude} tz={timezone} />}

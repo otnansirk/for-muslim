@@ -2,17 +2,17 @@ import { useEffect, useRef, useState } from "react"
 import Storage from "../../../utils/Storage"
 import Input from "../../form/input/Input"
 import Switch from "../../form/switch/Switch"
-import { GreatingType } from "../../../types/Storage"
+import { GreetingType } from "../../../types/Storage"
 
-const Greatings = () => {
+const Greetings = () => {
     const isEnableRef = useRef<HTMLInputElement>(null)
     const nameRef = useRef<HTMLInputElement>(null)
 
     const [showSettings, setShowSettings] = useState("hidden")
 
     useEffect(() => {
-        Storage.sync.watch("greating", (item) => {
-            const data = item as GreatingType
+        Storage.sync.watch("greeting", (item) => {
+            const data = item as GreetingType
             isEnableRef.current!.checked = data?.enable ?? false
             nameRef.current!.value = data?.name ?? ""
 
@@ -22,7 +22,7 @@ const Greatings = () => {
 
     return <>
         <h2 className='settings-title'>
-            GREATINGS
+            GREETINGS
         </h2>
         <div className='settings-items'>
             <div className='items'>
@@ -32,7 +32,7 @@ const Greatings = () => {
                 <Switch
                     isChecked={false}
                     ref={isEnableRef}
-                    onChange={e => Storage.sync.set('greating', { enable: e.target.checked })}
+                    onChange={e => Storage.sync.set('greeting', { enable: e.target.checked })}
                 />
             </div>
             <div className={`dropshow ${showSettings}`}>
@@ -42,7 +42,7 @@ const Greatings = () => {
                         Name
                     </div>
                     <Input
-                        onChange={e => Storage.sync.set('greating', { name: e.target.value })}
+                        onChange={e => Storage.sync.set('greeting', { name: e.target.value })}
                         placeholder="Name"
                         ref={nameRef}
                     />
@@ -52,4 +52,4 @@ const Greatings = () => {
     </>
 }
 
-export default Greatings
+export default Greetings

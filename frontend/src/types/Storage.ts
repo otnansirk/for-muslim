@@ -8,7 +8,7 @@ export type StorageType = {
     weather?: WeatherType
     prayer?: PrayerType
     notes?: string
-    greating?: GreatingType
+    greeting?: GreetingType
     date?: DateType
     time?: TimeType
 }
@@ -59,7 +59,7 @@ export type PrayerType = {
     last_update?: number
 }
 
-export type GreatingType = {
+export type GreetingType = {
     enable?: boolean
     name?: string
 }

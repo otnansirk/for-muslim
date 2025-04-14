@@ -1,6 +1,6 @@
 
 import { useState } from 'react'
-import Greatings from './greatings/Gratings'
+import Greetings from './greetings/Greetings'
 import DateAndTime from './clock/DateAndTime'
 import Icon from '../Icon'
 
@@ -17,7 +17,7 @@ const Settings = () => {
             </div>
         </div>
         <div className={`wrapper ${openSetting}`}>
-            <Greatings />
+            <Greetings />
             <DateAndTime />
         </div>
     </div>
