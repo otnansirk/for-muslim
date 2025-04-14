@@ -12,7 +12,7 @@ const Greating = () => {
     useEffect(() => {
         Storage.sync.watch('greating', (item) => {
             const great = item as GreatingType
-            if (great.enable) {
+            if (great?.enable) {
                 const name = great?.name ? ", " + great?.name : ""
                 nameRef.current!.textContent = name
                 greatingsRef.current!.textContent = Datetime.greating()
