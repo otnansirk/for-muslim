@@ -30,12 +30,12 @@ const DateAndTime = () => {
         Storage.sync.watch("time", (item) => {
             const data = item as TimeType
             timeEnableRef.current!.checked = data?.enable ?? false
-            time24HoursRef.current!.checked = data?.is_24_hours ?? false
+            time24HoursRef.current!.checked = data?.hour12 ?? false
             timeShowSecondsRef.current!.checked = data?.show_seconds ?? false
             timeShowAMPMRef.current!.checked = data?.show_ampm ?? false
 
             setShowTimeSettings(data?.enable ? "" : "hidden")
-            setShowAMPM(data?.is_24_hours ? "hidden" : "")
+            setShowAMPM(data?.hour12 ? "" : "hidden")
         })
     }, [])
 
@@ -84,11 +84,11 @@ const DateAndTime = () => {
                 <hr />
                 <div className='items'>
                     <div className='items-title'>
-                        24-Hours
+                        12-Hours
                     </div>
                     <Switch
                         ref={time24HoursRef}
-                        onChange={e => Storage.sync.set('time', { is_24_hours: e.target.checked })}
+                        onChange={e => Storage.sync.set('time', { hour12: e.target.checked })}
                     />
                 </div>
                 <div className={`dropshow ${showAMPM}`}>

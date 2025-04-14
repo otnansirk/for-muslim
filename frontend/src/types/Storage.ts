@@ -74,7 +74,7 @@ export type DateType = {
 
 export type TimeType = {
     enable?: boolean
-    is_24_hours?: boolean
+    hour12?: boolean
     show_ampm?: boolean
     show_seconds?: boolean
 }
