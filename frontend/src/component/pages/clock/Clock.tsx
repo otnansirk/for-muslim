@@ -42,7 +42,7 @@ const Clock = () => {
 
         Storage.sync.watch('date', (item) => {
             const date = item as DateType
-            if (date.enable) {
+            if (date?.enable) {
                 dateRef.current!.textContent = `${Datetime.format(date.format?.value, date.format?.config)}`
             } else {
                 dateRef.current!.textContent = ""
@@ -52,10 +52,11 @@ const Clock = () => {
         Storage.sync.watch('time', (item) => {
             const time = item as TimeType
             window.scrollTo({ top: document.body.scrollTop, behavior: "smooth" });
-
-            timeRef.current!.style = `display: ${time.enable ? 'flex' : 'none'}`
-            meridiemRef.current!.style = `display: ${time.show_ampm ? 'block' : 'none'}`
-            secondsRef.current!.style = `display: ${time.show_seconds ? 'block' : 'none'}`
+            if (time) {
+                timeRef.current!.style = `display: ${time.enable ? 'flex' : 'none'}`
+                meridiemRef.current!.style = `display: ${time.show_ampm ? 'block' : 'none'}`
+                secondsRef.current!.style = `display: ${time.show_seconds ? 'block' : 'none'}`
+            }
         })
 
         const interval = setInterval(setTime, 1000)
