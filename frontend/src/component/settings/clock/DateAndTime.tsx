@@ -15,12 +15,16 @@ const DateAndTime = () => {
     const timeShowAMPMRef = useRef<HTMLInputElement>(null)
 
     const [showAMPM, setShowAMPM] = useState("hidden")
+    const [showTimeSettings, setShowTimeSettings] = useState("hidden")
+    const [showDateSettings, setShowDateSettings] = useState("hidden")
 
     useEffect(() => {
         Storage.sync.watch("date", (item) => {
             const data = item as DateType
             dateEnableRef.current!.checked = data?.enable ?? false
             dateFormatRef.current!.value = data?.format?.value ?? ""
+
+            setShowDateSettings(data?.enable ? "" : "hidden")
         })
 
         Storage.sync.watch("time", (item) => {
@@ -29,6 +33,8 @@ const DateAndTime = () => {
             time24HoursRef.current!.checked = data?.is_24_hours ?? false
             timeShowSecondsRef.current!.checked = data?.show_seconds ?? false
             timeShowAMPMRef.current!.checked = data?.show_ampm ?? false
+
+            setShowTimeSettings(data?.enable ? "" : "hidden")
             setShowAMPM(data?.is_24_hours ? "hidden" : "")
         })
     }, [])
@@ -47,16 +53,18 @@ const DateAndTime = () => {
                     onChange={e => Storage.sync.set('date', { enable: e.target.checked })}
                 />
             </div>
-            <hr />
-            <div className='items'>
-                <div className='items-title'>
-                    Date Format
+            <div className={`dropshow ${showDateSettings}`}>
+                <hr />
+                <div className='items'>
+                    <div className='items-title'>
+                        Date Format
+                    </div>
+                    <Select
+                        items={DATE_FORMAT}
+                        ref={dateFormatRef}
+                        onSelect={e => Storage.sync.set('date', { format: DATE_FORMAT.find(item => item.value === e.target.value) })}
+                    />
                 </div>
-                <Select
-                    items={DATE_FORMAT}
-                    ref={dateFormatRef}
-                    onSelect={e => Storage.sync.set('date', { format: DATE_FORMAT.find(item => item.value === e.target.value) })}
-                />
             </div>
         </div>
 
@@ -71,37 +79,40 @@ const DateAndTime = () => {
                     onChange={e => Storage.sync.set('time', { enable: e.target.checked })}
                 />
             </div>
-            <hr />
-            <div className='items'>
-                <div className='items-title'>
-                    24-Hours
-                </div>
-                <Switch
-                    ref={time24HoursRef}
-                    onChange={e => Storage.sync.set('time', { is_24_hours: e.target.checked })}
-                />
-            </div>
-            <div className={`dropshow ${showAMPM}`}>
+
+            <div className={`dropshow ${showTimeSettings}`}>
                 <hr />
                 <div className='items'>
                     <div className='items-title'>
-                        Show AM/PM
+                        24-Hours
                     </div>
                     <Switch
-                        ref={timeShowAMPMRef}
-                        onChange={e => Storage.sync.set('time', { show_ampm: e.target.checked })}
+                        ref={time24HoursRef}
+                        onChange={e => Storage.sync.set('time', { is_24_hours: e.target.checked })}
                     />
                 </div>
-            </div>
-            <hr />
-            <div className='items'>
-                <div className='items-title'>
-                    Show Seconds
+                <div className={`dropshow ${showAMPM}`}>
+                    <hr />
+                    <div className='items'>
+                        <div className='items-title'>
+                            Show AM/PM
+                        </div>
+                        <Switch
+                            ref={timeShowAMPMRef}
+                            onChange={e => Storage.sync.set('time', { show_ampm: e.target.checked })}
+                        />
+                    </div>
                 </div>
-                <Switch
-                    ref={timeShowSecondsRef}
-                    onChange={e => Storage.sync.set('time', { show_seconds: e.target.checked })}
-                />
+                <hr />
+                <div className='items'>
+                    <div className='items-title'>
+                        Show Seconds
+                    </div>
+                    <Switch
+                        ref={timeShowSecondsRef}
+                        onChange={e => Storage.sync.set('time', { show_seconds: e.target.checked })}
+                    />
+                </div>
             </div>
         </div >
     </>
