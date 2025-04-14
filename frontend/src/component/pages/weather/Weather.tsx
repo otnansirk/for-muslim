@@ -10,8 +10,8 @@ import Icon from '../../Icon'
 import './style.css'
 
 type WeatherProps = {
-    lat: string
-    lng: string
+    lat?: string
+    lng?: string
 }
 
 const Weather = (props: WeatherProps) => {
@@ -21,14 +21,15 @@ const Weather = (props: WeatherProps) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            if (!props.lat && !props.lng) return
             try {
                 const response = await Request.get({
-                    path: "/weathers",
-                    query: {
-                        lat: props.lat,
-                        lng: props.lng
-                    }
+                    path: "/weathers-accu",
+                    query: props.lat && props.lng
+                        ? {
+                            lat: props.lat,
+                            lng: props.lng
+                        }
+                        : {}
                 });
 
                 const res = await response.json()

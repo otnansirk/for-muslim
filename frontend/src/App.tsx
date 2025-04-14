@@ -39,9 +39,9 @@ function App() {
                 (error) => {
                     console.log("Error getting location:");
 
-                    Storage.sync.get("location", (data) => {
+                    Storage.sync.watch("location", (data) => {
                         const position = data as LocationType
-                        if (position.lat && position.lng) {
+                        if (position?.lat && position?.lng) {
                             setLatitude(position.lat)
                             setLongitude(position.lng)
                         }
