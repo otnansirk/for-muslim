@@ -54,7 +54,7 @@ func main() {
 	e := echo.New()
 	e.Use(CorsMiddleware())
 	v1 := e.Group("/api/v1")
-	// v1.Use(Middleware)
+	v1.Use(Middleware)
 	v1.GET("/methods", persistance.GetCalculateMethodList)
 	v1.GET("/locations", persistance.GetLocationList)
 	v1.GET("/prayer-times", persistance.GetPrayerTime)
