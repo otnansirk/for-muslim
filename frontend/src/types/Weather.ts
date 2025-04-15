@@ -2,6 +2,7 @@ export type WeatherType = {
     enable?: boolean
     unit?: string
     geolocation?: string
+    address?: string
 
     text?: string
     temp_c?: number
