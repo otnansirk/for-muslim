@@ -122,212 +122,6 @@
         ]
     },
     {
-        "label": "Europe",
-        "options": [
-            {
-                "value": "Europe/Andorra",
-                "text": "Europe/Andorra"
-            },
-            {
-                "value": "Europe/Athens",
-                "text": "Europe/Athens"
-            },
-            {
-                "value": "Europe/Belgrade",
-                "text": "Europe/Belgrade"
-            },
-            {
-                "value": "Europe/Berlin",
-                "text": "Europe/Berlin"
-            },
-            {
-                "value": "Europe/Brussels",
-                "text": "Europe/Brussels"
-            },
-            {
-                "value": "Europe/Bucharest",
-                "text": "Europe/Bucharest"
-            },
-            {
-                "value": "Europe/Budapest",
-                "text": "Europe/Budapest"
-            },
-            {
-                "value": "Europe/Chisinau",
-                "text": "Europe/Chisinau"
-            },
-            {
-                "value": "Europe/Dublin",
-                "text": "Europe/Dublin"
-            },
-            {
-                "value": "Europe/Gibraltar",
-                "text": "Europe/Gibraltar"
-            },
-            {
-                "value": "Europe/Helsinki",
-                "text": "Europe/Helsinki"
-            },
-            {
-                "value": "Europe/Istanbul",
-                "text": "Europe/Istanbul"
-            },
-            {
-                "value": "Europe/Kyiv",
-                "text": "Europe/Kyiv"
-            },
-            {
-                "value": "Europe/Lisbon",
-                "text": "Europe/Lisbon"
-            },
-            {
-                "value": "Europe/London",
-                "text": "Europe/London"
-            },
-            {
-                "value": "Europe/Madrid",
-                "text": "Europe/Madrid"
-            },
-            {
-                "value": "Europe/Malta",
-                "text": "Europe/Malta"
-            },
-            {
-                "value": "Europe/Minsk",
-                "text": "Europe/Minsk"
-            },
-            {
-                "value": "Europe/Paris",
-                "text": "Europe/Paris"
-            },
-            {
-                "value": "Europe/Prague",
-                "text": "Europe/Prague"
-            },
-            {
-                "value": "Europe/Riga",
-                "text": "Europe/Riga"
-            },
-            {
-                "value": "Europe/Rome",
-                "text": "Europe/Rome"
-            },
-            {
-                "value": "Europe/Samara",
-                "text": "Europe/Samara"
-            },
-            {
-                "value": "Europe/Saratov",
-                "text": "Europe/Saratov"
-            },
-            {
-                "value": "Europe/Sofia",
-                "text": "Europe/Sofia"
-            },
-            {
-                "value": "Europe/Tallinn",
-                "text": "Europe/Tallinn"
-            },
-            {
-                "value": "Europe/Tirane",
-                "text": "Europe/Tirane"
-            },
-            {
-                "value": "Europe/Vienna",
-                "text": "Europe/Vienna"
-            },
-            {
-                "value": "Europe/Vilnius",
-                "text": "Europe/Vilnius"
-            },
-            {
-                "value": "Europe/Warsaw",
-                "text": "Europe/Warsaw"
-            },
-            {
-                "value": "Europe/Zurich",
-                "text": "Europe/Zurich"
-            }
-        ]
-    },
-    {
-        "label": "West Asia",
-        "options": [
-            {
-                "value": "Asia/Almaty",
-                "text": "Asia/Almaty"
-            },
-            {
-                "value": "Asia/Ashgabat",
-                "text": "Asia/Ashgabat"
-            },
-            {
-                "value": "Asia/Baku",
-                "text": "Asia/Baku"
-            },
-            {
-                "value": "Asia/Baghdad",
-                "text": "Asia/Baghdad"
-            },
-            {
-                "value": "Asia/Beirut",
-                "text": "Asia/Beirut"
-            },
-            {
-                "value": "Asia/Damascus",
-                "text": "Asia/Damascus"
-            },
-            {
-                "value": "Asia/Dushanbe",
-                "text": "Asia/Dushanbe"
-            },
-            {
-                "value": "Asia/Gaza",
-                "text": "Asia/Gaza"
-            },
-            {
-                "value": "Asia/Hebron",
-                "text": "Asia/Hebron"
-            },
-            {
-                "value": "Asia/Jerusalem",
-                "text": "Asia/Jerusalem"
-            },
-            {
-                "value": "Asia/Kabul",
-                "text": "Asia/Kabul"
-            },
-            {
-                "value": "Asia/Karachi",
-                "text": "Asia/Karachi"
-            },
-            {
-                "value": "Asia/Qatar",
-                "text": "Asia/Qatar"
-            },
-            {
-                "value": "Asia/Riyadh",
-                "text": "Asia/Riyadh"
-            },
-            {
-                "value": "Asia/Samarkand",
-                "text": "Asia/Samarkand"
-            },
-            {
-                "value": "Asia/Tbilisi",
-                "text": "Asia/Tbilisi"
-            },
-            {
-                "value": "Asia/Tehran",
-                "text": "Asia/Tehran"
-            },
-            {
-                "value": "Asia/Yerevan",
-                "text": "Asia/Yerevan"
-            }
-        ]
-    },
-    {
         "label": "Central and East Asia",
         "options": [
             {
@@ -457,6 +251,212 @@
             {
                 "value": "Asia/Yangon",
                 "text": "Asia/Yangon"
+            }
+        ]
+    },
+    {
+        "label": "West Asia",
+        "options": [
+            {
+                "value": "Asia/Almaty",
+                "text": "Asia/Almaty"
+            },
+            {
+                "value": "Asia/Ashgabat",
+                "text": "Asia/Ashgabat"
+            },
+            {
+                "value": "Asia/Baku",
+                "text": "Asia/Baku"
+            },
+            {
+                "value": "Asia/Baghdad",
+                "text": "Asia/Baghdad"
+            },
+            {
+                "value": "Asia/Beirut",
+                "text": "Asia/Beirut"
+            },
+            {
+                "value": "Asia/Damascus",
+                "text": "Asia/Damascus"
+            },
+            {
+                "value": "Asia/Dushanbe",
+                "text": "Asia/Dushanbe"
+            },
+            {
+                "value": "Asia/Gaza",
+                "text": "Asia/Gaza"
+            },
+            {
+                "value": "Asia/Hebron",
+                "text": "Asia/Hebron"
+            },
+            {
+                "value": "Asia/Jerusalem",
+                "text": "Asia/Jerusalem"
+            },
+            {
+                "value": "Asia/Kabul",
+                "text": "Asia/Kabul"
+            },
+            {
+                "value": "Asia/Karachi",
+                "text": "Asia/Karachi"
+            },
+            {
+                "value": "Asia/Qatar",
+                "text": "Asia/Qatar"
+            },
+            {
+                "value": "Asia/Riyadh",
+                "text": "Asia/Riyadh"
+            },
+            {
+                "value": "Asia/Samarkand",
+                "text": "Asia/Samarkand"
+            },
+            {
+                "value": "Asia/Tbilisi",
+                "text": "Asia/Tbilisi"
+            },
+            {
+                "value": "Asia/Tehran",
+                "text": "Asia/Tehran"
+            },
+            {
+                "value": "Asia/Yerevan",
+                "text": "Asia/Yerevan"
+            }
+        ]
+    },
+    {
+        "label": "Europe",
+        "options": [
+            {
+                "value": "Europe/Andorra",
+                "text": "Europe/Andorra"
+            },
+            {
+                "value": "Europe/Athens",
+                "text": "Europe/Athens"
+            },
+            {
+                "value": "Europe/Belgrade",
+                "text": "Europe/Belgrade"
+            },
+            {
+                "value": "Europe/Berlin",
+                "text": "Europe/Berlin"
+            },
+            {
+                "value": "Europe/Brussels",
+                "text": "Europe/Brussels"
+            },
+            {
+                "value": "Europe/Bucharest",
+                "text": "Europe/Bucharest"
+            },
+            {
+                "value": "Europe/Budapest",
+                "text": "Europe/Budapest"
+            },
+            {
+                "value": "Europe/Chisinau",
+                "text": "Europe/Chisinau"
+            },
+            {
+                "value": "Europe/Dublin",
+                "text": "Europe/Dublin"
+            },
+            {
+                "value": "Europe/Gibraltar",
+                "text": "Europe/Gibraltar"
+            },
+            {
+                "value": "Europe/Helsinki",
+                "text": "Europe/Helsinki"
+            },
+            {
+                "value": "Europe/Istanbul",
+                "text": "Europe/Istanbul"
+            },
+            {
+                "value": "Europe/Kyiv",
+                "text": "Europe/Kyiv"
+            },
+            {
+                "value": "Europe/Lisbon",
+                "text": "Europe/Lisbon"
+            },
+            {
+                "value": "Europe/London",
+                "text": "Europe/London"
+            },
+            {
+                "value": "Europe/Madrid",
+                "text": "Europe/Madrid"
+            },
+            {
+                "value": "Europe/Malta",
+                "text": "Europe/Malta"
+            },
+            {
+                "value": "Europe/Minsk",
+                "text": "Europe/Minsk"
+            },
+            {
+                "value": "Europe/Paris",
+                "text": "Europe/Paris"
+            },
+            {
+                "value": "Europe/Prague",
+                "text": "Europe/Prague"
+            },
+            {
+                "value": "Europe/Riga",
+                "text": "Europe/Riga"
+            },
+            {
+                "value": "Europe/Rome",
+                "text": "Europe/Rome"
+            },
+            {
+                "value": "Europe/Samara",
+                "text": "Europe/Samara"
+            },
+            {
+                "value": "Europe/Saratov",
+                "text": "Europe/Saratov"
+            },
+            {
+                "value": "Europe/Sofia",
+                "text": "Europe/Sofia"
+            },
+            {
+                "value": "Europe/Tallinn",
+                "text": "Europe/Tallinn"
+            },
+            {
+                "value": "Europe/Tirane",
+                "text": "Europe/Tirane"
+            },
+            {
+                "value": "Europe/Vienna",
+                "text": "Europe/Vienna"
+            },
+            {
+                "value": "Europe/Vilnius",
+                "text": "Europe/Vilnius"
+            },
+            {
+                "value": "Europe/Warsaw",
+                "text": "Europe/Warsaw"
+            },
+            {
+                "value": "Europe/Zurich",
+                "text": "Europe/Zurich"
             }
         ]
     },

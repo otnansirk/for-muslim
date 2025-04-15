@@ -27,20 +27,14 @@ func filterTimezone(data []TimezoneItemType, keyword string) []TimezoneItemType 
 }
 
 func GetTimezoneList(c echo.Context) error {
-	keyword := c.QueryParam("search")
 	data, err := helper.ReadJSON[[]TimezoneItemType]("data/timezone.json")
 
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
 	}
 
-	filtered := filterTimezone(data, keyword)
-	if len(filtered) > 6 {
-		filtered = filtered[:6]
-	}
-
 	res := helper.Response{
-		Data: filtered,
+		Data: data,
 		Meta: helper.Meta{
 			Status: "ok",
 			Message: "OK",
