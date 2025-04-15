@@ -20,7 +20,7 @@ type SelectProps = {
 }
 
 
-const Select2 = ({ onSelect, items, value, ref }: SelectProps) => {
+const SelectGroup = ({ onSelect, items, value, ref }: SelectProps) => {
     return <select className='form-items select-optgroup' onChange={onSelect} value={value} ref={ref}>
         <Each
             data={items}
@@ -36,4 +36,4 @@ const Select2 = ({ onSelect, items, value, ref }: SelectProps) => {
     </select>
 }
 
-export default Select2
+export default SelectGroup

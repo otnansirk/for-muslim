@@ -4,6 +4,9 @@ class Datetime {
 
     static get = (config?: ConfigDateTypes) => {
         const dateFrom = config?.timestring ? new Date(config.timestring) : Date.now();
+        if (config?.tz) {
+            config.tz = config?.tz == 'auto' ? Intl.DateTimeFormat().resolvedOptions().timeZone : config?.tz
+        }
         const time = new Intl.DateTimeFormat('en-US', {
             timeZone: config?.tz,
             hour: '2-digit',
