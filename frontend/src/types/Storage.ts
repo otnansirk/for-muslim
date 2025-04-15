@@ -53,9 +53,12 @@ export type PrayerType = {
     asr?: PrayerTimeType
     maghrib?: PrayerTimeType
     isha?: PrayerTimeType
+
     hijri?: string
     method?: string,
     upcoming?: PrayerTimeType
+    enable?: boolean
+    tz?: string
     last_update?: number
 }
 
