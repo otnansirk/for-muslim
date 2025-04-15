@@ -77,4 +77,5 @@ export type TimeType = {
     hour12?: boolean
     show_ampm?: boolean
     show_seconds?: boolean
+    tz?: string
 }

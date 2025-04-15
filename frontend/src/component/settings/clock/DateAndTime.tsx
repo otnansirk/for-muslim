@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from "react"
 import { DATE_FORMAT } from "../../../constant/date_and_time"
+import SelectGroup from "../../form/select-group/SelectGroup"
 import { DateType, TimeType } from "../../../types/Storage"
+import { TimezoneType } from "../../../types/timezone"
 import Switch from "../../form/switch/Switch"
 import Select from "../../form/select/Select"
 import Storage from "../../../utils/Storage"
+import Request from "../../../utils/Request"
 
 const DateAndTime = () => {
     const dateEnableRef = useRef<HTMLInputElement>(null)
@@ -17,6 +20,8 @@ const DateAndTime = () => {
     const [showAMPM, setShowAMPM] = useState("hidden")
     const [showTimeSettings, setShowTimeSettings] = useState("hidden")
     const [showDateSettings, setShowDateSettings] = useState("hidden")
+    const [timezones, setTimezones] = useState<TimezoneType[]>([])
+    const [selectedTimezone, setSelectedTimezone] = useState<string | undefined>(undefined)
 
     useEffect(() => {
         Storage.sync.watch("date", (item) => {
@@ -36,7 +41,23 @@ const DateAndTime = () => {
 
             setShowTimeSettings(data?.enable ? "" : "hidden")
             setShowAMPM(data?.hour12 ? "" : "hidden")
+            setSelectedTimezone(data?.tz)
         })
+
+        const fetchData = async () => {
+            try {
+                const response = await Request.get({
+                    path: "/timezones"
+                });
+
+                const res = await response.json()
+                const data = res.data as TimezoneType[]
+                setTimezones(data)
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+        fetchData()
     }, [])
 
     return <>
@@ -111,6 +132,17 @@ const DateAndTime = () => {
                     <Switch
                         ref={timeShowSecondsRef}
                         onChange={e => Storage.sync.set('time', { show_seconds: e.target.checked })}
+                    />
+                </div>
+                <hr />
+                <div className='items'>
+                    <div className='items-title'>
+                        Timezone
+                    </div>
+                    <SelectGroup
+                        items={timezones}
+                        onSelect={ev => Storage.sync.set('time', { tz: ev.target.value })}
+                        value={selectedTimezone}
                     />
                 </div>
             </div>
