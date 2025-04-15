@@ -1,19 +1,12 @@
 import { RefObject } from 'react'
+import { TimezoneType } from '../../../types/timezone';
 import Each from '../../Each'
 
 import './style.css'
 
 
-type Options = {
-    value: string;
-    text: string;
-}
-
 type SelectProps = {
-    items: {
-        label: string
-        options: Options[];
-    }[]
+    items: TimezoneType[]
     value?: string
     ref?: RefObject<HTMLSelectElement | null>
     onSelect: (e: React.ChangeEvent<HTMLSelectElement>) => void
