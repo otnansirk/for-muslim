@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import Greetings from './greetings/Greetings'
 import DateAndTime from './clock/DateAndTime'
+import Weather from './weather/Weather'
 import Icon from '../Icon'
 
 import './style.css'
@@ -19,6 +20,7 @@ const Settings = () => {
         <div className={`wrapper ${openSetting}`}>
             <Greetings />
             <DateAndTime />
+            <Weather />
         </div>
     </div>
 }
