@@ -8,6 +8,6 @@ type InputProps = {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-const Input = ({ onChange, value, ref, placeholder }: InputProps) => <input type='text' onChange={onChange} defaultValue={value} ref={ref} placeholder={placeholder} />
+const Input = ({ onChange, value, ref, placeholder }: InputProps) => <input type='text' className='form-items' onChange={onChange} defaultValue={value} ref={ref} placeholder={placeholder} />
 
 export default Input

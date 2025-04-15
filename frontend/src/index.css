@@ -76,5 +76,11 @@ html {
         }
     }
 
+    .form-items {
+        max-width: 172px;
+        min-width: 172px;
+        height: 30px;
+        box-sizing: border-box;
+    }
 
 }

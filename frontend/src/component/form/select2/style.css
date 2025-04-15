@@ -1,4 +1,4 @@
-.select-option {
+.select-optgroup {
     background-color: #9494943a;
     border-radius: var(--border-radius-sm);
     border: 1px solid #78787834;
@@ -8,4 +8,5 @@
     font-size: 13px;
     font-weight: var(--font-weight-xs);
     letter-spacing: .5px;
+    max-width: 60%;
 }

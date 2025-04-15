@@ -15,7 +15,7 @@ type SelectProps = {
 }
 
 const Select = ({ onSelect, items, value, ref }: SelectProps) => {
-    return <select className='select-option' onChange={onSelect} defaultValue={value} ref={ref}>
+    return <select className='form-items select-option' onChange={onSelect} defaultValue={value} ref={ref}>
         <Each
             data={items}
             render={(item, key) => <option key={key} value={item.value}>{item.label}</option>}
