@@ -11,7 +11,9 @@ class Request {
 
     private static async api(method: "GET" | "POST" | "DELETE", options: RequestOptionsType) {
         const url = new URL(Dotenv.api_url + options.path);
-        url.search = new URLSearchParams(options.query).toString();
+        if (options.query) {
+            url.search = new URLSearchParams(options.query).toString();
+        }
 
         const response = await fetch(url.toString(), {
             method: method,
