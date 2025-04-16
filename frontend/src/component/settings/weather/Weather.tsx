@@ -11,6 +11,7 @@ const Weather = () => {
     const geolocationRef = useRef<HTMLSelectElement>(null)
     const unitRef = useRef<HTMLSelectElement>(null)
     const addressRef = useRef<HTMLInputElement>(null)
+    const errorNotifyRef = useRef<HTMLDivElement>(null)
 
     const [showSettings, setShowSettings] = useState("hidden")
     const [showSettingsAddress, setShowSettingsAddress] = useState("hidden")
@@ -25,6 +26,14 @@ const Weather = () => {
 
             setShowSettings(data?.enable ? "" : "hidden")
             setShowSettingsAddress(data?.geolocation === "manual" ? "" : "hidden")
+
+            if (data.geolocation === 'precise') {
+                navigator.geolocation.getCurrentPosition(() => { }, () => {
+                    errorNotifyRef.current!.textContent = 'Please allow your location'
+                })
+            } else {
+                errorNotifyRef.current!.textContent = ''
+            }
         })
     }, [])
 
@@ -55,6 +64,7 @@ const Weather = () => {
                         onSelect={e => Storage.sync.set('weather', { geolocation: e.target.value })}
                     />
                 </div>
+                <span className="notify-error" ref={errorNotifyRef} />
                 <div className={`dropshow ${showSettingsAddress}`}>
                     <hr />
                     <div className='items'>

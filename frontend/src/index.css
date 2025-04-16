@@ -85,4 +85,9 @@ html {
         box-sizing: border-box;
     }
 
+    .notify-error {
+        color: #ff534b;
+        font-size: 13px;
+        font-weight: var(--font-weight-md);
+    }
 }
