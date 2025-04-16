@@ -24,4 +24,12 @@ export const defaultSettings = [
             "show_ampm": true,
             "show_seconds": false
         }
-    }]
+    },
+    {
+        'weather': {
+            "enable": true,
+            'geolocation': 'approximate',
+            'unit': 'c'
+        }
+    }
+]
