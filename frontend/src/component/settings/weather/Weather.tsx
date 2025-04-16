@@ -27,13 +27,6 @@ const Weather = () => {
             setShowSettings(data?.enable ? "" : "hidden")
             setShowSettingsAddress(data?.geolocation === "manual" ? "" : "hidden")
 
-            if (data.geolocation === 'precise') {
-                navigator.geolocation.getCurrentPosition(() => { }, () => {
-                    errorNotifyRef.current!.textContent = 'Please allow your location'
-                })
-            } else {
-                errorNotifyRef.current!.textContent = ''
-            }
         })
     }, [])
 
@@ -61,7 +54,18 @@ const Weather = () => {
                     <Select
                         items={GEOLOCATION}
                         ref={geolocationRef}
-                        onSelect={e => Storage.sync.set('weather', { geolocation: e.target.value })}
+                        onSelect={e => {
+                            if (e.target.value === 'precise') {
+                                navigator.geolocation.getCurrentPosition(() => {
+                                    Storage.sync.set('weather', { geolocation: e.target.value })
+                                }, () => {
+                                    errorNotifyRef.current!.textContent = 'Please allow your location'
+                                })
+                            } else {
+                                Storage.sync.set('weather', { geolocation: e.target.value })
+                                errorNotifyRef.current!.textContent = ''
+                            }
+                        }}
                     />
                 </div>
                 <span className="notify-error" ref={errorNotifyRef} />
