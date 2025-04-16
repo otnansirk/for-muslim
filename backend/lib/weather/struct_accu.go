@@ -13,6 +13,11 @@ type WeatherAccResponse struct {
     Daily  []Daily  `json:"daily"`
 }
 
+type WeatherAccLocationResponse struct {
+    Name        string   `json:"name"`
+    LongName    string   `json:"longName"`
+}
+
 type Now struct {
     Icon        int     `json:"icon"`
     Temp        float64 `json:"temp"`

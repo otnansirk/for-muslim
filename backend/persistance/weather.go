@@ -13,12 +13,21 @@ type (
 		Lat    string `query:"lat"`
 		Lng    string `query:"lng"`
 	}
+	GetWeatherAccLocationRequest struct {
+		Search  string `query:"search"`
+		Lang    string `query:"lang"`
+	}
 
 	WeatherResponse struct {
 		Location Location `json:"location,omitempty"`
 		Temp  Temp   `json:"temp"`
-		IsDay int   `json:"is_day,omitempty"`
+		IsDay int    `json:"is_day,omitempty"`
 		Text  string `json:"text"`
+	}
+
+	WeatherAccLocationResponse struct {
+		Name 	 string   `json:"name,omitempty"`
+		Address  string   `json:"address"`
 	}
 
 	Temp struct {
@@ -42,11 +51,25 @@ func validateGetWeather(req WeatherRequest) map[string]string {
 	errors := make(map[string]string)
 	
 	if req.Lat == "" {
-		errors["lat"] = "Lat is required"
+		errors["lat"] = "lat is required"
 	}
 
 	if req.Lng == "" {
 		errors["lng"] = "lng is required"
+	}
+
+	return errors
+}
+
+func validateGetWeatherAccLocation(req GetWeatherAccLocationRequest) map[string]string {
+	errors := make(map[string]string)
+	
+	if req.Search == "" {
+		errors["search"] = "search is required"
+	}
+
+	if req.Lang == "" {
+		errors["lang"] = "lang is required"
 	}
 
 	return errors
@@ -147,6 +170,52 @@ func GetWeatherAccu(c echo.Context) error {
 
 	res := helper.Response{
 		Data: weathersData,
+		Meta: helper.Meta{
+			Status: "ok",
+			Message: "OK",
+		},
+	}
+	return c.JSON(http.StatusOK, res)
+}
+
+func GetWeatherAccuAutocompleteLocation(c echo.Context) error {
+	var req GetWeatherAccLocationRequest
+	if err := c.Bind(&req); err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "Invalid request"})
+	}
+
+	// Validasi manual
+	errors := validateGetWeatherAccLocation(req)
+	if len(errors) > 0 {
+		return c.JSON(http.StatusBadRequest, helper.Response{
+			Errors: errors,
+			Meta: helper.Meta{
+				Status: "bad_request",
+				Message: "Bad Request",
+			},
+		})
+	}
+
+	search  := c.QueryParam("search")
+	lang  := c.QueryParam("lang")
+
+	weatherReq := weather.GetWeatherAccLocationRequest{
+		Search: search,
+		Lang: lang,
+	}
+
+	weatherRes, err := weather.GetWeatherAccuLocation(c, weatherReq)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, helper.Response{
+			Meta: helper.Meta{
+				Status: "bad_request",
+				Message: "Failed get weather",
+			},
+		})
+	}
+
+	res := helper.Response{
+		Data: weatherRes,
 		Meta: helper.Meta{
 			Status: "ok",
 			Message: "OK",
