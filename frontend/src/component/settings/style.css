@@ -26,14 +26,15 @@
             &:hover {
                 background-color: #878787a1;
 
-                >img {
+                >.icon {
                     transform: rotate(25deg);
                 }
             }
 
-            >img {
+            >.icon {
                 transition: .2s ease-in-out;
                 width: 28px;
+                height: 28px;
 
                 &.opened {
                     transform: rotate(65deg);
@@ -100,6 +101,39 @@
 
                 .items-title {
                     font-size: 15px;
+                }
+
+                .items-content {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+
+                    .save-action {
+                        background-color: #9494943a;
+                        border-radius: var(--border-radius-sm);
+                        border: 1px solid #78787834;
+                        height: 27px;
+                        width: 27px;
+                        outline: none;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        cursor: pointer;
+                        padding: 0px 8px;
+
+                        &:hover {
+                            background-color: #e8e8e845;
+                        }
+
+                        &.loading {
+                            cursor: default;
+                            padding: 0px;
+
+                            >.loader {
+                                font-size: 2.5px;
+                            }
+                        }
+                    }
                 }
             }
         }

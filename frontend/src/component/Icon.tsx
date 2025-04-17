@@ -19,7 +19,7 @@ const Icon: React.FC<IconProps> = ({ icon, className = '' }) => {
         console.warn(`Icon "${icon}" not found`);
         return null;
     }
-    return <SVGIcon className={`icon ${icon}-icon ${className}`} />
+    return <SVGIcon className={`icon ${className}`} />
 };
 
 export default Icon;
