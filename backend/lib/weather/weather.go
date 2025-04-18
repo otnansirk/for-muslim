@@ -48,7 +48,12 @@ func GetWeather(c echo.Context, req WeatherRequest) (WeatherResponse, error) {
 
 	query := u.Query()
 	
-	setQuery(query, "provider", req.Provider)
+	setQuery(query, "provider", func() string {
+		if req.Provider != "" {
+			return req.Provider
+		}
+		return "accuweather"
+	}())
 	setQuery(query, "query", req.Query)
 	setQuery(query, "lat", req.Lat)
 	setQuery(query, "lon", req.Lon)
