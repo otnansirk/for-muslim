@@ -8,4 +8,8 @@
     font-size: 13px;
     font-weight: var(--font-weight-xs);
     letter-spacing: .5px;
+
+    option {
+        background-color: #9494943a;
+    }
 }
