@@ -18,19 +18,6 @@ type WeatherAccLocationResponse struct {
     LongName    string   `json:"longName"`
 }
 
-type Now struct {
-    Icon        int     `json:"icon"`
-    Temp        float64 `json:"temp"`
-    Feels       float64 `json:"feels"`
-    Description string  `json:"description"`
-}
-
-type Sun struct {
-    Duration string `json:"duration"`
-    Rise     int    `json:"rise"`
-    Set      int    `json:"set"`
-}
-
 type Today struct {
     Day   string `json:"day"`
     Night string `json:"night"`
@@ -44,11 +31,3 @@ type Hourly struct {
     Rain      string `json:"rain"`
 }
 
-type Daily struct {
-    Timestamp int    `json:"timestamp"`
-    High      int    `json:"high"`
-    Low       int    `json:"low"`
-    Day       string `json:"day"`
-    Night     string `json:"night"`
-    Rain      string `json:"rain"`
-}

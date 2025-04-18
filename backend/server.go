@@ -59,8 +59,7 @@ func main() {
 	v1.GET("/locations", persistance.GetLocationList)
 	v1.GET("/prayer-times", persistance.GetPrayerTime)
 	v1.GET("/weathers", persistance.GetWeather)
-	v1.GET("/weathers-accu", persistance.GetWeatherAccu)
-	v1.GET("/weathers-accu/locations", persistance.GetWeatherAccuAutocompleteLocation)
+	v1.GET("/weathers/locations", persistance.GetWeatherAccuAutocompleteLocation)
 	v1.GET("/timezones", persistance.GetTimezoneList)
 
 	e.Logger.Fatal(e.Start(":1323"))

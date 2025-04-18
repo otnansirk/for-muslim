@@ -2,55 +2,44 @@ package weather
 
 
 type WeatherResponse struct {
-    Location Location `json:"location"`
-    Current  Current  `json:"current"`
+    Meta  Meta    `json:"meta"`
+    Geo   Geo     `json:"geo"`
+    Now   Now     `json:"now"`
+    Sun   Sun     `json:"sun"`
+    Daily []Daily `json:"daily"`
 }
 
-type Location struct {
-    Name           string  `json:"name"`
-    Region         string  `json:"region"`
-    Country        string  `json:"country"`
-    Lat            float64 `json:"lat"`
-    Lon            float64 `json:"lon"`
-    TzId           string  `json:"tz_id"`
-    LocaltimeEpoch float64 `json:"localtime_epoch"`
-    Localtime      string  `json:"localtime"`
+type Meta struct {
+    Url      string `json:"url"`
+    Lang     string `json:"lang"`
+    Provider string `json:"provider"`
 }
 
-type Current struct {
-    LastUpdatedEpoch float64   `json:"last_updated_epoch"`
-    LastUpdated      string    `json:"last_updated"`
-    TempC            float64   `json:"temp_c"`
-    TempF            float64   `json:"temp_f"`
-    IsDay            int       `json:"is_day"`
-    Condition        Condition `json:"condition"`
-    WindMph          float64   `json:"wind_mph"`
-    WindKph          float64   `json:"wind_kph"`
-    WindDegree       float64   `json:"wind_degree"`
-    WindDir          string    `json:"wind_dir"`
-    PressureMb       float64   `json:"pressure_mb"`
-    PressureIn       float64   `json:"pressure_in"`
-    PrecipMm         float64   `json:"precip_mm"`
-    PrecipIn         float64   `json:"precip_in"`
-    Humidity         float64   `json:"humidity"`
-    Cloud            float64   `json:"cloud"`
-    FeelslikeC       float64   `json:"feelslike_c"`
-    FeelslikeF       float64   `json:"feelslike_f"`
-    WindchillC       float64   `json:"windchill_c"`
-    WindchillF       float64   `json:"windchill_f"`
-    HeatindexC       float64   `json:"heatindex_c"`
-    HeatindexF       float64   `json:"heatindex_f"`
-    DewpointC        float64   `json:"dewpoint_c"`
-    DewpointF        float64   `json:"dewpoint_f"`
-    VisKm            float64   `json:"vis_km"`
-    VisMiles         float64   `json:"vis_miles"`
-    Uv               float64   `json:"uv"`
-    GustMph          float64   `json:"gust_mph"`
-    GustKph          float64   `json:"gust_kph"`
+type Geo struct {
+    City    string `json:"city"`
+    Country string `json:"country"`
+    Lat     float64 `json:"lat"`
+    Lon     float64 `json:"lon"`
 }
 
-type Condition struct {
-    Text string `json:"text"`
-    Icon string `json:"icon"`
-    Code float64`json:"code"`
+type Now struct {
+    Icon        string `json:"icon"`
+    Description string `json:"description"`
+    Temp        int    `json:"temp"`
+    Feels       int    `json:"feels"`
+}
+
+type Sun struct {
+    Rise []int  `json:"rise"`
+    Duration string `json:"duration"`
+    Set  []int  `json:"set"`
+}
+
+type Daily struct {
+    Timestamp int    `json:"timestamp"`
+    High      int    `json:"high"`
+    Low       int    `json:"low"`
+    Day       string `json:"day"`
+    Night     string `json:"night"`
+    Rain      string `json:"rain"`
 }
