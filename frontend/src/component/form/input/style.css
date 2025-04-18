@@ -9,4 +9,5 @@ input[type=text] {
     font-size: 13px;
     font-weight: var(--font-weight-xs);
     letter-spacing: .5px;
+    text-transform: capitalize;
 }

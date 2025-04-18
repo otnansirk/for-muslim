@@ -10,7 +10,7 @@ type InputProps = {
     }[]
     placeholder?: string
     ref?: RefObject<HTMLInputElement | null>
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const Input = ({ onChange, value, ref, placeholder, datalist }: InputProps) => {
