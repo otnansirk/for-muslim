@@ -1,3 +1,7 @@
+export const GEOLOCATION_APPROXIMATE = "approximate"
+export const GEOLOCATION_PRECISE = "precise"
+export const GEOLOCATION_MANUAL = "manual"
+
 export const GEOLOCATION = [
     {
         value: "approximate",
@@ -12,13 +16,14 @@ export const GEOLOCATION = [
         label: "Manual"
     },
 ]
+
 export const UNIT = [
     {
-        value: "c",
+        value: "C",
         label: "Celsius"
     },
     {
-        value: "f",
+        value: "F",
         label: "Fahrenheit"
     }
 ]

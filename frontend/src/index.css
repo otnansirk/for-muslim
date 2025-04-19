@@ -90,4 +90,8 @@ html {
         font-size: 13px;
         font-weight: var(--font-weight-md);
     }
+
+    .loading {
+        cursor: progress;
+    }
 }

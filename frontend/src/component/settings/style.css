@@ -69,6 +69,10 @@
             letter-spacing: 1.5px;
             margin-bottom: 12px;
             text-align: end;
+            display: flex;
+            justify-content: end;
+            align-items: center;
+            gap: 10px;
         }
 
         .settings-items {
@@ -119,14 +123,13 @@
                         justify-content: center;
                         align-items: center;
                         cursor: pointer;
-                        padding: 0px 8px;
 
                         &:hover {
                             background-color: #e8e8e845;
                         }
 
                         &.loading {
-                            cursor: default;
+                            cursor: progress;
                             padding: 0px;
 
                             >.loader {
