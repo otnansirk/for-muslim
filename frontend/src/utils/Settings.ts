@@ -29,7 +29,7 @@ export const defaultSettings = [
         'weather': {
             "enable": true,
             'geolocation': 'approximate',
-            'unit': 'c'
+            'unit': 'C'
         }
     }
 ]

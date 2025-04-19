@@ -22,9 +22,9 @@
     }
 
     .clock-date {
-        font-size: 16px;
+        font-size: 20px;
         line-height: 1.6em;
-        font-weight: var(--font-weight-md);
+        font-weight: var(--font-weight-sm);
         min-width: 248px;
     }
 
