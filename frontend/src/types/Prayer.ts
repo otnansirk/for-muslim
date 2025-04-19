@@ -4,3 +4,11 @@ export type NextPrayerType = {
     minutes: number
     minutes_current: number
 }
+
+export type PrayerQueryParamsType = {
+    lat?: string
+    lng?: string
+    method?: string
+    timezone?: string
+    date?: string
+}
