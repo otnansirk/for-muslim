@@ -34,6 +34,33 @@
     }
 }
 
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+    /* atau bisa pakai warna lain */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgb(56, 56, 56);
+    border-radius: 10px;
+}
+
+/* Optional: hover effect */
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(72, 72, 72);
+}
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(56, 56, 56) transparent;
+    /* thumb color | track color */
+}
+
 html {
     font-family: var(--font-family);
     font-weight: 400;
