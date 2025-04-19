@@ -33,6 +33,7 @@
 
             >.icon {
                 transition: .2s ease-in-out;
+                cursor: pointer;
                 width: 28px;
                 height: 28px;
 

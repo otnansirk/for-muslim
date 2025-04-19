@@ -18,15 +18,9 @@ const Weather = () => {
 
         Storage.sync.watch('weather', data => {
             const weather = data as WeatherType
-            weatherRef.current!.style = `display: ${weather.enable ? 'flex' : 'none'}`
+            weatherRef.current!.style = `display: ${weather.temp && weather.enable ? 'flex' : 'none'}`
             tempRef.current!.textContent = `${weather.text}, ${weather.temp}°${weather.unit}`
             addressRef.current!.textContent = `${weather.address}`
-
-            if (weather.temp) {
-                weatherRef.current!.style = `display: flex`
-            } else {
-                weatherRef.current!.style = `display: none`
-            }
         })
 
     }, [])
