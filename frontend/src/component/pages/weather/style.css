@@ -4,6 +4,7 @@
     color: #FFFFFF;
     animation: fadeIn .4s ease-in-out forwards;
     min-height: 5rem;
+    max-width: 18rem;
 
     display: flex;
     gap: 10px;
@@ -28,4 +29,16 @@
             text-transform: capitalize;
         }
     }
+
+}
+
+.loading {
+    object-fit: contain;
+    text-align: center;
+    object-fit: contain;
+    display: flex;
+    max-width: 18rem;
+    min-height: 6em;
+    justify-content: center;
+    align-items: center;
 }

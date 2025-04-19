@@ -21,18 +21,25 @@ const Weather = () => {
             weatherRef.current!.style = `display: ${weather.enable ? 'flex' : 'none'}`
             tempRef.current!.textContent = `${weather.text}, ${weather.temp}°${weather.unit}`
             addressRef.current!.textContent = `${weather.address}`
+
+            if (weather.temp) {
+                weatherRef.current!.style = `display: flex`
+            } else {
+                weatherRef.current!.style = `display: none`
+            }
         })
 
     }, [])
 
-    return (<div className='weather' ref={weatherRef}>
-        <Icon icon='weather' />
-        <div className='weather-wrap'>
-            <div ref={tempRef} className='weather-temp' />
-            <div ref={addressRef} className='weather-address' />
+    return <>
+        <div className='weather' ref={weatherRef}>
+            <Icon icon='weather' />
+            <div className='weather-wrap'>
+                <div ref={tempRef} className='weather-temp' />
+                <div ref={addressRef} className='weather-address' />
+            </div>
         </div>
-    </div>
-    )
+    </>
 }
 
 export default Weather
