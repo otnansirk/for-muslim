@@ -1,58 +1,17 @@
 
 import BackgroundOverlay from './component/pages/background-overlay/BackgroundOverlay'
-import PrayerTime from './component/pages/prayer-time/PrayerTime'
+// import PrayerTime from './component/pages/prayer-time/PrayerTime'
 import Greeting from './component/pages/greeting/Greeting'
 import Weather from './component/pages/weather/Weather'
 // import Quote from './component/pages/quotes/Quote'
 import Settings from './component/settings/Settings'
 import Clock from './component/pages/clock/Clock'
 import Notes from './component/pages/notes/Notes'
-import { LocationType } from './types/Storage'
-import { useEffect, useState } from 'react'
-import Storage from './utils/Storage'
 
 import './app.css'
 
 
 function App() {
-    const [latitude, setLatitude] = useState("")
-    const [longitude, setLongitude] = useState("")
-    const [timezone, setTimezone] = useState("")
-
-    useEffect(() => {
-        if ("geolocation" in navigator) {
-
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    const timezone = new Intl.DateTimeFormat("en", { timeZoneName: "long" }).resolvedOptions().timeZone;
-                    const timezone_offset = new Date().getTimezoneOffset() / 60; // 60 is munutes. convert minutes to hours
-                    setLatitude(position.coords.latitude.toString())
-                    setLongitude(position.coords.longitude.toString())
-                    setTimezone(timezone.toString())
-                    Storage.sync.set('location', {
-                        timezone,
-                        timezone_offset,
-                        lat: position.coords.latitude.toString(),
-                        lng: position.coords.longitude.toString()
-                    })
-                },
-                (error) => {
-                    console.log("Error getting location:");
-
-                    Storage.sync.watch("location", (data) => {
-                        const position = data as LocationType
-                        if (position?.lat && position?.lng) {
-                            setLatitude(position.lat)
-                            setLongitude(position.lng)
-                        }
-                    })
-                    console.error("Error getting location:", error.message);
-                }
-            );
-        } else {
-            console.log("Geolocation is not supported by this browser.");
-        }
-    }, [])
 
     return (
         <>
@@ -62,12 +21,12 @@ function App() {
                 <div className='header'>
                     <Clock />
                     {
-                        <Weather lat={latitude} lng={longitude} />
+                        <Weather />
                     }
                     <Greeting />
                 </div>
                 <div className='content'>
-                    {<PrayerTime lat={latitude} lng={longitude} tz={timezone} />}
+                    {/* {<PrayerTime lat={latitude} lng={longitude} tz={timezone} />} */}
                     <Notes />
                 </div>
                 {/* <div className='footer'>

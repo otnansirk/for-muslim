@@ -5,26 +5,27 @@
     animation: fadeIn .4s ease-in-out forwards;
     min-height: 5rem;
 
-    .temperature {
-        display: flex;
-        align-items: baseline;
-        gap: 6px;
-        font-size: 18px;
-        /* text-align: center; */
-        /* justify-content: center; */
+    display: flex;
+    gap: 10px;
+
+    .icon {
+        width: 34px;
+        height: 34px;
     }
 
-    .location {
-        font-size: 15px;
-        margin-top: 5px;
-    }
+    .weather-wrap {
 
-    .loading {
-        object-fit: contain;
-        display: flex;
-        max-width: 18rem;
-        min-height: 6em;
-        justify-content: center;
-        align-items: center;
+        .weather-temp {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            font-size: 17px;
+        }
+
+        .weather-address {
+            font-size: 15px;
+            margin-top: 5px;
+            text-transform: capitalize;
+        }
     }
 }
