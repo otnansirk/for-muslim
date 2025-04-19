@@ -31,14 +31,3 @@
     }
 
 }
-
-.loading {
-    object-fit: contain;
-    text-align: center;
-    object-fit: contain;
-    display: flex;
-    max-width: 18rem;
-    min-height: 6em;
-    justify-content: center;
-    align-items: center;
-}
