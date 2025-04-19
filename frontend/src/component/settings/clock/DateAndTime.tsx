@@ -64,30 +64,6 @@ const DateAndTime = () => {
         <h2 className='settings-title'>
             DATE & TIME
         </h2>
-        <div className='settings-items'>
-            <div className='items'>
-                <div className='items-title'>
-                    Enable Date
-                </div>
-                <Switch
-                    ref={dateEnableRef}
-                    onChange={e => Storage.sync.set('date', { enable: e.target.checked })}
-                />
-            </div>
-            <div className={`dropshow ${showDateSettings}`}>
-                <hr />
-                <div className='items'>
-                    <div className='items-title'>
-                        Date Format
-                    </div>
-                    <Select
-                        items={DATE_FORMAT}
-                        ref={dateFormatRef}
-                        onSelect={e => Storage.sync.set('date', { format: DATE_FORMAT.find(item => item.value === e.target.value) })}
-                    />
-                </div>
-            </div>
-        </div>
 
         {/* TIME SETTINGS */}
         <div className='settings-items'>
@@ -147,6 +123,32 @@ const DateAndTime = () => {
                 </div>
             </div>
         </div >
+        {/* DATE SETTINGS */}
+        <div className='settings-items'>
+            <div className='items'>
+                <div className='items-title'>
+                    Enable Date
+                </div>
+                <Switch
+                    ref={dateEnableRef}
+                    onChange={e => Storage.sync.set('date', { enable: e.target.checked })}
+                />
+            </div>
+            <div className={`dropshow ${showDateSettings}`}>
+                <hr />
+                <div className='items'>
+                    <div className='items-title'>
+                        Date Format
+                    </div>
+                    <Select
+                        items={DATE_FORMAT}
+                        ref={dateFormatRef}
+                        onSelect={e => Storage.sync.set('date', { format: DATE_FORMAT.find(item => item.value === e.target.value) })}
+                    />
+                </div>
+            </div>
+        </div>
+
     </>
 }
 
