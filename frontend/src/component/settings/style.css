@@ -55,7 +55,8 @@
         border-radius: 0px var(--border-radius-md) 0px 0px;
         transform: translateX(-100%);
         transition: .2s ease-in-out;
-        padding: 24px;
+        padding: 24px 24px 24px 24px;
+        overflow-y: scroll;
 
         &.opened {
             transform: translateX(0%);
