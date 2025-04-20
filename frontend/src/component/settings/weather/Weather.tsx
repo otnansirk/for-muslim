@@ -88,6 +88,7 @@ const Weather = () => {
         }, () => {
             setGeolocationLoading(false)
             errorNotifyRef.current!.textContent = 'Please allow your location'
+            errorNotifyRef.current!.style = `display: inline-block`
         })
     }
 
@@ -96,6 +97,7 @@ const Weather = () => {
         const weather = await fetchDataWeather(GEOLOCATION_APPROXIMATE, { provider: 'accuweather', ...params })
         Storage.sync.set('location', weather?.location)
         errorNotifyRef.current!.textContent = ''
+        errorNotifyRef.current!.style = `display: none`
         setGeolocationLoading(false)
     }
 
@@ -103,6 +105,7 @@ const Weather = () => {
         setGeolocationLoading(true)
         await fetchDataWeather(GEOLOCATION_MANUAL, { query: addressRef.current?.value, ...params })
         errorNotifyRef.current!.textContent = ''
+        errorNotifyRef.current!.style = `display: none`
         setGeolocationLoading(false)
     }
 
