@@ -31,5 +31,11 @@ export const defaultSettings = [
             'geolocation': 'approximate',
             'unit': 'C'
         }
+    },
+    {
+        'prayer': {
+            "enable": true,
+            'geolocation': 'approximate'
+        }
     }
 ]

@@ -1,5 +1,7 @@
 
 import { useState } from 'react'
+
+import PrayerTime from './prayer-time/PrayerTime'
 import Greetings from './greetings/Greetings'
 import DateAndTime from './clock/DateAndTime'
 import Weather from './weather/Weather'
@@ -21,6 +23,7 @@ const Settings = () => {
             <Greetings />
             <DateAndTime />
             <Weather />
+            <PrayerTime />
         </div>
     </div>
 }

@@ -12,3 +12,9 @@ export type PrayerQueryParamsType = {
     timezone?: string
     date?: string
 }
+
+export type PrayerAreaType = {
+    lat?: string
+    lng?: string
+    city?: string
+}
