@@ -59,6 +59,7 @@ export type PrayerType = {
     upcoming?: PrayerTimeType
     enable?: boolean
     tz?: string
+    geolocation?: string
     last_update?: number
 }
 
