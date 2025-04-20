@@ -10,14 +10,15 @@ type InputProps = {
     }[]
     placeholder?: string
     ref?: RefObject<HTMLInputElement | null>
+    datalistID?: string
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-const Input = ({ onChange, value, ref, placeholder, datalist }: InputProps) => {
+const Input = ({ onChange, value, ref, placeholder, datalist, datalistID }: InputProps) => {
     return <>
-        <input type='text' list='fm_input-list' className='form-items' onChange={onChange} defaultValue={value} ref={ref} placeholder={placeholder} />
+        <input type='text' list={datalistID ? datalistID : 'fm_input-list'} className='form-items' onChange={onChange} defaultValue={value} ref={ref} placeholder={placeholder} />
         {datalist &&
-            <datalist id='fm_input-list'>
+            <datalist id={datalistID ? datalistID : 'fm_input-list'}>
                 <Each
                     data={datalist}
                     render={(item, key) => <option key={key} value={item.value}>{item.label}</option>}
