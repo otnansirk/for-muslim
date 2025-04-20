@@ -1,13 +1,21 @@
 {
   "name": "for-muslim",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "Muslim app to make it more obedient and better than yesterday.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "for muslim",
+    "muslim board",
+    "muslim started page",
+    "prayer time",
+    "for muslim chrome",
+    "formuslim chrome extension",
+    "for muslim chrome extension"
+  ],
   "author": {
     "name": "otnansirk",
     "url": "https://otnansirk.super.site"
