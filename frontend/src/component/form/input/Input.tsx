@@ -5,8 +5,8 @@ import Each from '../../Each'
 type InputProps = {
     value?: string
     datalist?: {
-        value: string
-        label: string
+        value?: string
+        label?: string
     }[]
     placeholder?: string
     ref?: RefObject<HTMLInputElement | null>
