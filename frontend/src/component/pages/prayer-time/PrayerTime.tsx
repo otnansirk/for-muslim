@@ -50,12 +50,13 @@ const PrayerTime = () => {
 
             <div className="times">
                 {
-                    prayerTimes
+                    prayerTimes?.last_update // Check if exist
                         ? <Each
                             data={PRAYER_NAMES}
                             render={(name, key) => {
                                 const data = prayerTimes as PrayerType
                                 const prayer = data[name as keyof TimesType] as PrayerTimeType
+
                                 const isUpcoming = prayer.id === data.upcoming?.id
                                 return (
                                     <div className={`__pad ${isUpcoming && 'active'}`} key={key}>
