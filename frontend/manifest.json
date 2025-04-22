@@ -1,7 +1,7 @@
 {
     "name": "For Muslim",
     "description": "Modern & Minimalist Chrome extension designed to help you balance work and faith.",
-    "version": "3.0.1",
+    "version": "3.0.2",
     "manifest_version": 3,
     "chrome_url_overrides": {
         "newtab": "index.html"
