@@ -11,6 +11,7 @@ const Clock = () => {
     const timeRef = useRef<HTMLDivElement>(null)
     const meridiemRef = useRef<HTMLDivElement>(null)
     const secondsRef = useRef<HTMLDivElement>(null)
+    const secondSeparatorRef = useRef<HTMLDivElement>(null)
 
     const [weekday, setWeekday] = useState<string | null>(null)
     const [day, setDay] = useState<string | null>(null)
@@ -54,8 +55,9 @@ const Clock = () => {
             window.scrollTo({ top: document.body.scrollTop, behavior: "smooth" });
             if (time) {
                 timeRef.current!.style = `display: ${time.enable ? 'flex' : 'none'}`
-                meridiemRef.current!.style = `display: ${time.show_ampm ? 'block' : 'none'}`
-                secondsRef.current!.style = `display: ${time.show_seconds ? 'block' : 'none'}`
+                meridiemRef.current!.style = `display: ${time.show_ampm ? 'inline-block' : 'none'}`
+                secondsRef.current!.style = `display: ${time.show_seconds ? 'inline-block' : 'none'}`
+                secondSeparatorRef.current!.style = `display: ${time.show_seconds ? 'inline-block' : 'none'}`
             }
         })
 
@@ -66,23 +68,20 @@ const Clock = () => {
 
     return (
         <div className='clock'>
-            <div className="clock-digital" ref={timeRef}>
-                <div className="hours">{hours}</div>
-                {
-                    hours &&
-                    <div className="separation">:</div>
-                }
-                <div className="minutes">{minutes}</div>
-                <div className="seconds" ref={secondsRef}>
+            <div className='clock-wrapper'>
+                <div className="clock-digital" ref={timeRef}>
+                    <span className="hours">{hours}</span>
                     {
-                        seconds &&
+                        hours &&
                         <span className="separation">:</span>
                     }
-                    {seconds}
+                    <span className="minutes">{minutes}</span>
+                    <span className="separation" ref={secondSeparatorRef}>:</span>
+                    <span className="seconds" ref={secondsRef}>{seconds}</span>
+                    <span className="meridiem" ref={meridiemRef}>{meridiem}</span>
                 </div>
-                <div className="meridiem" ref={meridiemRef}>{meridiem}</div>
+                <div className='clock-date' ref={dateRef} />
             </div>
-            <div className='clock-date' ref={dateRef} />
         </div>
     )
 }

@@ -1,17 +1,19 @@
 .clock {
     color: #FFF;
-    max-width: fit-content;
-    text-align: center;
     margin-top: 20px;
+    text-align: center;
+    display: flex;
 
     .clock-digital {
-        display: none;
         font-size: 8em;
         align-items: baseline;
         font-weight: var(--font-weight-lg);
+        justify-content: center;
+        position: relative;
 
         .seconds {
             display: none;
+            width: 2ch;
         }
 
         .meridiem {
@@ -25,7 +27,7 @@
         font-size: 20px;
         line-height: 1.6em;
         font-weight: var(--font-weight-sm);
-        min-width: 248px;
+        text-align: center;
     }
 
 }
