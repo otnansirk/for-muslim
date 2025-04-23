@@ -14,22 +14,22 @@ class Datetime {
         }).format(dateFrom)
 
         const weekday = new Intl.DateTimeFormat('en-US', {
-            timeZone: config?.tz,
+            timeZone: timezone,
             weekday: (config?.weekday) ? config.weekday : "long"
         }).format(dateFrom)
 
         const day = new Intl.DateTimeFormat('en-US', {
-            timeZone: config?.tz,
+            timeZone: timezone,
             day: (config?.day) ? config.day : "2-digit"
         }).format(dateFrom)
 
         const month = new Intl.DateTimeFormat('en-US', {
-            timeZone: config?.tz,
+            timeZone: timezone,
             month: (config?.month) ? config.month : "long"
         }).format(dateFrom)
 
         const year = new Intl.DateTimeFormat('en-US', {
-            timeZone: config?.tz,
+            timeZone: timezone,
             year: (config?.year) ? config.year : "numeric"
         }).format(dateFrom)
         const data = {
