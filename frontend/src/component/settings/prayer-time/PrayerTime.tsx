@@ -121,6 +121,9 @@ const PrayerTime = () => {
             isEnableRef.current!.checked = data?.enable ?? false
             geolocationRef.current!.value = data?.geolocation ?? ""
 
+            const upcoming = prayer.next(data)
+            Storage.sync.set("prayer", { upcoming });
+
             if (prayer.isExpired(data?.last_update ?? 0)) {
                 if (data?.geolocation === GEOLOCATION_PRECISE) {
                     prayerPrecise()
