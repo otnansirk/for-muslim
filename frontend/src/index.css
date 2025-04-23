@@ -126,4 +126,12 @@ html {
     .loading {
         cursor: progress;
     }
+
+    select,
+    input,
+    option {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
 }
