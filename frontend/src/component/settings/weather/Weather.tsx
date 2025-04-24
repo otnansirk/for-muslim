@@ -25,6 +25,7 @@ const Weather = () => {
     const [geolocationLoading, setGeolocationLoading] = useState<boolean>(false)
     const [weatherLocation, setWeatherLocation] = useState([])
 
+
     const fetchDataWeather = async (geolocation?: typeof GEOLOCATION_PRECISE | typeof GEOLOCATION_APPROXIMATE | typeof GEOLOCATION_MANUAL, queryParams?: FetchDataWeatherQueryParamType | undefined) => {
         try {
             const response = await Request.get({

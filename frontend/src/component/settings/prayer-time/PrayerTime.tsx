@@ -11,6 +11,8 @@ import Select from "../../form/select/Select"
 import Storage from "../../../utils/Storage"
 import Request from "../../../utils/Request"
 import Loader from "../../loader/Loader"
+import { TimezoneType } from "../../../types/timezone"
+import SelectGroup from "../../form/select-group/SelectGroup"
 
 
 const PrayerTime = () => {
@@ -20,6 +22,8 @@ const PrayerTime = () => {
 
     const [showSettings, setShowSettings] = useState("hidden")
     const [prayerLoading, setPrayerLoading] = useState<boolean>(false)
+    const [timezones, setTimezones] = useState<TimezoneType[]>([])
+    const [selectedTimezone, setSelectedTimezone] = useState<string | undefined>(undefined)
 
 
     const fetchDataPrayer = async (queryParams?: PrayerQueryParamsType, geolocation?: string) => {
@@ -114,6 +118,20 @@ const PrayerTime = () => {
     }
 
     useEffect(() => {
+        const fetchDataTimezone = async () => {
+            try {
+                const response = await Request.get({
+                    path: "/timezones"
+                });
+
+                const res = await response.json()
+                const data = res.data as TimezoneType[]
+                setTimezones(data)
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+        fetchDataTimezone()
 
         Storage.sync.watch("prayer", (item) => {
 
@@ -123,6 +141,7 @@ const PrayerTime = () => {
 
             const upcoming = prayer.next(data)
             Storage.sync.set("prayer", { upcoming });
+            setSelectedTimezone(data.tz)
 
             if (prayer.isExpired(data?.last_update ?? 0)) {
                 if (data?.geolocation === GEOLOCATION_PRECISE) {
@@ -182,6 +201,17 @@ const PrayerTime = () => {
                     </div>
                 </div>
                 <span className="notify-error" ref={errorNotifyRef} />
+                <hr />
+                <div className='items'>
+                    <div className='items-title'>
+                        Timezone
+                    </div>
+                    <SelectGroup
+                        items={timezones}
+                        onSelect={ev => Storage.sync.set('prayer', { tz: ev.target.value })}
+                        value={selectedTimezone}
+                    />
+                </div>
             </div>
         </div>
     </div>
