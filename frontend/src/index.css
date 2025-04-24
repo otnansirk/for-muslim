@@ -107,7 +107,7 @@ html {
         max-width: 172px;
         min-width: 172px;
         height: 30px;
-        padding: 0px 12px;
+        padding-inline: 12px;
         font-weight: var(--font-weight-md);
         box-sizing: border-box;
     }

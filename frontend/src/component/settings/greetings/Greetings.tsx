@@ -45,6 +45,7 @@ const Greetings = () => {
                         onChange={e => Storage.sync.set('greeting', { name: e.target.value })}
                         placeholder="Name"
                         ref={nameRef}
+                        datalistID="fm_greatings-name"
                     />
                 </div>
             </div>

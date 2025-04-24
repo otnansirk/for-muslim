@@ -209,6 +209,7 @@ const Weather = () => {
                                 }}
                                 placeholder={addressRef.current?.value ? addressRef.current.value : "Input address"}
                                 datalist={weatherLocation.map((val: { name: string, longName: string }) => ({ value: val.longName, label: val.name }))}
+                                datalistID="fm_weather-address"
                             />
                         </div>
                     </div>
