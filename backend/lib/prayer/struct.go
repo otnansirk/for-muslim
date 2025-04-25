@@ -94,8 +94,8 @@ type Method struct {
 }
 
 type Params struct {
-    Fajr int `json:"fajr"`
-    Isha int `json:"isha"`
+    Fajr interface{} `json:"fajr"`
+    Isha interface{} `json:"isha"`
 }
 
 type Location struct {
