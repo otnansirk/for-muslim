@@ -18,3 +18,8 @@ export type PrayerAreaType = {
     lng?: string
     city?: string
 }
+
+export type CalculateMethodType = {
+    id: string
+    name: string
+}

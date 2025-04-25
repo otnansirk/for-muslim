@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react"
 import { GEOLOCATION_APPROXIMATE, GEOLOCATION_PRECISE } from "../../../constant/weather"
+import { CALCULATE_METHOD, CALCULATE_METHOD_MWL, PRAYER_NAMES } from "../../../constant/prayer"
 import { LocationType, PrayerType, TimesType } from "../../../types/Storage"
-import { CALCULATE_METHOD, PRAYER_NAMES } from "../../../constant/prayer"
+import SelectGroup from "../../form/select-group/SelectGroup"
 import { PrayerQueryParamsType } from "../../../types/Prayer"
+import { TimezoneType } from "../../../types/timezone"
 import { firstUpper } from "../../../utils/Strings"
 import * as prayer from "../../../utils/Prayer"
 import Datetime from "../../../utils/Datetime"
@@ -11,14 +13,13 @@ import Select from "../../form/select/Select"
 import Storage from "../../../utils/Storage"
 import Request from "../../../utils/Request"
 import Loader from "../../loader/Loader"
-import { TimezoneType } from "../../../types/timezone"
-import SelectGroup from "../../form/select-group/SelectGroup"
 
 
 const PrayerTime = () => {
     const isEnableRef = useRef<HTMLInputElement>(null)
     const geolocationRef = useRef<HTMLSelectElement>(null)
     const errorNotifyRef = useRef<HTMLDivElement>(null)
+    const calculateMethodRef = useRef<HTMLSelectElement>(null)
 
     const [showSettings, setShowSettings] = useState("hidden")
     const [prayerLoading, setPrayerLoading] = useState<boolean>(false)
@@ -67,6 +68,7 @@ const PrayerTime = () => {
                 upcoming,
                 geolocation,
                 method: queryParams?.method,
+                tz: queryParams?.timezone,
                 hijri: res.data.hijri.readable,
                 last_update: Date.now()
             }
@@ -77,7 +79,7 @@ const PrayerTime = () => {
         }
     }
 
-    const prayerApproximate = () => {
+    const prayerApproximate = (queryParams?: PrayerQueryParamsType) => {
         Storage.sync.watch('location', async loc => {
             setPrayerLoading(true)
             const data = loc as LocationType
@@ -87,13 +89,14 @@ const PrayerTime = () => {
                 lat: data.lat,
                 lng: data.lng,
                 timezone: data.timezone,
-                method: method?.code
+                method: method?.value ?? CALCULATE_METHOD_MWL,
+                ...queryParams
             }, GEOLOCATION_APPROXIMATE)
             setPrayerLoading(false)
         })
     }
 
-    const prayerPrecise = () => {
+    const prayerPrecise = (queryParams?: PrayerQueryParamsType) => {
         setPrayerLoading(true)
         navigator.geolocation.getCurrentPosition(async (position) => {
 
@@ -104,7 +107,8 @@ const PrayerTime = () => {
                     lat: position.coords.latitude.toString(),
                     lng: position.coords.longitude.toString(),
                     timezone: data.tz,
-                    method: data.method
+                    method: data.method,
+                    ...queryParams
                 }, GEOLOCATION_PRECISE)
 
                 setPrayerLoading(false)
@@ -114,6 +118,53 @@ const PrayerTime = () => {
             setPrayerLoading(false)
             errorNotifyRef.current!.textContent = 'Please allow your location'
             errorNotifyRef.current!.style = `display: inline-block`
+        })
+    }
+
+    const changeCalculateMethodHandler = (method: string): void => {
+
+        Storage.sync.get('prayer', data => {
+            const pry = data as PrayerType
+            const q: PrayerQueryParamsType = {
+                method,
+                timezone: pry.tz
+            }
+            if (pry?.geolocation === GEOLOCATION_PRECISE) {
+                prayerPrecise(q)
+            } else {
+                prayerApproximate(q)
+            }
+        })
+    }
+
+    const changeTimezoneHandler = (timezone: string): void => {
+
+        Storage.sync.get('prayer', res => {
+            const data = res as PrayerType
+            const times: TimesType = {
+                imsak: data.imsak?.datetime ?? "",
+                fajr: data.fajr?.datetime ?? "",
+                dhuhr: data.dhuhr?.datetime ?? "",
+                asr: data.asr?.datetime ?? "",
+                maghrib: data.maghrib?.datetime ?? "",
+                isha: data.isha?.datetime ?? ""
+            };
+
+            let prayers: PrayerType = {}
+            PRAYER_NAMES.forEach((name: string) => {
+                const datetime = Datetime.get({ timestring: times[name as keyof TimesType], tz: timezone })
+                prayers = Object.assign(prayers, {
+                    [name]: {
+                        id: name,
+                        icon: name,
+                        title: firstUpper(name),
+                        datetime: times[name as keyof TimesType],
+                        time: datetime.hours + ':' + datetime.minutes,
+                        hours_in_seconds: parseInt(datetime.hours) * 60 + parseInt(datetime.minutes)
+                    }
+                })
+            })
+            Storage.sync.set("prayer", { ...prayers, tz: timezone });
         })
     }
 
@@ -142,6 +193,7 @@ const PrayerTime = () => {
             const upcoming = prayer.next(data)
             Storage.sync.set("prayer", { upcoming });
             setSelectedTimezone(data.tz)
+            calculateMethodRef.current!.value = data.method ?? ""
 
             if (prayer.isExpired(data?.last_update ?? 0)) {
                 if (data?.geolocation === GEOLOCATION_PRECISE) {
@@ -208,8 +260,19 @@ const PrayerTime = () => {
                     </div>
                     <SelectGroup
                         items={timezones}
-                        onSelect={ev => Storage.sync.set('prayer', { tz: ev.target.value })}
+                        onSelect={(e) => changeTimezoneHandler(e.target.value)}
                         value={selectedTimezone}
+                    />
+                </div>
+                <hr />
+                <div className='items'>
+                    <div className='items-title'>
+                        Calculate Method
+                    </div>
+                    <Select
+                        items={CALCULATE_METHOD}
+                        ref={calculateMethodRef}
+                        onSelect={(e) => changeCalculateMethodHandler(e.target.value)}
                     />
                 </div>
             </div>
