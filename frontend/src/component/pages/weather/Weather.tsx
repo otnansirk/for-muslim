@@ -20,7 +20,7 @@ const Weather = () => {
             const weather = data as WeatherType
             weatherRef.current!.style = `display: ${weather.temp && weather.enable ? 'flex' : 'none'}`
             tempRef.current!.textContent = `${weather.text}, ${weather.temp}°${weather.unit}`
-            addressRef.current!.textContent = `${weather.address}`
+            addressRef.current!.textContent = `${weather.address?.substring(0, weather?.address?.length - 3)}`
         })
 
     }, [])
