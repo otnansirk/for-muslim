@@ -1,6 +1,6 @@
 {
   "name": "for-muslim",
-  "version": "3.0.2",
+  "version": "3.1.0",
   "description": "Muslim app to make it more obedient and better than yesterday.",
   "scripts": {
     "dev": "vite",
