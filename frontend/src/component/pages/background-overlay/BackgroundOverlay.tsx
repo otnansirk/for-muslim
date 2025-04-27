@@ -1,13 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { BackgroundOverlayType } from '../../../types/bckground-overlay';
 
 import './style.css';
-
-const defaultBg = {
-    "author_name": "Francesco Ungaro",
-    "author_url": "https://unsplash.com/@francesco_ungaro",
-    "photos": "https://images.unsplash.com/photo-1603366615917-1fa6dad5c4fa"
-}
 
 const bg: BackgroundOverlayType[] = [
     {
@@ -69,41 +63,46 @@ const bg: BackgroundOverlayType[] = [
 
 const BackgroundOverlay = () => {
 
-    const refreshRef = useRef(() => { })
+    const bgRef = useRef<HTMLDivElement>(null)
+    const bg1Ref = useRef<HTMLDivElement>(null)
+    const bg2Ref = useRef<HTMLDivElement>(null)
+    const bgArtistRef = useRef<HTMLAnchorElement>(null)
 
-    const [currentBG, setCurrentBG] = useState<BackgroundOverlayType>(defaultBg)
-    const [nextBG, setNextBG] = useState<BackgroundOverlayType>()
-    const [isRender, setIsRender] = useState<boolean>(true)
+    const refreshRef = (url: string) => {
+        const image = new Image();
+        image.onload = () => {
+            const loadBg = bg2Ref.current!.style.opacity === '1'
+            bg2Ref.current!.style.opacity = loadBg ? '0' : '1'
 
-    refreshRef.current = () => {
-        setIsRender(true)
-        const newBg = bg[Math.floor(Math.random() * bg.length)];
-        if (newBg.photos !== currentBG?.photos) {
-            setNextBG(newBg);
-            setTimeout(() => {
-                setCurrentBG(newBg);
-                setNextBG(undefined);
-            }, 400);
+            const changeBg = loadBg ? bg1Ref.current : bg2Ref.current;
+            changeBg!.style.backgroundImage = `url(${url})`
+
+            bgRef.current!.style.opacity = '1'
         }
+        image.src = url;
+        image.remove()
+    }
+
+    const credit = (name: string, profileUrl: string) => {
+        bgArtistRef.current!.textContent = `Photo by ${name}`
+        bgArtistRef.current!.href = profileUrl
     }
 
     useEffect(() => {
-        refreshRef.current();
+        const bgInfo = bg[Math.floor(Math.random() * bg.length)];
+        credit(bgInfo.author_name, bgInfo.author_url)
+        refreshRef(bgInfo.photos)
     }, [])
 
     return (
         <div className='background'>
-            <div className={`background-overlay`}>
-                <div className={`overlay fade-in`} style={{ backgroundImage: `url(${isRender ? currentBG.photos : currentBG?.photos})` }} />
-                {
-                    nextBG && <div className={`overlay fade-in`} style={{ backgroundImage: `url(${nextBG.photos})` }} />
-                }
+            <div ref={bgRef} className={`background-overlay`}>
+                <div ref={bg1Ref} className='overlay' />
+                <div ref={bg2Ref} className='overlay otnansirk' />
             </div>
-            <img style={{ display: 'none' }} src={currentBG?.photos} onLoad={() => setIsRender(false)} />
             {
-                <div className={`background-info ${currentBG && 'visible'}`}>
-                    Photo by <a href={currentBG?.author_url} >{currentBG?.author_name}</a>&nbsp;
-                    on <a href="https://unsplash.com" target='__blank'>Unsplash</a>
+                <div className={`background-info`}>
+                    <a ref={bgArtistRef} />&nbsp;
                 </div>
             }
         </div >

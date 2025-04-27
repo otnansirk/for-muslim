@@ -69,13 +69,13 @@ html {
 
     -ms-overflow-style: none;
     scrollbar-width: none;
+    background-color: #1f1f1f;
 
     &::-webkit-scrollbar {
         display: none;
     }
 
     body {
-        background-color: #000000;
         margin: 0 auto;
         text-shadow: 1px 2px 6px rgba(0, 0, 0, var(--text-shadow-sm));
         font-family: var(--font-family) !important;
