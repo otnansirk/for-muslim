@@ -26,16 +26,18 @@ export const defaultSettings = [
         }
     },
     {
-        'weather': {
+        "weather": {
             "enable": true,
-            'geolocation': 'approximate',
-            'unit': 'C'
+            "geolocation": "approximate",
+            "unit": "C"
         }
     },
     {
-        'prayer': {
+        "prayer": {
             "enable": true,
-            'geolocation': 'approximate'
+            "geolocation": "approximate",
+            "tz": "auto",
+            "method": "3",
         }
     }
 ]
