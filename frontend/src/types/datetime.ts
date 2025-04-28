@@ -7,3 +7,15 @@ export type ConfigDateTypes = {
     month?: "long" | "short" | "narrow" | "numeric" | "2-digit" | undefined;
     year?: "numeric" | "2-digit" | undefined;
 }
+
+export type TimeFormatType = {
+    hours: string;
+    minutes: string;
+    seconds: string;
+    meridiem: string;
+    weekday: string;
+    month: string;
+    day: string;
+    year: string;
+    full: string;
+}

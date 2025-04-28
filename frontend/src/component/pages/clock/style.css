@@ -4,6 +4,10 @@
     text-align: center;
     display: flex;
 
+    .clock-wrapper {
+        min-width: 250px;
+    }
+
     .clock-digital {
         font-size: 8em;
         align-items: baseline;

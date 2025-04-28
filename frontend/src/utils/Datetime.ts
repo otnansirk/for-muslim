@@ -1,8 +1,8 @@
-import { ConfigDateTypes } from "../types/datetime";
+import { ConfigDateTypes, TimeFormatType } from "../types/datetime";
 
 class Datetime {
 
-    static get = (config?: ConfigDateTypes) => {
+    static get = (config?: ConfigDateTypes): TimeFormatType => {
         const dateFrom = config?.timestring ? new Date(config.timestring) : Date.now();
         const timezone = (config?.tz == 'auto' || !config?.tz) ? Intl.DateTimeFormat().resolvedOptions().timeZone : config?.tz
         const time = new Intl.DateTimeFormat('en-US', {
