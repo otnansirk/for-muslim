@@ -61,6 +61,7 @@ func main() {
 	v1.GET("/weathers", persistance.GetWeather)
 	v1.GET("/weathers/locations", persistance.GetWeatherAccuAutocompleteLocation)
 	v1.GET("/timezones", persistance.GetTimezoneList)
+	v1.GET("/unsplash/random", persistance.GetRandomPhotos)
 
 	e.Logger.Fatal(e.Start(":1323"))
 }
