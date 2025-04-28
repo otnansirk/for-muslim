@@ -1,5 +1,5 @@
 .select-optgroup {
-    background-color: #9494943a;
+    background-color: #3f3f3f;
     border-radius: var(--border-radius-sm);
     border: 1px solid #78787834;
     outline: none;
@@ -12,6 +12,6 @@
     cursor: default;
 
     option {
-        background-color: #9494943a;
+        background-color: #3f3f3f;
     }
 }
