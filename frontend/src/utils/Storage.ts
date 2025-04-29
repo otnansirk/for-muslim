@@ -1,5 +1,39 @@
 import { StorageType } from "../types/Storage";
 
+const StorageLocal = class Storage {
+    static set = <K>(key: string, value: K) => {
+        if (typeof chrome !== "undefined" && chrome.storage) {
+            chrome.storage.local.set({ [key]: value });
+        } else {
+            console.error("Chrome Local Storage API is not available.");
+        }
+    }
+
+    static get = (key: string, callback: <T>(item: T) => void) => {
+        if (typeof chrome !== "undefined" && chrome.storage) {
+            chrome.storage.local.get(key, result => callback(result[key]))
+        } else {
+            console.error("Chrome Local Storage API is not available.");
+        }
+    }
+
+    static listen = (key: string, callback: <T>(item: T) => void) => {
+        if (typeof chrome !== "undefined" && chrome.storage) {
+            chrome.storage.onChanged.addListener(item => {
+                if (item?.[key]) {
+                    callback(item?.[key]?.newValue)
+                }
+            })
+        } else {
+            console.error("Chrome Storage API is not available.");
+        }
+    }
+
+    static watch = (key: string, callback: <T>(item: T) => void) => {
+        this.listen(key, callback)
+        this.get(key, callback)
+    }
+}
 class Storage {
 
     private static deepMerge = <T extends StorageType>(target: T, source: Partial<T>): T => {
@@ -71,6 +105,14 @@ class Storage {
         listen: this.listen,
         watch: this.watch
     }
+
+    static local = {
+        set: StorageLocal.set,
+        get: StorageLocal.get,
+        listen: StorageLocal.listen,
+        watch: StorageLocal.watch
+    }
+
 }
 
 export default Storage

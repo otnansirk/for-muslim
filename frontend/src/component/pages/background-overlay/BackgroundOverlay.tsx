@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { BackgroundOverlayType } from '../../../types/bckground-overlay';
 
 import './style.css';
+import { UNSPLASH_UTM } from '../../../constant/background';
 
 const bg: BackgroundOverlayType[] = [
     {
@@ -83,9 +84,9 @@ const BackgroundOverlay = () => {
         image.remove()
     }
 
-    const credit = (name: string, profileUrl: string) => {
+    const credit = (name: string, username: string) => {
         bgArtistRef.current!.textContent = `Photo by ${name}`
-        bgArtistRef.current!.href = profileUrl
+        bgArtistRef.current!.href = `https://unsplash.com/@${username}${UNSPLASH_UTM}`
     }
 
     useEffect(() => {
@@ -103,6 +104,7 @@ const BackgroundOverlay = () => {
             {
                 <div className={`background-info`}>
                     <a ref={bgArtistRef} />&nbsp;
+                    on <a href={`https://unsplash.com/${UNSPLASH_UTM}`}>Unsplash</a>
                 </div>
             }
         </div >

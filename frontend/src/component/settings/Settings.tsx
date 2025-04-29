@@ -8,6 +8,7 @@ import Weather from './weather/Weather'
 import Icon from '../Icon'
 
 import './style.css'
+import Background from './background/Background'
 
 
 const Settings = () => {
@@ -24,6 +25,7 @@ const Settings = () => {
             <DateAndTime />
             <Weather />
             <PrayerTime />
+            <Background />
         </div>
     </div>
 }
