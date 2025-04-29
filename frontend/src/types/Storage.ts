@@ -11,6 +11,7 @@ export type StorageType = {
     greeting?: GreetingType
     date?: DateType
     time?: TimeType
+    background?: BackgroundType
 }
 
 // ======== 
@@ -82,4 +83,45 @@ export type TimeType = {
     show_ampm?: boolean
     show_seconds?: boolean
     tz?: string
+}
+
+export type BackgroundType = {
+    type?: string | "local" | "unsplash"
+    frequency?: string | "off" | "5_seconds" | "10_seconds" | "15_seconds" | "30_seconds" | "3600_seconds" | "86400_seconds" | "tab"
+    refresh_at?: number
+    featured_index?: number
+}
+
+export type UnsplashType = {
+    id: string;
+    slug: string;
+    url: string;
+    download: string;
+    exif: Exif;
+    location: Location;
+    user: User;
+}
+
+type Exif = {
+    make: string;
+    model: string;
+    name: string;
+    exposureTime: string;
+    aperture: string;
+    focalLength: string;
+    iso: number;
+}
+
+type Location = {
+    name: string;
+    city: string;
+    country: string;
+}
+
+type User = {
+    username: string;
+    name: string;
+    url: string;
+    location: string;
+    image: string;
 }
