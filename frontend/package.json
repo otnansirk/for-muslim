@@ -1,7 +1,7 @@
 {
-  "name": "for-muslim",
-  "version": "3.1.0",
+  "name": "moslem",
   "description": "Muslim app to make it more obedient and better than yesterday.",
+  "version": "3.1.0",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -9,12 +9,19 @@
   },
   "keywords": [
     "for muslim",
+    "sebahyang",
+    "Sebahyang",
+    "moslem",
     "muslim board",
     "muslim started page",
     "prayer time",
     "for muslim chrome",
     "formuslim chrome extension",
-    "for muslim chrome extension"
+    "for muslim chrome extension",
+    "sembahyang chrome extension",
+    "moslem tabs",
+    "moslem chrome tab",
+    "moslem chrome extension"
   ],
   "author": {
     "name": "otnansirk",
