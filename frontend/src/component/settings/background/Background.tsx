@@ -1,13 +1,13 @@
 import { useEffect, useRef } from "react"
-import { BACKGROUND_MAX_FEATURED_INDEX, BACKGROUND_REFRESH_FREQUENCY, BACKGROUND_TYPES } from "../../../constant/background"
-import { BackgroundQueryParams } from "../../../types/bckground-overlay"
+import { BACKGROUND_REFRESH_FREQUENCY, BACKGROUND_TYPES } from "../../../constant/background"
+import { fetchDataUnsplash, refreshBackgroundHandler } from "../../../utils/Background"
 import { BackgroundType } from "../../../types/Storage"
 import Select from "../../form/select/Select"
 import Storage from "../../../utils/Storage"
-import Request from "../../../utils/Request"
 import Icon from "../../Icon"
 
 import "./style.css"
+
 
 const Background = () => {
     const isTypeRef = useRef<HTMLSelectElement>(null)
@@ -15,47 +15,28 @@ const Background = () => {
     const isRefreshIconRef = useRef<SVGSVGElement>(null)
     let rotate = 0
 
-    const fetchDataUnsplash = async (queryParams?: BackgroundQueryParams) => {
+    useEffect(() => {
+
         Storage.sync.get("background", async (item) => {
             const data = item as BackgroundType
+            isRefreshFrequencyRef.current!.value = data?.frequency ?? "tab"
+            isTypeRef.current!.value = data?.type ?? "unsplash"
+            if (data.frequency == "tab") {
+                refreshBackgroundHandler()
+            }
+        })
 
-            isRefreshFrequencyRef.current!.value = data.frequency ?? "tab"
-
-
-            let idx = data?.featured_index ?? -1;
-
-            if (idx >= 0 && idx <= BACKGROUND_MAX_FEATURED_INDEX) {
-                Storage.sync.set("background", { featured_index: ++idx })
+        Storage.local.get("unsplash", async (cache) => {
+            const data = cache as BackgroundType[]
+            if (!Array.isArray(data)) {
+                await fetchDataUnsplash()
+                Storage.sync.set("background", { frequency: "tab", type: "unsplash" })
                 return
             }
-
-            const response = await Request.get({
-                path: "/unsplash/random",
-                query: {
-                    count: "10",
-                    ...queryParams
-                }
-            });
-
-            const res = await response.json()
-            Storage.local.set("unsplash", res.data)
-            Storage.sync.set("background", { featured_index: 0 })
         })
-    }
 
-    const frequencyHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        isRefreshFrequencyRef.current!.value = e.target.value
-        Storage.sync.set('background', { frequency: e.target.value })
-    }
-
-    const refreshHandler = () => {
-        fetchDataUnsplash()
-        isRefreshIconRef.current!.style.transform = `rotate(${rotate += 360}deg)`
-    }
-
-    useEffect(() => {
-        fetchDataUnsplash()
     }, [])
+
 
     return <div className="background-settings">
         <h2 className='settings-title'>
@@ -80,14 +61,20 @@ const Background = () => {
                 <div className="items-content">
                     <div
                         className={`save-action`}
-                        onClick={refreshHandler}
+                        onClick={() => {
+                            refreshBackgroundHandler()
+                            isRefreshIconRef.current!.style.transform = `rotate(${rotate += 360}deg)`
+                        }}
                     >
                         <Icon ref={isRefreshIconRef} icon="arrow-path" className="refresh-icon" />
                     </div>
                     <Select
                         items={BACKGROUND_REFRESH_FREQUENCY}
                         ref={isRefreshFrequencyRef}
-                        onSelect={frequencyHandler}
+                        onSelect={(e) => {
+                            const data: BackgroundType = { frequency: e.target.value }
+                            Storage.sync.set('background', data)
+                        }}
                     />
                 </div>
             </div>

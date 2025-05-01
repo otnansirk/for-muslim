@@ -2,13 +2,13 @@
 import { useState } from 'react'
 
 import PrayerTime from './prayer-time/PrayerTime'
+import Background from './background/Background'
 import Greetings from './greetings/Greetings'
 import DateAndTime from './clock/DateAndTime'
 import Weather from './weather/Weather'
 import Icon from '../Icon'
 
 import './style.css'
-import Background from './background/Background'
 
 
 const Settings = () => {

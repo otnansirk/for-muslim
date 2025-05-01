@@ -30,6 +30,7 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
+    "idb-keyval": "^6.2.1",
     "pocket-editor": "^2.4.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

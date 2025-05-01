@@ -1,66 +1,11 @@
 import { useEffect, useRef } from 'react';
-import { BackgroundOverlayType } from '../../../types/bckground-overlay';
+
+import { UNSPLASH_UTM } from '../../../constant/background';
+import { UnsplashType } from '../../../types/Storage';
+import Storage from '../../../utils/Storage';
 
 import './style.css';
-import { UNSPLASH_UTM } from '../../../constant/background';
 
-const bg: BackgroundOverlayType[] = [
-    {
-        "author_name": "Abdulla Dhahri",
-        "author_url": "https://unsplash.com/@iiabdulla92",
-        "photos": "https://images.unsplash.com/photo-1579003223313-8053dc9d10aa"
-    },
-    {
-        "author_name": "Haidan",
-        "author_url": "https://unsplash.com/@hydngallery",
-        "photos": "https://images.unsplash.com/photo-1553755088-ef1973c7b4a1"
-    },
-    {
-        "author_name": "Abdullah Arif",
-        "author_url": "https://unsplash.com/@abdu3h",
-        "photos": "https://images.unsplash.com/photo-1587617425953-9075d28b8c46"
-    },
-    {
-        "author_name": "Richard Horvath",
-        "author_url": "https://unsplash.com/@ricvath",
-        "photos": "https://images.unsplash.com/photo-1620121684840-edffcfc4b878"
-    },
-    {
-        "author_name": "Richard Horvath",
-        "author_url": "https://unsplash.com/@ricvath",
-        "photos": "https://images.unsplash.com/photo-1620121478247-ec786b9be2fa"
-    },
-    {
-        "author_name": "Richard Horvath",
-        "author_url": "https://unsplash.com/@ricvath",
-        "photos": "https://images.unsplash.com/photo-1620121692029-d088224ddc74"
-    },
-    {
-        "author_name": "Richard Horvath",
-        "author_url": "https://unsplash.com/@ricvath",
-        "photos": "https://images.unsplash.com/photo-1620120966883-d977b57a96ec"
-    },
-    {
-        "author_name": "Ryan Farid",
-        "author_url": "https://unsplash.com/@torgusonyan",
-        "photos": "https://images.unsplash.com/photo-1590757825699-4844233cd768"
-    },
-    {
-        "author_name": "Yubli Audy Warokka",
-        "author_url": "https://unsplash.com/@yubliwarokka",
-        "photos": "https://images.unsplash.com/photo-1628962844030-e0db6053a5e1"
-    },
-    {
-        "author_name": "Jody A. Khomaro",
-        "author_url": "https://unsplash.com/@jodykhomaro",
-        "photos": "https://images.unsplash.com/photo-1631180388083-31d3420a1fdc"
-    },
-    {
-        "author_name": "rahmat taufiq",
-        "author_url": "https://unsplash.com/@rahmattaufiq",
-        "photos": "https://images.unsplash.com/photo-1584835106735-7fe1b39f24a4"
-    }
-]
 
 const BackgroundOverlay = () => {
 
@@ -89,10 +34,28 @@ const BackgroundOverlay = () => {
         bgArtistRef.current!.href = `https://unsplash.com/@${username}${UNSPLASH_UTM}`
     }
 
+    const setBackground = (bgInfo: UnsplashType) => {
+
+        credit(bgInfo.user.name, bgInfo.user.username)
+
+        const { width, height } = screen
+        const dpr = window.devicePixelRatio
+        const quality = Math.min(100 - dpr * 20, 75)
+
+        const qparams = `&h=${height}&w=${width}&q=${quality}&dpr=1&auto=format&fit=crop`
+        refreshRef(bgInfo.url + qparams)
+    }
+
     useEffect(() => {
-        const bgInfo = bg[Math.floor(Math.random() * bg.length)];
-        credit(bgInfo.author_name, bgInfo.author_url)
-        refreshRef(bgInfo.photos)
+        Storage.local.watch("unsplash", (item) => {
+            const unsplash = item as UnsplashType[]
+            if (!Array.isArray(unsplash)) return;
+            const bgInfo = unsplash[Math.floor(Math.random() * unsplash.length)];
+            if (!bgInfo) return;
+            setBackground(bgInfo)
+        })
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
