@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
 
-    input[type=checkbox] {
+    >input[type=checkbox] {
         -webkit-tap-highlight-color: transparent;
         cursor: pointer;
         opacity: 0;
@@ -19,7 +19,7 @@
         }
     }
 
-    input[type=text] {
+    >input[type=text] {
         background-color: #9494943a;
         border-radius: var(--border-radius-sm);
         border: 1px solid #78787834;
@@ -32,7 +32,7 @@
         letter-spacing: .5px;
     }
 
-    .switch {
+    >.switch {
         position: relative;
         background-color: #9494945c;
         border-radius: 100px;

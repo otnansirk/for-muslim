@@ -2,6 +2,14 @@
     z-index: 9;
     position: fixed;
 
+    select,
+    input,
+    option {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
+
     .gear {
 
         position: fixed;
