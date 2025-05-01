@@ -1,4 +1,4 @@
-export const defaultSettings = [
+export const DEFAULT = [
     {
         "date": {
             "enable": true,

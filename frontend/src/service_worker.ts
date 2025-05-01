@@ -10,7 +10,7 @@ import {
     NOTIF_SHOLAT_DESC,
     NOTIF_SHOLAT_TITLE
 } from "./constant/prayer";
-import { defaultSettings } from "./utils/Settings";
+import { DEFAULT } from "./constant/settings";
 import { PrayerType, StorageType } from "./types/Storage";
 import { firstUpper } from "./utils/Strings";
 import Storage from "./utils/Storage";
@@ -65,8 +65,8 @@ chrome.alarms.onAlarm.addListener(alarm => {
 })
 
 chrome.runtime.onInstalled.addListener((details) => {
-    if (details.reason === 'install') {
-        defaultSettings.forEach((setting) => {
+    if (details.reason === 'install' || details.reason === 'update') {
+        DEFAULT.forEach((setting) => {
             const [key, value] = Object.entries(setting)[0] as [keyof StorageType, StorageType[keyof StorageType]];
             Storage.sync.set(key, value);
         });
