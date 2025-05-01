@@ -12,7 +12,7 @@ export const next = (prayerTimes: PrayerType): PrayerTimeType => {
     const now = Datetime.get({ hour12: false, tz: prayerTimes?.tz });
 
     const currentTime = parseInt(now.hours) * 60 + parseInt(now.minutes);
-    return prayers.find(i => (i.hours_in_seconds ?? 0) > currentTime) ?? prayers[0];
+    return prayers.find(i => (i?.hours_in_seconds ?? 0) > currentTime) ?? prayers[0];
 }
 
 /**

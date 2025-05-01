@@ -39,5 +39,11 @@ export const defaultSettings = [
             "tz": "auto",
             "method": "3",
         }
+    },
+    {
+        "background": {
+            "frequency": "tab",
+            "type": "unsplash"
+        }
     }
 ]

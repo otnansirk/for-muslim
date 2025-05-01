@@ -1,4 +1,6 @@
 import { StorageType } from "../types/Storage";
+import * as idb from 'idb-keyval';
+
 
 const StorageLocal = class Storage {
     static set = <K>(key: string, value: K) => {
@@ -9,7 +11,7 @@ const StorageLocal = class Storage {
         }
     }
 
-    static get = (key: string, callback: <T>(item: T) => void) => {
+    static get = async (key: string, callback: <T>(item: T) => void) => {
         if (typeof chrome !== "undefined" && chrome.storage) {
             chrome.storage.local.get(key, result => callback(result[key]))
         } else {
@@ -32,6 +34,15 @@ const StorageLocal = class Storage {
     static watch = (key: string, callback: <T>(item: T) => void) => {
         this.listen(key, callback)
         this.get(key, callback)
+    }
+}
+const StorageDB = class Storage {
+    static set = <K>(key: string, value: K, callback?: <T>(item: T) => void) => {
+        idb.set(key, value).then(result => callback && callback(result))
+    }
+
+    static get = (key: string, callback: <T>(item: T) => void) => {
+        idb.get(key).then(result => callback(result))
     }
 }
 class Storage {
@@ -111,6 +122,11 @@ class Storage {
         get: StorageLocal.get,
         listen: StorageLocal.listen,
         watch: StorageLocal.watch
+    }
+
+    static db = {
+        set: StorageDB.set,
+        get: StorageDB.get
     }
 
 }
