@@ -10,18 +10,22 @@ export const BACKGROUND_TYPES = [
     // }
 ]
 export const BACKGROUND_MAX_FEATURED_INDEX = 8
+export const BACKGROUND_COLLECTION_ISLAMIC = "SWYjUoOuc44"
+export const BACKGROUND_COLLECTION_WALLPAPER = "TC8LguLGFy4"
+export const BACKGROUND_COLLECTION_ILLUSTRATION = "oM0HMhRHAVk"
+
 export const BACKGROUND_COLLECTIONS = [
     {
         label: "Wallpaper",
-        value: "TC8LguLGFy4"
+        value: BACKGROUND_COLLECTION_WALLPAPER
     },
     {
         label: "Islamic",
-        value: "SWYjUoOuc44"
+        value: BACKGROUND_COLLECTION_ISLAMIC
     },
     {
         label: "Illustration",
-        value: "oM0HMhRHAVk"
+        value: BACKGROUND_COLLECTION_ILLUSTRATION
     },
     {
         label: "Custom",

@@ -1,4 +1,4 @@
-import { BACKGROUND_MAX_FEATURED_INDEX } from "../constant/background";
+import { BACKGROUND_COLLECTION_ISLAMIC, BACKGROUND_MAX_FEATURED_INDEX } from "../constant/background";
 import { BackgroundQueryParams } from "../types/bckground-overlay";
 import { BackgroundType, UnsplashType } from "../types/Storage";
 import Request from "./Request";
@@ -9,7 +9,7 @@ export const fetchDataUnsplash = async (data: UnsplashType[], queryParams?: Back
     const response = await Request.get({
         path: "/unsplash/random",
         query: {
-            collections: "SWYjUoOuc44",
+            collections: BACKGROUND_COLLECTION_ISLAMIC,
             count: BACKGROUND_MAX_FEATURED_INDEX.toString(),
             ...queryParams
         }
