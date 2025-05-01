@@ -17,7 +17,7 @@
         /* filter: blur(var(--bg-blur)) brightness(var(--bg-brightness)); */
         opacity: 1;
         transform: scale(1.05);
-        transition: opacity .9s cubic-bezier(0.42, 0, 0.58, 1);
+        transition: opacity .5s cubic-bezier(0.42, 0, 0.58, 1);
     }
 
 }

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react"
 import { BACKGROUND_REFRESH_FREQUENCY, BACKGROUND_TYPES } from "../../../constant/background"
 import { fetchDataUnsplash, refreshBackgroundHandler } from "../../../utils/Background"
-import { BackgroundType } from "../../../types/Storage"
+import { BackgroundType, UnsplashType } from "../../../types/Storage"
 import Select from "../../form/select/Select"
 import Storage from "../../../utils/Storage"
 import Icon from "../../Icon"
@@ -21,15 +21,12 @@ const Background = () => {
             const data = item as BackgroundType
             isRefreshFrequencyRef.current!.value = data?.frequency ?? "tab"
             isTypeRef.current!.value = data?.type ?? "unsplash"
-            if (data.frequency == "tab") {
-                refreshBackgroundHandler()
-            }
         })
 
         Storage.local.get("unsplash", async (cache) => {
-            const data = cache as BackgroundType[]
-            if (!Array.isArray(data)) {
-                await fetchDataUnsplash()
+            const data = cache as UnsplashType[]
+            if (!Array.isArray(data) || data.length <= 2) {
+                await fetchDataUnsplash(data)
                 Storage.sync.set("background", { frequency: "tab", type: "unsplash" })
                 return
             }

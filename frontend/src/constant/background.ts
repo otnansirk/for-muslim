@@ -28,6 +28,7 @@ export const BACKGROUND_COLLECTIONS = [
         value: "custom"
     }
 ]
+
 export const BACKGROUND_REFRESH_FREQUENCY = [
     {
         label: "Every Tab",

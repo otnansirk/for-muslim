@@ -1,11 +1,10 @@
 import { useEffect, useRef } from 'react';
 
 import { UNSPLASH_UTM } from '../../../constant/background';
-import { UnsplashType } from '../../../types/Storage';
+import { BackgroundType, UnsplashType } from '../../../types/Storage';
 import Storage from '../../../utils/Storage';
 
 import './style.css';
-
 
 const BackgroundOverlay = () => {
 
@@ -13,9 +12,13 @@ const BackgroundOverlay = () => {
     const bg1Ref = useRef<HTMLDivElement>(null)
     const bg2Ref = useRef<HTMLDivElement>(null)
     const bgArtistRef = useRef<HTMLAnchorElement>(null)
+    const bgLoadingRef = useRef<boolean>(null)
 
     const refreshRef = (url: string) => {
+        if (bgLoadingRef.current) return;
         const image = new Image();
+
+        bgLoadingRef.current = true
         image.onload = () => {
             const loadBg = bg2Ref.current!.style.opacity === '1'
             bg2Ref.current!.style.opacity = loadBg ? '0' : '1'
@@ -24,6 +27,7 @@ const BackgroundOverlay = () => {
             changeBg!.style.backgroundImage = `url(${url})`
 
             bgRef.current!.style.opacity = '1'
+            bgLoadingRef.current = false
         }
         image.src = url;
         image.remove()
@@ -50,9 +54,34 @@ const BackgroundOverlay = () => {
         Storage.local.watch("unsplash", (item) => {
             const unsplash = item as UnsplashType[]
             if (!Array.isArray(unsplash)) return;
-            const bgInfo = unsplash[Math.floor(Math.random() * unsplash.length)];
-            if (!bgInfo) return;
-            setBackground(bgInfo)
+            if (unsplash.length < 1) return;
+
+            Storage.sync.get("background", item => {
+                const bg = item as BackgroundType;
+                const lastIndex = typeof bg?.index === 'number' ? bg.index : -1;
+
+                let bgInfo = null
+                if (bg?.frequency === "tab") {
+                    const indx = [...Array(unsplash.length).keys()].filter(i => i !== lastIndex);
+                    const random = Math.floor(Math.random() * indx.length);
+                    const randomIndex = indx[random];
+                    console.log(indx, random, "OOOOO");
+                    console.log(lastIndex, randomIndex, "PPPPP");
+
+                    Storage.sync.set("background", { index: randomIndex ?? 0 });
+
+                    bgInfo = unsplash[randomIndex];
+                }
+                if (bg?.frequency === "off") {
+                    bgInfo = unsplash[lastIndex];
+                    if (!bgInfo && unsplash.length > 0) {
+                        bgInfo = unsplash[0];
+                    }
+                }
+
+                if (!bgInfo) return;
+                setBackground(bgInfo);
+            });
         })
 
         // eslint-disable-next-line react-hooks/exhaustive-deps

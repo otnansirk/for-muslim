@@ -4,31 +4,32 @@ import { BackgroundType, UnsplashType } from "../types/Storage";
 import Request from "./Request";
 import Storage from "./Storage";
 
-export const fetchDataUnsplash = async (queryParams?: BackgroundQueryParams) => {
+export const fetchDataUnsplash = async (data: UnsplashType[], queryParams?: BackgroundQueryParams) => {
 
     const response = await Request.get({
         path: "/unsplash/random",
         query: {
+            collections: "SWYjUoOuc44",
             count: BACKGROUND_MAX_FEATURED_INDEX.toString(),
             ...queryParams
         }
     });
 
     const res = await response.json()
-    Storage.local.set("unsplash", res.data)
+    Storage.local.set("unsplash", [...data, ...res.data])
 }
 
 export const refreshBackgroundHandler = (params?: BackgroundQueryParams) => {
     Storage.sync.get("background", async (item) => {
-        const data = item as BackgroundType
-        if (data.type === "unsplash") {
+        const bg = item as BackgroundType
+        if (bg.type === "unsplash") {
             Storage.local.get("unsplash", async (item) => {
                 const data = item as UnsplashType[]
-                if (data.length) {
-                    Storage.local.set("unsplash", data.slice(1));
+                if (data.length > 2) {
+                    Storage.local.set("unsplash", data.filter((_, key) => key !== bg.index));
                     return
                 } else {
-                    fetchDataUnsplash(params)
+                    fetchDataUnsplash(data, params)
                 }
             })
         }
