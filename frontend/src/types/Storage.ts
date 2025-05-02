@@ -90,6 +90,7 @@ export type BackgroundType = {
     frequency?: string | "off" | "5_seconds" | "10_seconds" | "15_seconds" | "30_seconds" | "3600_seconds" | "86400_seconds" | "tab"
     refresh_at?: number
     index?: number
+    collections?: string
 }
 
 export type UnsplashType = {

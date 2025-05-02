@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react"
-import { BACKGROUND_REFRESH_FREQUENCY, BACKGROUND_TYPES } from "../../../constant/background"
+import { useEffect, useRef, useState } from "react"
+import { BACKGROUND_COLLECTION_ISLAMIC, BACKGROUND_COLLECTIONS, BACKGROUND_REFRESH_FREQUENCY, BACKGROUND_TYPES } from "../../../constant/background"
 import { fetchDataUnsplash, refreshBackgroundHandler } from "../../../utils/Background"
 import { BackgroundType, UnsplashType } from "../../../types/Storage"
 import Select from "../../form/select/Select"
@@ -7,37 +7,43 @@ import Storage from "../../../utils/Storage"
 import Icon from "../../Icon"
 
 import "./style.css"
+import Loader from "../../loader/Loader"
 
 
 const Background = () => {
+    const rotateRef = useRef<number>(0)
+
     const isTypeRef = useRef<HTMLSelectElement>(null)
     const isRefreshFrequencyRef = useRef<HTMLSelectElement>(null)
     const isRefreshIconRef = useRef<SVGSVGElement>(null)
-    let rotate = 0
+    const collectionsRef = useRef<HTMLSelectElement>(null)
+
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
 
         Storage.sync.get("background", async (item) => {
-            const data = item as BackgroundType
-            isRefreshFrequencyRef.current!.value = data?.frequency ?? "tab"
-            isTypeRef.current!.value = data?.type ?? "unsplash"
-        })
+            const bg = item as BackgroundType
+            isRefreshFrequencyRef.current!.value = bg?.frequency ?? "tab"
+            isTypeRef.current!.value = bg?.type ?? "unsplash"
+            collectionsRef.current!.value = bg?.collections ?? BACKGROUND_COLLECTION_ISLAMIC
 
-        Storage.local.get("unsplash", async (cache) => {
-            const data = cache as UnsplashType[]
-            if (!Array.isArray(data) || data.length <= 2) {
-                await fetchDataUnsplash(data)
-                Storage.sync.set("background", { frequency: "tab", type: "unsplash" })
-                return
-            }
+            Storage.local.get("unsplash", async (cache) => {
+                const data = cache as UnsplashType[]
+                if (!Array.isArray(data) || data.length <= 2) {
+                    await fetchDataUnsplash(data, { collections: bg.collections })
+                    Storage.sync.set("background", { frequency: "tab", type: "unsplash" })
+                    return
+                }
+            })
         })
 
     }, [])
 
 
-    return <div className="background-settings">
+    return <div className={`background-settings ${loading && 'loading'}`}>
         <h2 className='settings-title'>
-            BACKGROUND
+            {loading && <Loader />} BACKGROUND
         </h2>
         <div className='settings-items'>
             <div className='items'>
@@ -58,9 +64,9 @@ const Background = () => {
                 <div className="items-content">
                     <div
                         className={`save-action`}
-                        onClick={() => {
-                            refreshBackgroundHandler()
-                            isRefreshIconRef.current!.style.transform = `rotate(${rotate += 360}deg)`
+                        onClick={async () => {
+                            isRefreshIconRef.current!.style.transform = `rotate(${rotateRef.current += 360}deg)`
+                            await refreshBackgroundHandler()
                         }}
                     >
                         <Icon ref={isRefreshIconRef} icon="arrow-path" className="refresh-icon" />
@@ -71,6 +77,24 @@ const Background = () => {
                         onSelect={(e) => {
                             const data: BackgroundType = { frequency: e.target.value }
                             Storage.sync.set('background', data)
+                        }}
+                    />
+                </div>
+            </div>
+            <hr />
+            <div className='items'>
+                <div className='items-title'>
+                    Collections
+                </div>
+                <div className="items-content">
+                    <Select
+                        items={BACKGROUND_COLLECTIONS}
+                        ref={collectionsRef}
+                        onSelect={async (e) => {
+                            setLoading(true)
+                            Storage.sync.set('background', { collections: e.target.value })
+                            await fetchDataUnsplash([], { collections: e.target.value })
+                            setLoading(false)
                         }}
                     />
                 </div>

@@ -1,3 +1,5 @@
+import { BACKGROUND_COLLECTION_ISLAMIC } from "./background";
+
 export const DEFAULT = [
     {
         "date": {
@@ -43,7 +45,8 @@ export const DEFAULT = [
     {
         "background": {
             "frequency": "tab",
-            "type": "unsplash"
+            "type": "unsplash",
+            "collections": BACKGROUND_COLLECTION_ISLAMIC
         }
     }
 ]

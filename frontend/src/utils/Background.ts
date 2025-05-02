@@ -19,7 +19,7 @@ export const fetchDataUnsplash = async (data: UnsplashType[], queryParams?: Back
     Storage.local.set("unsplash", [...data, ...res.data])
 }
 
-export const refreshBackgroundHandler = (params?: BackgroundQueryParams) => {
+export const refreshBackgroundHandler = async (params?: BackgroundQueryParams) => {
     Storage.sync.get("background", async (item) => {
         const bg = item as BackgroundType
         if (bg.type === "unsplash") {
@@ -29,7 +29,7 @@ export const refreshBackgroundHandler = (params?: BackgroundQueryParams) => {
                     Storage.local.set("unsplash", data.filter((_, key) => key !== bg.index));
                     return
                 } else {
-                    fetchDataUnsplash(data, params)
+                    await fetchDataUnsplash(data, { collections: bg.collections, ...params })
                 }
             })
         }
