@@ -4,7 +4,7 @@
     display: grid;
     min-height: 100dvh;
     grid-template: 'header' 'content' 'footer';
-    padding-bottom: 18px;
+    /* padding-bottom: 18px; */
 
     .header {
         padding-top: 40px;

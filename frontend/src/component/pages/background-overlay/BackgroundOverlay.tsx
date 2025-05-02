@@ -65,8 +65,6 @@ const BackgroundOverlay = () => {
                     const indx = [...Array(unsplash.length).keys()].filter(i => i !== lastIndex);
                     const random = Math.floor(Math.random() * indx.length);
                     const randomIndex = indx[random];
-                    console.log(indx, random, "OOOOO");
-                    console.log(lastIndex, randomIndex, "PPPPP");
 
                     Storage.sync.set("background", { index: randomIndex ?? 0 });
 
