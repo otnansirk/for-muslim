@@ -23,12 +23,12 @@ export const BACKGROUND_COLLECTION: { [key: string]: string } = {
 
 export const BACKGROUND_COLLECTIONS = [
     {
-        label: "Wallpaper",
-        value: "wallpaper"
-    },
-    {
         label: "Islamic",
         value: "islamic"
+    },
+    {
+        label: "Wallpaper",
+        value: "wallpaper"
     },
     {
         label: "Illustration",

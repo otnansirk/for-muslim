@@ -45,14 +45,14 @@ const Background = () => {
         Storage.sync.get("background", item => {
             const bg = item as BackgroundType
             if (bg) {
-                typeRef.current!.value = bg.type as string
-                frequencyRef.current!.value = bg.frequency as string
-                collectionTypeRef.current!.value = bg.collection_type as string
-                collectionValueRef.current!.placeholder = bg.collection_value as string
-                lastCollectionValueRef.current = bg.collection_value as string
+                typeRef.current!.value = bg?.type as string
+                frequencyRef.current!.value = bg?.frequency as string
+                collectionTypeRef.current!.value = bg?.collection_type as string
+                collectionValueRef.current!.placeholder = bg?.collection_value as string
+                lastCollectionValueRef.current = bg?.collection_value as string
 
-                setCollectionType(bg.collection_type as string)
-                setCurrentCollectionValue(bg.collection_value as string)
+                setCollectionType(bg?.collection_type as string)
+                setCurrentCollectionValue(bg?.collection_value as string)
             }
         })
 

@@ -46,7 +46,8 @@ export const DEFAULT = [
         "background": {
             "frequency": "tab",
             "type": "unsplash",
-            "collections": BACKGROUND_COLLECTION_ISLAMIC
+            "collection_type": "islamic",
+            "collection_value": BACKGROUND_COLLECTION_ISLAMIC
         }
     }
 ]

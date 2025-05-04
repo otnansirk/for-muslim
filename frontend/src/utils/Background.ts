@@ -46,17 +46,20 @@ export const initUnsplash = async (unsplashCache?: UnsplashCollectionsType, coll
 
 export const cacheUnsplash = async (unsplashCache: UnsplashCollectionsType, backgroundSync: BackgroundType, reset: boolean = false): Promise<UnsplashType | undefined> => {
 
-    let data = reset ? undefined : unsplashCache?.[backgroundSync.collection_type as keyof UnsplashCollectionsType] as UnsplashType[] | undefined
+    const collectType = backgroundSync?.collection_type ?? "islamic"
+    const collectValue = backgroundSync?.collection_value ?? BACKGROUND_COLLECTION_ISLAMIC
+
+    let data = reset ? undefined : unsplashCache?.[collectType as keyof UnsplashCollectionsType] as UnsplashType[] | undefined
 
     if (data === undefined || data.length <= 2) {
-        data = await initUnsplash(unsplashCache, backgroundSync.collection_type, backgroundSync.collection_value, reset)
-        unsplashCache = { ...unsplashCache, [backgroundSync.collection_type as string]: data }
+        data = await initUnsplash(unsplashCache, collectType, collectValue, reset)
+        unsplashCache = { ...unsplashCache, [collectType as string]: data }
     }
 
     if (data) {
         data.shift()
 
-        unsplashCache[backgroundSync.collection_type as keyof UnsplashCollectionsType] = data
+        unsplashCache[collectType as keyof UnsplashCollectionsType] = data
         Storage.local.set(`unsplash`, unsplashCache)
 
         imagePreload(data[0].url)
