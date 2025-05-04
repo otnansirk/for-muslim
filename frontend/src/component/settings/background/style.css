@@ -1,10 +1,16 @@
 .background-settings {
     .refresh-icon {
         transition: transform .8s ease;
+
+        &.spin {
+            animation: rotate 1s linear;
+            transform-origin: center center;
+        }
     }
 
     .check-icon {
         color: rgb(0, 255, 17);
+        font-size: 12px;
     }
 
     .loader {
