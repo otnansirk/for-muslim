@@ -1,11 +1,11 @@
 {
-    "name": "For Muslim",
-    "description": "Muslim app to make it more obedient and better than yesterday.",
+    "name": "Mooslem° Startpage",
+    "description": "Mooslem Start Page is a minimalist Chrome extension that helps you stay focused, energized, and connected to your faith.",
     "version": "1.0.0",
     "manifest_version": 3,
     "action": {
         "default_popup": "index.html",
-        "default_title": "For Muslim"
+        "default_title": "Mooslem"
     },
     "icons": {
         "192": "/assets/favicon/web-app-manifest-192x192.png",
