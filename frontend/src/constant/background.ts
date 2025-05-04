@@ -9,23 +9,30 @@ export const BACKGROUND_TYPES = [
     //     value: "local"
     // }
 ]
-export const BACKGROUND_MAX_FEATURED_INDEX = 8
+export const BACKGROUND_MAX_FEATURED_INDEX = 10
+
 export const BACKGROUND_COLLECTION_ISLAMIC = "SWYjUoOuc44"
 export const BACKGROUND_COLLECTION_WALLPAPER = "TC8LguLGFy4"
 export const BACKGROUND_COLLECTION_ILLUSTRATION = "dUWMO3DKotM"
 
+export const BACKGROUND_COLLECTION: { [key: string]: string } = {
+    "islamic": BACKGROUND_COLLECTION_ISLAMIC,
+    "wallpaper": BACKGROUND_COLLECTION_WALLPAPER,
+    "illustration": BACKGROUND_COLLECTION_ILLUSTRATION
+}
+
 export const BACKGROUND_COLLECTIONS = [
     {
         label: "Wallpaper",
-        value: BACKGROUND_COLLECTION_WALLPAPER
+        value: "wallpaper"
     },
     {
         label: "Islamic",
-        value: BACKGROUND_COLLECTION_ISLAMIC
+        value: "islamic"
     },
     {
         label: "Illustration",
-        value: BACKGROUND_COLLECTION_ILLUSTRATION
+        value: "illustration"
     },
     {
         label: "Custom",
@@ -62,8 +69,8 @@ export const BACKGROUND_REFRESH_FREQUENCY = [
     //     label: "Every Day",
     //     value: "86400_seconds"
     // },
-    {
-        label: "Off",
-        value: "off"
-    },
+    // {
+    //     label: "Off",
+    //     value: "off"
+    // },
 ]
