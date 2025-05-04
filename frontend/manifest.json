@@ -1,7 +1,7 @@
 {
-    "name": "Moslem",
-    "description": "Modern & Minimalist Chrome extension designed to help you balance work and faith.",
-    "version": "3.1.0",
+    "name": "Mooslem° Startpage",
+    "description": "Mooslem Start Page is a minimalist Chrome extension that helps you stay focused, energized, and connected to your faith.",
+    "version": "3.2.0",
     "manifest_version": 3,
     "chrome_url_overrides": {
         "newtab": "index.html"
