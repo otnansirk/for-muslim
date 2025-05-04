@@ -88,9 +88,15 @@ export type TimeType = {
 export type BackgroundType = {
     type?: string | "local" | "unsplash"
     frequency?: string | "off" | "5_seconds" | "10_seconds" | "15_seconds" | "30_seconds" | "3600_seconds" | "86400_seconds" | "tab"
-    refresh_at?: number
-    index?: number
-    collections?: string
+    collection_type?: string
+    collection_value?: string
+}
+
+export type UnsplashCollectionsType = {
+    islamic?: UnsplashType[]
+    wallpaper?: UnsplashType[]
+    illustration?: UnsplashType[]
+    custom?: UnsplashType[]
 }
 
 export type UnsplashType = {

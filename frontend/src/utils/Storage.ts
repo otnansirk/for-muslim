@@ -11,15 +11,26 @@ const StorageLocal = class Storage {
         }
     }
 
-    static get = async (key: string, callback: <T>(item: T) => void) => {
+    static get = async <T>(key: string, callback?: (item: T) => Promise<T | void> | void) => {
         if (typeof chrome !== "undefined" && chrome.storage) {
-            chrome.storage.local.get(key, result => callback(result[key]))
+            if (callback) {
+                chrome.storage.local.get(key, result => callback(result[key]))
+            }
+            return new Promise<T>((resolve, reject) => {
+                chrome.storage.local.get(key, result => {
+                    if (chrome.runtime.lastError) {
+                        reject(chrome.runtime.lastError)
+                    } else {
+                        resolve(result[key])
+                    }
+                })
+            })
         } else {
             console.error("Chrome Local Storage API is not available.");
         }
     }
 
-    static listen = (key: string, callback: <T>(item: T) => void) => {
+    static listen = <T>(key: string, callback: (item: T) => void) => {
         if (typeof chrome !== "undefined" && chrome.storage) {
             chrome.storage.onChanged.addListener(item => {
                 if (item?.[key]) {
@@ -31,9 +42,9 @@ const StorageLocal = class Storage {
         }
     }
 
-    static watch = (key: string, callback: <T>(item: T) => void) => {
-        this.listen(key, callback)
-        this.get(key, callback)
+    static watch = <T>(key: string, callback: (item: T) => void) => {
+        this.listen<T>(key, callback)
+        this.get<T>(key, callback)
     }
 }
 const StorageDB = class Storage {
@@ -41,8 +52,20 @@ const StorageDB = class Storage {
         idb.set(key, value).then(result => callback && callback(result))
     }
 
-    static get = (key: string, callback: <T>(item: T) => void) => {
-        idb.get(key).then(result => callback(result))
+    static get = async <T>(key: string, callback?: <T>(item: T) => Promise<T | void> | void) => {
+        if (callback) {
+            idb.get(key).then(result => callback(result))
+        }
+
+        return new Promise<T>((resolve, reject) => {
+            idb.get(key).then(result => {
+                if (chrome.runtime.lastError) {
+                    reject(chrome.runtime.lastError)
+                } else {
+                    resolve(result)
+                }
+            })
+        })
     }
 }
 class Storage {
@@ -85,9 +108,21 @@ class Storage {
         }
     }
 
-    private static get = async <K extends keyof StorageType>(key: K, callback: <T>(item: T) => void) => {
+    private static get = async <K extends keyof StorageType, T = StorageType[K]>(key: K, callback?: <T>(item: T) => Promise<T | void> | void) => {
         if (typeof chrome !== "undefined" && chrome.storage) {
-            chrome.storage.sync.get(key, result => callback(result[key]))
+            if (callback) {
+                chrome.storage.sync.get(key, result => callback(result[key]))
+            }
+
+            return new Promise<T>((resolve, reject) => {
+                chrome.storage.sync.get(key, result => {
+                    if (chrome.runtime.lastError) {
+                        reject(chrome.runtime.lastError)
+                    } else {
+                        resolve(result[key])
+                    }
+                })
+            })
         } else {
             console.error("Chrome Storage API is not available.");
         }
