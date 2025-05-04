@@ -34,6 +34,8 @@ export const initUnsplash = async (unsplashCache?: UnsplashCollectionsType, coll
                 [collection_type as keyof UnsplashCollectionsType]: res.data as UnsplashType[],
             }
         }
+        imagePreload(res.data[0].url)
+        imagePreload(res.data[1].url)
         Storage.local.set(`unsplash`, unsplashCache)
         const result = res.data as UnsplashType[]
         return result

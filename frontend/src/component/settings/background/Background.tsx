@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { BACKGROUND_COLLECTION, BACKGROUND_COLLECTIONS, BACKGROUND_REFRESH_FREQUENCY, BACKGROUND_TYPES } from "../../../constant/background"
+import { BACKGROUND_COLLECTION, BACKGROUND_COLLECTION_ISLAMIC, BACKGROUND_COLLECTIONS, BACKGROUND_REFRESH_FREQUENCY, BACKGROUND_TYPES } from "../../../constant/background"
 import { BackgroundType } from "../../../types/Storage"
 import Select from "../../form/select/Select"
 import Storage from "../../../utils/Storage"
@@ -12,7 +12,7 @@ import Loader from "../../loader/Loader"
 
 const Background = () => {
 
-    const typeRef = useRef<HTMLSelectElement>(null)
+    const sourceRef = useRef<HTMLSelectElement>(null)
     const frequencyRef = useRef<HTMLSelectElement>(null)
     const refreshIconRef = useRef<SVGSVGElement>(null)
     const collectionTypeRef = useRef<HTMLSelectElement>(null)
@@ -45,10 +45,10 @@ const Background = () => {
         Storage.sync.get("background", item => {
             const bg = item as BackgroundType
             if (bg) {
-                typeRef.current!.value = bg?.type as string
-                frequencyRef.current!.value = bg?.frequency as string
-                collectionTypeRef.current!.value = bg?.collection_type as string
-                collectionValueRef.current!.placeholder = bg?.collection_value as string
+                sourceRef.current!.value = bg?.source ?? "unsplash"
+                frequencyRef.current!.value = bg?.frequency ?? "tab"
+                collectionTypeRef.current!.value = bg?.collection_type ?? "islamic"
+                collectionValueRef.current!.placeholder = bg?.collection_value ?? BACKGROUND_COLLECTION_ISLAMIC
                 lastCollectionValueRef.current = bg?.collection_value as string
 
                 setCollectionType(bg?.collection_type as string)
@@ -83,8 +83,8 @@ const Background = () => {
                 </div>
                 <Select
                     items={BACKGROUND_TYPES}
-                    ref={typeRef}
-                    onSelect={e => Storage.sync.set('background', { type: e.target.value })}
+                    ref={sourceRef}
+                    onSelect={e => Storage.sync.set('background', { source: e.target.value })}
                 />
             </div>
             <hr />
