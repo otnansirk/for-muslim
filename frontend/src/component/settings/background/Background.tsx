@@ -31,6 +31,8 @@ const Background = () => {
             setOnChangeUnsplashCollection(true)
             Storage.local.set("onChangeUnsplashCollection", { collection_type: value, collection_value: BACKGROUND_COLLECTION[value as string] })
             Storage.sync.set("background", { collection_type: value, collection_value: BACKGROUND_COLLECTION[value as string] })
+        } else {
+            setOnChangeUnsplashCollection(false)
         }
     }
 
