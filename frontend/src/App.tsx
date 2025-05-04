@@ -12,7 +12,6 @@ import './app.css'
 
 
 function App() {
-
     return (
         <>
             <BackgroundOverlay />
@@ -29,11 +28,7 @@ function App() {
                     {<PrayerTime />}
                     <Notes />
                 </div>
-                {/* <div className='footer'>
-                    <Quote />
-                </div> */}
             </div>
-
         </>
     )
 }
