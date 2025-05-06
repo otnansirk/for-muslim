@@ -23,8 +23,8 @@
             backdrop-filter: blur(15px);
             padding: 10px;
             border-radius: var(--border-radius-md);
-            width: 30px;
-            height: 30px;
+            width: 28px;
+            height: 28px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -32,7 +32,7 @@
             transition: .2s ease-in-out;
 
             &:hover {
-                background-color: #878787a1;
+                background-color: #ffffff31;
 
                 >.icon {
                     transform: rotate(25deg);
