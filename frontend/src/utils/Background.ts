@@ -35,7 +35,6 @@ export const initUnsplash = async (unsplashCache?: UnsplashCollectionsType, coll
             }
         }
         imagePreload(res.data[0].url)
-        imagePreload(res.data[1].url)
         Storage.local.set(`unsplash`, unsplashCache)
         const result = res.data as UnsplashType[]
         return result
@@ -56,15 +55,15 @@ export const cacheUnsplash = async (unsplashCache: UnsplashCollectionsType, back
     if (data === undefined || data.length <= 2) {
         data = await initUnsplash(unsplashCache, collectType, collectValue, reset)
         unsplashCache = { ...unsplashCache, [collectType as string]: data }
+    } else {
+        data.shift()
     }
 
     if (data) {
-        data.shift()
 
         unsplashCache[collectType as keyof UnsplashCollectionsType] = data
         Storage.local.set(`unsplash`, unsplashCache)
 
-        imagePreload(data[0].url)
         imagePreload(data[1].url)
         return data[0]
     }
