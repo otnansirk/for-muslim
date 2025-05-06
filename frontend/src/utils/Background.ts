@@ -4,7 +4,7 @@ import Request from "./Request";
 import Storage from "./Storage";
 
 
-export const initUnsplash = async (unsplashCache?: UnsplashCollectionsType, collection_type: string = "islamic", collection_value: string = BACKGROUND_COLLECTION_ISLAMIC, reset: boolean = false): Promise<UnsplashType[] | undefined> => {
+export const initUnsplash = async (collection_value: string = BACKGROUND_COLLECTION_ISLAMIC): Promise<UnsplashType[] | undefined> => {
     const query = {
         collections: collection_value,
         count: BACKGROUND_MAX_FEATURED_INDEX.toString(),
@@ -25,17 +25,7 @@ export const initUnsplash = async (unsplashCache?: UnsplashCollectionsType, coll
             return
         }
 
-        const currentCache = reset ? [] : unsplashCache?.[collection_type as keyof UnsplashCollectionsType] as UnsplashType[]
-
-        if (unsplashCache?.[collection_type as keyof UnsplashCollectionsType]) {
-            unsplashCache[collection_type as keyof UnsplashCollectionsType] = [...currentCache, ...res.data as UnsplashType[]]
-        } else {
-            unsplashCache = {
-                [collection_type as keyof UnsplashCollectionsType]: res.data as UnsplashType[],
-            }
-        }
         imagePreload(res.data[0].url)
-        Storage.local.set(`unsplash`, unsplashCache)
         const result = res.data as UnsplashType[]
         return result
 
@@ -50,22 +40,27 @@ export const cacheUnsplash = async (unsplashCache: UnsplashCollectionsType, back
     const collectType = backgroundSync?.collection_type ?? "islamic"
     const collectValue = backgroundSync?.collection_value ?? BACKGROUND_COLLECTION_ISLAMIC
 
-    let data = reset ? undefined : unsplashCache?.[collectType as keyof UnsplashCollectionsType] as UnsplashType[] | undefined
-
-    if (data === undefined || data.length <= 2) {
-        data = await initUnsplash(unsplashCache, collectType, collectValue, reset)
-        unsplashCache = { ...unsplashCache, [collectType as string]: data }
-    } else {
-        data.shift()
+    // Init unsplash cache if not exist
+    if (!unsplashCache?.[collectType as keyof UnsplashCollectionsType]) {
+        unsplashCache = { [collectType]: [] }
     }
 
-    if (data) {
+    let currentCache = reset ? [] : (unsplashCache?.[collectType as keyof UnsplashCollectionsType] ?? []) as UnsplashType[]
 
-        unsplashCache[collectType as keyof UnsplashCollectionsType] = data
+    currentCache.shift()
+
+    if (currentCache === undefined || currentCache.length <= 2) {
+        const photos = await initUnsplash(collectValue)
+        currentCache = [...currentCache ?? [], ...photos ?? []]
+    }
+
+    if (currentCache) {
+
+        unsplashCache[collectType as keyof UnsplashCollectionsType] = currentCache
         Storage.local.set(`unsplash`, unsplashCache)
 
-        imagePreload(data[1].url)
-        return data[0]
+        imagePreload(currentCache[1].url)
+        return currentCache[0]
     }
 }
 
