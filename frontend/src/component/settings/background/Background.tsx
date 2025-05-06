@@ -4,10 +4,10 @@ import { BackgroundType } from "../../../types/Storage"
 import Select from "../../form/select/Select"
 import Storage from "../../../utils/Storage"
 import Input from "../../form/input/Input"
+import Loader from "../../loader/Loader"
 import Icon from "../../Icon"
 
 import "./style.css"
-import Loader from "../../loader/Loader"
 
 
 const Background = () => {
@@ -24,7 +24,7 @@ const Background = () => {
     const [onChangeUnsplashCollection, setOnChangeUnsplashCollection] = useState<boolean | undefined>(undefined)
     const [currentCollectionValue, setCurrentCollectionValue] = useState<string>("")
 
-    const onCollectionHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const onCollectionHandler = async (e: React.ChangeEvent<HTMLSelectElement>) => {
         const value = e.target.value
         setCollectionType(value)
         if (value !== "custom") {
@@ -32,7 +32,9 @@ const Background = () => {
             Storage.local.set("onChangeUnsplashCollection", { collection_type: value, collection_value: BACKGROUND_COLLECTION[value as string] })
             Storage.sync.set("background", { collection_type: value, collection_value: BACKGROUND_COLLECTION[value as string] })
         } else {
+            const bg = await Storage.sync.get("background")
             setOnChangeUnsplashCollection(false)
+            collectionValueRef.current!.placeholder = bg?.collection_value ?? BACKGROUND_COLLECTION_ISLAMIC
         }
     }
 
@@ -41,6 +43,7 @@ const Background = () => {
         setOnChangeUnsplashCollection(true)
         Storage.local.set("onChangeUnsplashCollection", { type: "custom", value: collectionValueRef.current?.value })
         Storage.sync.set("background", { collection_type: "custom", collection_value: collectionValueRef.current?.value })
+        collectionValueRef.current!.placeholder = collectionValueRef.current?.value ?? ""
     }
 
     useEffect(() => {
