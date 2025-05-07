@@ -12,6 +12,9 @@
     --bg-blur: 5px;
     --bg-brightness: .9;
     --out-transition: cubic-bezier(.210, .61, .350, 1);
+    --color-white: #a5aea8;
+    --color-blue: #3e38f0;
+    --color-green: #00ff6370;
 }
 
 @keyframes fadeIn {

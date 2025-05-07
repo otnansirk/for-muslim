@@ -11,7 +11,7 @@
         height: 0;
 
         &:checked+.switch {
-            background-color: rgb(62, 56, 240);
+            background-color: var(--color-blue);
 
             &:after {
                 transform: translate(20px);
