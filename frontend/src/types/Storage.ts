@@ -99,6 +99,11 @@ export type UnsplashCollectionsType = {
     custom?: UnsplashType[]
 }
 
+export type LocalBackgroundCollectionsType = {
+    background: HTMLInputElement["files"]
+    thumbnail: Blob
+}
+
 export type UnsplashType = {
     id: string;
     slug: string;
