@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react"
-import { BACKGROUND_COLLECTION, BACKGROUND_COLLECTION_ISLAMIC, BACKGROUND_COLLECTIONS, BACKGROUND_REFRESH_FREQUENCY, BACKGROUND_TYPES } from "../../../constant/background"
+import { BACKGROUND_REFRESH_FREQUENCY, BACKGROUND_SOURCE } from "../../../constant/background"
 import { BackgroundType } from "../../../types/Storage"
 import Select from "../../form/select/Select"
 import Storage from "../../../utils/Storage"
-import Input from "../../form/input/Input"
-import Loader from "../../loader/Loader"
+import Unsplash from "./Unsplash"
 import Icon from "../../Icon"
+import Local from "./Local"
 
 import "./style.css"
 
@@ -15,49 +15,17 @@ const Background = () => {
     const sourceRef = useRef<HTMLSelectElement>(null)
     const frequencyRef = useRef<HTMLSelectElement>(null)
     const refreshIconRef = useRef<SVGSVGElement>(null)
-    const collectionTypeRef = useRef<HTMLSelectElement>(null)
-    const collectionValueRef = useRef<HTMLInputElement>(null)
-    const lastCollectionValueRef = useRef<string>("")
 
-    const [collectionType, setCollectionType] = useState<string>()
     const [onRefreshBackground, setOnRefreshBackground] = useState<boolean>(false)
-    const [onChangeUnsplashCollection, setOnChangeUnsplashCollection] = useState<boolean | undefined>(undefined)
-    const [currentCollectionValue, setCurrentCollectionValue] = useState<string>("")
+    const [source, setSource] = useState<string>("")
 
-    const onCollectionHandler = async (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const value = e.target.value
-        setCollectionType(value)
-        if (value !== "custom") {
-            setOnChangeUnsplashCollection(true)
-            Storage.local.set("onChangeUnsplashCollection", { collection_type: value, collection_value: BACKGROUND_COLLECTION[value as string] })
-            Storage.sync.set("background", { collection_type: value, collection_value: BACKGROUND_COLLECTION[value as string] })
-        } else {
-            const bg = await Storage.sync.get("background")
-            setOnChangeUnsplashCollection(false)
-            collectionValueRef.current!.placeholder = bg?.collection_value ?? BACKGROUND_COLLECTION_ISLAMIC
-        }
-    }
-
-    const onSaveCustomCollection = () => {
-        if (onChangeUnsplashCollection) return
-        setOnChangeUnsplashCollection(true)
-        Storage.local.set("onChangeUnsplashCollection", { type: "custom", value: collectionValueRef.current?.value })
-        Storage.sync.set("background", { collection_type: "custom", collection_value: collectionValueRef.current?.value })
-        collectionValueRef.current!.placeholder = collectionValueRef.current?.value ?? ""
-    }
 
     useEffect(() => {
         Storage.sync.get("background", item => {
             const bg = item as BackgroundType
             if (bg) {
                 sourceRef.current!.value = bg?.source ?? "unsplash"
-                frequencyRef.current!.value = bg?.frequency ?? "tab"
-                collectionTypeRef.current!.value = bg?.collection_type ?? "islamic"
-                collectionValueRef.current!.placeholder = bg?.collection_value ?? BACKGROUND_COLLECTION_ISLAMIC
-                lastCollectionValueRef.current = bg?.collection_value as string
-
-                setCollectionType(bg?.collection_type as string)
-                setCurrentCollectionValue(bg?.collection_value as string)
+                setSource(bg?.source ?? "unsplash")
             }
         })
 
@@ -67,14 +35,6 @@ const Background = () => {
             }, 500);
         })
 
-        Storage.local.watch("onChangeUnsplashCollection", (load) => {
-            if (collectionValueRef.current?.value && load === false) {
-                setTimeout(() => {
-                    setOnChangeUnsplashCollection(false)
-                    lastCollectionValueRef.current = collectionValueRef.current?.value as string
-                }, 500);
-            }
-        })
     }, [])
 
     return <div className={`background-settings`}>
@@ -87,9 +47,12 @@ const Background = () => {
                     Source
                 </div>
                 <Select
-                    items={BACKGROUND_TYPES}
+                    items={BACKGROUND_SOURCE}
                     ref={sourceRef}
-                    onSelect={e => Storage.sync.set('background', { source: e.target.value })}
+                    onSelect={e => {
+                        setSource(e.target.value)
+                        Storage.sync.set('background', { source: e.target.value })
+                    }}
                 />
             </div>
             <hr />
@@ -112,51 +75,17 @@ const Background = () => {
                     <Select
                         items={BACKGROUND_REFRESH_FREQUENCY}
                         ref={frequencyRef}
-                        onSelect={() => {
-
-                        }}
+                        onSelect={() => { }}
                     />
                 </div>
             </div>
-            <hr />
-            <div className='items'>
-                <div className='items-title'>
-                    Collections
-                </div>
-                <div className="items-content">
-                    <Select
-                        items={BACKGROUND_COLLECTIONS}
-                        ref={collectionTypeRef}
-                        onSelect={onCollectionHandler}
-                    />
-                </div>
-            </div>
-            <div className={`dropshow ${collectionType !== "custom" && "hidden"}`}>
+            <div className={`dropshow ww ${source !== "unsplash" && "hidden"}`}>
                 <hr />
-                <div className='items'>
-                    <div className='items-title'>
-                        Custom
-                    </div>
-                    <div className="items-content">
-                        {
-                            (currentCollectionValue && currentCollectionValue !== lastCollectionValueRef.current) &&
-                            <div
-                                className={`save-action`}
-                                onClick={onSaveCustomCollection}
-                            >
-                                {
-                                    onChangeUnsplashCollection
-                                        ? <Loader />
-                                        : <Icon icon="check" className="check-icon" />
-                                }
-                            </div>
-                        }
-                        <Input
-                            ref={collectionValueRef}
-                            onChange={e => setCurrentCollectionValue(e.target.value)}
-                        />
-                    </div>
-                </div>
+                <Unsplash />
+            </div>
+            <div className={`dropshow ww ${source !== "local" && "hidden"}`}>
+                <hr />
+                <Local />
             </div>
         </div>
     </div>
