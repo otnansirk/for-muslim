@@ -1,13 +1,13 @@
 export const UNSPLASH_UTM = "?utm_source=sembahyang&utm_medium=referral"
-export const BACKGROUND_TYPES = [
+export const BACKGROUND_SOURCE = [
     {
         label: "Unsplash",
         value: "unsplash"
     },
-    // {
-    //     label: "Local",
-    //     value: "local"
-    // }
+    {
+        label: "Local",
+        value: "local"
+    }
 ]
 export const BACKGROUND_MAX_FEATURED_INDEX = 10
 
