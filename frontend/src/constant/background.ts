@@ -1,4 +1,4 @@
-export const UNSPLASH_UTM = "?utm_source=sembahyang&utm_medium=referral"
+export const UNSPLASH_UTM = "?utm_source=mooslem&utm_medium=referral"
 export const BACKGROUND_SOURCE = [
     {
         label: "Unsplash",
