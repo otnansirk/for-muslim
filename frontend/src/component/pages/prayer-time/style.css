@@ -41,7 +41,7 @@
         border: 1px solid #7878784c;
         backdrop-filter: blur(30px);
         box-shadow: #0000003e 0 3px 8px;
-        background-color: #44444441;
+        background-color: #c7c7c738;
         position: relative;
 
         &.active {
