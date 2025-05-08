@@ -31,7 +31,7 @@ export const applyImageBackground = (
             creditRef.current!.href = `https://unsplash.com/@${data.user?.username}${UNSPLASH_UTM}`
         }
 
-        Storage.local.set("unsplaceEmageLoad", false)
+        Storage.local.set("unsplashEmageLoad", false)
     }
     image.src = url;
     image.remove()

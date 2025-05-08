@@ -73,7 +73,7 @@ export const loadUnsplaceImage = async (
     reset: boolean = false
 ) => {
 
-    Storage.local.set("unsplaceEmageLoad", true)
+    Storage.local.set("unsplashEmageLoad", true)
 
     const background = await Storage.sync.get("background") as BackgroundType
     const unsplash = await Storage.local.get("unsplash") as UnsplashCollectionsType
