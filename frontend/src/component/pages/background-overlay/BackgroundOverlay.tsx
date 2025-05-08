@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 
 import { UNSPLASH_UTM } from '../../../constant/background';
-import { loadUnsplaceImage } from '../../../utils/Background';
+import { loadUnsplaceImage } from '../../../utils/BackgroundUnsplash';
 import Storage from '../../../utils/Storage';
 
 import './style.css';
