@@ -1,7 +1,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import { LocalBackgroundCollectionsType, LocalImagesType } from "../../../types/Storage"
-import { deleteFile, uploadFiles } from "../../../utils/BackgroundLocal"
+import { deleteImage, uploadFiles } from "../../../utils/BackgroundLocal"
 import Storage from "../../../utils/Storage"
 import Loader from "../../loader/Loader"
 import Each from "../../Each"
@@ -21,7 +21,7 @@ const Local = () => {
     const [loading, setLoading] = useState<boolean>(false)
 
     const onRemoveHandler = (id: string) => {
-        deleteFile(id)
+        deleteImage(id)
         setThumbnails(state => state.filter(item => item.key !== id))
     }
 

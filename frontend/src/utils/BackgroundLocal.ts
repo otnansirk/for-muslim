@@ -32,7 +32,7 @@ export const uploadFiles = async (files: HTMLInputElement["files"]): Promise<Loc
     return data
 }
 
-export const deleteFile = async (id: string) => {
+export const deleteImage = async (id: string) => {
     await Storage.db.delete(id)
     const localImages = await Storage.db.get("localImages") as LocalImagesType
 
