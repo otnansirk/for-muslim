@@ -100,7 +100,7 @@ export type UnsplashCollectionsType = {
 }
 
 export type LocalBackgroundCollectionsType = {
-    background: HTMLInputElement["files"]
+    background: File
     thumbnail: Blob
 }
 
@@ -112,6 +112,16 @@ export type UnsplashType = {
     exif: Exif;
     location: Location;
     user: User;
+}
+
+export type LocalBackgroundType = {
+    url: string;
+}
+
+export type LocalImagesType = {
+    ids: string[]
+    selected: string
+    time: number
 }
 
 type Exif = {

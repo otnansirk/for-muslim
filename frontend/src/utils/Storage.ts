@@ -48,9 +48,7 @@ const StorageLocal = class Storage {
     }
 }
 const StorageDB = class Storage {
-    static set = <K>(key: string, value: K, callback?: <T>(item: T) => void) => {
-        idb.set(key, value).then(result => callback && callback(result))
-    }
+    static set = async <K>(key: string, value: K) => await idb.set(key, value)
 
     static get = async <T>(key: string, callback?: <T>(item: T) => Promise<T | void> | void) => {
         if (callback) {
@@ -67,6 +65,8 @@ const StorageDB = class Storage {
             })
         })
     }
+
+    static delete = async (key: string) => await idb.del(key)
 }
 class Storage {
 
@@ -161,7 +161,8 @@ class Storage {
 
     static db = {
         set: StorageDB.set,
-        get: StorageDB.get
+        get: StorageDB.get,
+        delete: StorageDB.delete,
     }
 
 }
