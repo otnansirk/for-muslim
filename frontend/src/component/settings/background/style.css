@@ -56,9 +56,14 @@
             /* outline: 3.1px solid #a5aea8; */
             outline-offset: -3.1px;
             border-radius: 10px;
+            transition: opacity .5s, outline .5s;
+
+            &.selected {
+                outline: 3.1px solid #a5aea8;
+            }
 
             &:active {
-                opacity: .8;
+                opacity: .5;
             }
 
             &:hover {
