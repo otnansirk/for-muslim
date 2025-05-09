@@ -12,8 +12,8 @@ export const applyImageBackground = (
     const { width, height } = screen
     const dpr = window.devicePixelRatio
     const quality = Math.min(100 - dpr * 20, 75)
-
-    const url = `${data.url}&h=${height}&w=${width}&q=${quality}&dpr=1&auto=format&fit=crop`
+    const params = `&h=${height}&w=${width}&q=${quality}&dpr=1&auto=format&fit=crop`
+    const url = data.url.startsWith("blob:") ? data.url : `${data.url + params}`
 
     const image = new Image();
     image.onload = () => {
