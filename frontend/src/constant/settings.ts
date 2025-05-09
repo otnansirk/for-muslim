@@ -49,5 +49,15 @@ export const DEFAULT = [
             "collection_type": "islamic",
             "collection_value": BACKGROUND_COLLECTION_ISLAMIC
         }
+    },
+    {
+        "notes": `# Notes Here !!!
+### Shorcuts
+[ ] Ctrl + Shift + 1 - To big heading
+[ ] Ctrl + Shift + 2 - To medium heading
+[ ] Ctrl + Shift + 3 - To small heading
+[ ] Ctrl + Shift + 4 - To bullet list
+[ ] Ctrl + Shift + 5 - To todo list
+[ ] Ctrl + Shift + 6 - To normal line`
     }
 ]
