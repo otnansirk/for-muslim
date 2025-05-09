@@ -3,3 +3,5 @@ export const generateID = (length: number) => {
     crypto.getRandomValues(array);
     return Array.from(array, b => b.toString(16).padStart(2, '0')).join('').substring(0, length);
 }
+
+export const delay = (func: () => void, delay: number = 200) => setTimeout(() => func(), delay)
