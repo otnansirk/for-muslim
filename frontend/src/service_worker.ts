@@ -65,7 +65,7 @@ chrome.alarms.onAlarm.addListener(alarm => {
 })
 
 chrome.runtime.onInstalled.addListener((details) => {
-    if (details.reason === 'install' || details.reason === 'update') {
+    if (details.reason === 'install') {
         DEFAULT.forEach((setting) => {
             const [key, value] = Object.entries(setting)[0] as [keyof StorageType, StorageType[keyof StorageType]];
             Storage.sync.set(key, value);
