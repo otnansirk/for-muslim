@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react"
 import { LocalBackgroundCollectionsType, LocalImagesType } from "../../../types/Storage"
 import { deleteImage, uploadFiles } from "../../../utils/BackgroundLocal"
+import { BACKGROUND_SOURCE_LOCAL } from "../../../constant/background"
 import Storage from "../../../utils/Storage"
 import Loader from "../../loader/Loader"
 import Each from "../../Each"
@@ -32,15 +33,21 @@ const Local = () => {
         setLoading(true)
         await uploadFiles(files)
         await loadThumbnails()
+        Storage.sync.set("background", { source: BACKGROUND_SOURCE_LOCAL })
         setLoading(false)
     }
 
     const loadThumbnails = async () => {
         const localImages = await Storage.db.get("localImages") as LocalImagesType
+        const thumbnailsFormated: ThumbnailType[] = []
+        const ids = localImages?.ids
+        if (!ids) return
+
         for (const id of localImages.ids) {
             const thumbnail = await Storage.db.get(id) as LocalBackgroundCollectionsType
-            setThumbnails(state => [...state, { key: id, value: URL.createObjectURL(thumbnail.thumbnail) }])
+            thumbnailsFormated.push({ key: id, value: URL.createObjectURL(thumbnail.thumbnail) })
         }
+        setThumbnails(thumbnailsFormated)
     }
 
     useEffect(() => {

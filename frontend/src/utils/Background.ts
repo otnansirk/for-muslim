@@ -1,6 +1,5 @@
 import { UNSPLASH_UTM } from "../constant/background";
 import { LocalBackgroundType, UnsplashType } from "../types/Storage";
-import Storage from "./Storage";
 
 export const applyImageBackground = (
     data: UnsplashType | LocalBackgroundType,
@@ -31,7 +30,6 @@ export const applyImageBackground = (
             creditRef.current!.href = `https://unsplash.com/@${data.user?.username}${UNSPLASH_UTM}`
         }
 
-        Storage.local.set("unsplashEmageLoad", false)
     }
     image.src = url;
     image.remove()

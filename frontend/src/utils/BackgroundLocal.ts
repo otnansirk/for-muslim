@@ -24,10 +24,11 @@ export const uploadFiles = async (files: HTMLInputElement["files"]): Promise<Loc
             ids.push(ID)
         }
     }
+    console.log(ids?.pop(), ids?.[0], "OOOO");
 
     const localImages: LocalImagesType = {
         ids,
-        selected: ids[0],
+        selected: ids.pop() ?? ids[0],
         time: Date.now()
     }
 
@@ -43,10 +44,9 @@ export const loadLocalImage = async (
     creditRef: React.RefObject<HTMLAnchorElement | null>,
 ) => {
 
-    Storage.local.set("unsplashEmageLoad", true)
-
     const localImages = await Storage.db.get("localImages") as LocalImagesType
-    const currentIds = localImages.ids.length <= 1 ? localImages.ids : localImages.ids.filter(i => i != localImages.selected)
+    const ids = localImages?.ids ?? []
+    const currentIds = ids.length <= 1 ? ids : ids.filter(i => i != localImages.selected)
     const length = currentIds.length
 
     if (!length) {
