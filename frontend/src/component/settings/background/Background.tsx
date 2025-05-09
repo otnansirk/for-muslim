@@ -19,6 +19,12 @@ const Background = () => {
     const [onRefreshBackground, setOnRefreshBackground] = useState<boolean>(false)
     const [source, setSource] = useState<string>("")
 
+    const onChangeSourceHandler = (ev: React.ChangeEvent<HTMLSelectElement>) => {
+        const value = ev.target.value
+        setSource(value)
+        Storage.sync.set('background', { source: value })
+        Storage.local.set("onLoadBackground", true)
+    }
 
     useEffect(() => {
         Storage.sync.get("background", item => {
@@ -29,9 +35,9 @@ const Background = () => {
             }
         })
 
-        Storage.local.watch("onRefreshBackground", (load) => {
+        Storage.local.watch("onLoadBackground", (load: boolean) => {
             setTimeout(() => {
-                setOnRefreshBackground(load as boolean)
+                setOnRefreshBackground(load)
             }, 500);
         })
 
@@ -49,10 +55,7 @@ const Background = () => {
                 <Select
                     items={BACKGROUND_SOURCE}
                     ref={sourceRef}
-                    onSelect={e => {
-                        setSource(e.target.value)
-                        Storage.sync.set('background', { source: e.target.value })
-                    }}
+                    onSelect={onChangeSourceHandler}
                 />
             </div>
             <hr />
@@ -65,9 +68,7 @@ const Background = () => {
                         className={`save-action`}
                         onClick={() => {
                             setOnRefreshBackground(true)
-                            if (!onRefreshBackground) {
-                                Storage.local.set("onRefreshBackground", true)
-                            }
+                            if (!onRefreshBackground) Storage.local.set("onLoadBackground", true)
                         }}
                     >
                         <Icon ref={refreshIconRef} icon="arrow-path" className={`refresh-icon ${onRefreshBackground && 'spin'}`} />

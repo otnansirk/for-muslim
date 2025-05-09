@@ -1,4 +1,4 @@
-import { BACKGROUND_COLLECTION_ISLAMIC, BACKGROUND_MAX_FEATURED_INDEX } from "../constant/background";
+import { BACKGROUND_COLLECTION_ISLAMIC, BACKGROUND_MAX_FEATURED_INDEX, BACKGROUND_SOURCE_UNSPLASH } from "../constant/background";
 import { BackgroundType, UnsplashCollectionsType, UnsplashType } from "../types/Storage";
 import { applyImageBackground } from "./Background";
 import Request from "./Request";
@@ -89,6 +89,8 @@ export const loadUnsplaceImage = async (
         bg1Ref,
         bg2Ref,
         creditRef)
+
+    Storage.sync.set("background", { source: BACKGROUND_SOURCE_UNSPLASH })
 }
 
 // Preload image

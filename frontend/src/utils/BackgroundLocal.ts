@@ -1,3 +1,4 @@
+import { BACKGROUND_SOURCE_LOCAL } from "../constant/background";
 import { LocalBackgroundCollectionsType, LocalBackgroundType, LocalImagesType } from "../types/Storage";
 import { applyImageBackground } from "./Background";
 import { loadUnsplaceImage } from "./BackgroundUnsplash";
@@ -47,7 +48,6 @@ export const loadLocalImage = async (
     const localImages = await Storage.db.get("localImages") as LocalImagesType
     const currentIds = localImages.ids.length <= 1 ? localImages.ids : localImages.ids.filter(i => i != localImages.selected)
     const length = currentIds.length
-    console.log(length, "LEEEEE");
 
     if (!length) {
         loadUnsplaceImage(
@@ -78,6 +78,8 @@ export const loadLocalImage = async (
             selected: selectedId,
             time: Date.now()
         })
+
+        Storage.sync.set("background", { source: BACKGROUND_SOURCE_LOCAL })
     }
 }
 

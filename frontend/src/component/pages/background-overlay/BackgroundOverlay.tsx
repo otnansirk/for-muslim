@@ -23,14 +23,12 @@ const BackgroundOverlay = () => {
 
     const loadBackground = async () => {
         const bg: BackgroundType | undefined = await Storage.sync.get("background")
-        const bgSource = bg?.source
-        if (bgSource === BACKGROUND_SOURCE_LOCAL) {
+        if (bg?.source === BACKGROUND_SOURCE_LOCAL) {
             await loadLocalImage(bgOverlayRef, bg1Ref, bg2Ref, creditRef)
         }
-        if (bgSource === BACKGROUND_SOURCE_UNSPLASH) {
+        if (bg?.source === BACKGROUND_SOURCE_UNSPLASH) {
             await loadUnsplaceImage(bgOverlayRef, bg1Ref, bg2Ref, creditRef)
         }
-
     }
 
     Storage.local.watch<UnsplashCollectionChangeType>("onChangeUnsplashCollection", async (collect) => {
@@ -45,10 +43,12 @@ const BackgroundOverlay = () => {
         }
     })
 
-    Storage.local.watch("onRefreshBackground", async (onLoad) => {
+    Storage.local.watch("onLoadBackground", async (onLoad: boolean) => {
         if (onLoad) {
-            await loadBackground()
-            Storage.local.set("onRefreshBackground", false)
+            setTimeout(async () => {
+                await loadBackground()
+                Storage.local.set("onLoadBackground", false)
+            }, 200)
         }
     })
 

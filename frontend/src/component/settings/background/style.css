@@ -3,7 +3,7 @@
         transition: transform .8s ease;
 
         &.spin {
-            animation: rotate 1s linear;
+            animation: rotate 1s linear infinite;
             transform-origin: center center;
         }
     }
