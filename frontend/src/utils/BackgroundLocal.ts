@@ -1,4 +1,6 @@
-import { LocalBackgroundCollectionsType, LocalImagesType } from "../types/Storage";
+import { LocalBackgroundCollectionsType, LocalBackgroundType, LocalImagesType } from "../types/Storage";
+import { applyImageBackground } from "./Background";
+import { loadUnsplaceImage } from "./BackgroundUnsplash";
 import { generateID } from "./Helpers";
 import Storage from "./Storage";
 
@@ -31,6 +33,54 @@ export const uploadFiles = async (files: HTMLInputElement["files"]): Promise<Loc
     await Storage.db.set("localImages", localImages)
     return data
 }
+
+
+export const loadLocalImage = async (
+    bgOverlay: React.RefObject<HTMLDivElement | null>,
+    bg1Ref: React.RefObject<HTMLDivElement | null>,
+    bg2Ref: React.RefObject<HTMLDivElement | null>,
+    creditRef: React.RefObject<HTMLAnchorElement | null>,
+) => {
+
+    Storage.local.set("unsplashEmageLoad", true)
+
+    const localImages = await Storage.db.get("localImages") as LocalImagesType
+    const currentIds = localImages.ids.length <= 1 ? localImages.ids : localImages.ids.filter(i => i != localImages.selected)
+    const length = currentIds.length
+    console.log(length, "LEEEEE");
+
+    if (!length) {
+        loadUnsplaceImage(
+            bgOverlay,
+            bg1Ref,
+            bg2Ref,
+            creditRef)
+        return
+    }
+
+    const random = Math.floor(Math.random() * length)
+    const selectedId = currentIds[random]
+    const selectedImage: LocalBackgroundCollectionsType = await Storage.db.get(selectedId)
+
+    if (selectedImage) {
+        const url = URL.createObjectURL(selectedImage.background)
+        const data: LocalBackgroundType = { url }
+
+        applyImageBackground(
+            data,
+            bgOverlay,
+            bg1Ref,
+            bg2Ref,
+            creditRef)
+
+        await Storage.db.set("localImages", {
+            ids: localImages.ids,
+            selected: selectedId,
+            time: Date.now()
+        })
+    }
+}
+
 
 export const deleteImage = async (id: string) => {
     await Storage.db.delete(id)
