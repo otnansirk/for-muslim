@@ -4,6 +4,7 @@ import { loadUnsplaceImage } from '../../../utils/BackgroundUnsplash';
 import { loadLocalImage } from '../../../utils/BackgroundLocal';
 import { BACKGROUND_SOURCE_LOCAL, BACKGROUND_SOURCE_UNSPLASH, UNSPLASH_UTM } from '../../../constant/background';
 import { BackgroundType } from '../../../types/Storage';
+import { delay } from '../../../utils/Helpers';
 import Storage from '../../../utils/Storage';
 
 import './style.css';
@@ -33,22 +34,31 @@ const BackgroundOverlay = () => {
 
     Storage.local.watch<UnsplashCollectionChangeType>("onChangeUnsplashCollection", async (collect) => {
         if (collect) {
-            setTimeout(async () => {
+            delay(async () => {
                 const runAsync = async () => {
                     await loadUnsplaceImage(bgOverlayRef, bg1Ref, bg2Ref, creditRef, collect?.type === "custom")
                     Storage.local.set("onChangeUnsplashCollection", false)
                 }
                 runAsync()
-            }, 200)
+            })
         }
     })
 
     Storage.local.watch("onLoadBackground", async (onLoad: boolean) => {
         if (onLoad) {
-            setTimeout(async () => {
+            delay(async () => {
                 await loadBackground()
                 Storage.local.set("onLoadBackground", false)
-            }, 200)
+            })
+        }
+    })
+
+    Storage.local.watch("onLoadSelectedLocalBackground", async (selectedId: string) => {
+        if (selectedId) {
+            delay(async () => {
+                await loadLocalImage(bgOverlayRef, bg1Ref, bg2Ref, creditRef, selectedId)
+                Storage.local.set("onLoadSelectedLocalBackground", "")
+            })
         }
     })
 

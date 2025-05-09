@@ -24,15 +24,16 @@ export const uploadFiles = async (files: HTMLInputElement["files"]): Promise<Loc
             ids.push(ID)
         }
     }
-    console.log(ids?.pop(), ids?.[0], "OOOO");
 
+    const selected = ids[ids.length - 1]
     const localImages: LocalImagesType = {
         ids,
-        selected: ids.pop() ?? ids[0],
+        selected,
         time: Date.now()
     }
 
     await Storage.db.set("localImages", localImages)
+    Storage.local.set("onLoadSelectedLocalBackground", selected)
     return data
 }
 
@@ -42,6 +43,7 @@ export const loadLocalImage = async (
     bg1Ref: React.RefObject<HTMLDivElement | null>,
     bg2Ref: React.RefObject<HTMLDivElement | null>,
     creditRef: React.RefObject<HTMLAnchorElement | null>,
+    imageId?: string
 ) => {
 
     const localImages = await Storage.db.get("localImages") as LocalImagesType
@@ -59,7 +61,7 @@ export const loadLocalImage = async (
     }
 
     const random = Math.floor(Math.random() * length)
-    const selectedId = currentIds[random]
+    const selectedId = imageId ?? currentIds[random]
     const selectedImage: LocalBackgroundCollectionsType = await Storage.db.get(selectedId)
 
     if (selectedImage) {

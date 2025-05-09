@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react"
 import { LocalBackgroundCollectionsType, LocalImagesType } from "../../../types/Storage"
 import { deleteImage, uploadFiles } from "../../../utils/BackgroundLocal"
 import { BACKGROUND_SOURCE_LOCAL } from "../../../constant/background"
+import { delay } from "../../../utils/Helpers"
 import Storage from "../../../utils/Storage"
 import Loader from "../../loader/Loader"
 import Each from "../../Each"
@@ -11,7 +12,7 @@ import "./style.css"
 
 
 type ThumbnailType = {
-    key: string,
+    key: string
     value: string
 }
 
@@ -20,6 +21,7 @@ const Local = () => {
 
     const [thumbnails, setThumbnails] = useState<ThumbnailType[]>([])
     const [loading, setLoading] = useState<boolean>(false)
+    const [selectedThumbnail, setSelectedThumbnail] = useState<string>("")
 
     const onRemoveHandler = (id: string) => {
         deleteImage(id)
@@ -45,13 +47,25 @@ const Local = () => {
 
         for (const id of localImages.ids) {
             const thumbnail = await Storage.db.get(id) as LocalBackgroundCollectionsType
-            thumbnailsFormated.push({ key: id, value: URL.createObjectURL(thumbnail.thumbnail) })
+            thumbnailsFormated.push({
+                key: id,
+                value: URL.createObjectURL(thumbnail.thumbnail)
+            })
         }
         setThumbnails(thumbnailsFormated)
+        setSelectedThumbnail(localImages.selected)
+    }
+
+    const onSelectedHandler = (id: string) => {
+        Storage.local.set("onLoadSelectedLocalBackground", id)
+        setSelectedThumbnail(id)
     }
 
     useEffect(() => {
-        loadThumbnails()
+        delay(loadThumbnails)
+        Storage.local.watch("onLoadBackground", (load: boolean) => {
+            if (load) setSelectedThumbnail("")
+        })
     }, [])
 
 
@@ -72,7 +86,7 @@ const Local = () => {
                 <Each
                     data={thumbnails}
                     render={(thumbnail, key) => (
-                        <button className="thumbnail" key={key} id={thumbnail.key}>
+                        <button className={`thumbnail ${selectedThumbnail === thumbnail.key && "selected"}`} key={key} id={thumbnail.key} onClick={() => onSelectedHandler(thumbnail.key)}>
                             <img src={thumbnail.value} />
                             <span className="remove-button" onClick={() => onRemoveHandler(thumbnail.key)}>✕</span>
                         </button>

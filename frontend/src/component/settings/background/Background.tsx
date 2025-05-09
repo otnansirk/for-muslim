@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { BACKGROUND_REFRESH_FREQUENCY, BACKGROUND_SOURCE, BACKGROUND_SOURCE_LOCAL, BACKGROUND_SOURCE_UNSPLASH } from "../../../constant/background"
 import { BackgroundType } from "../../../types/Storage"
+import { delay } from "../../../utils/Helpers"
 import Select from "../../form/select/Select"
 import Storage from "../../../utils/Storage"
 import Unsplash from "./Unsplash"
@@ -36,7 +37,7 @@ const Background = () => {
         })
 
         Storage.local.watch("onLoadBackground", (load: boolean) => {
-            setTimeout(() => {
+            delay(() => {
                 setOnRefreshBackground(load)
             }, 500);
         })
