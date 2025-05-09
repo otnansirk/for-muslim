@@ -24,10 +24,10 @@ const BackgroundOverlay = () => {
     const loadBackground = async () => {
         const bg: BackgroundType | undefined = await Storage.sync.get("background")
         const bgSource = bg?.source
-        if (bgSource === BACKGROUND_SOURCE_UNSPLASH) {
+        if (bgSource === BACKGROUND_SOURCE_LOCAL) {
             await loadLocalImage(bgOverlayRef, bg1Ref, bg2Ref, creditRef)
         }
-        if (bgSource === BACKGROUND_SOURCE_LOCAL) {
+        if (bgSource === BACKGROUND_SOURCE_UNSPLASH) {
             await loadUnsplaceImage(bgOverlayRef, bg1Ref, bg2Ref, creditRef)
         }
 
