@@ -1,10 +1,13 @@
 import { useEffect, useRef } from 'react';
 
-import { UNSPLASH_UTM } from '../../../constant/background';
 import { loadUnsplaceImage } from '../../../utils/BackgroundUnsplash';
+import { loadLocalImage } from '../../../utils/BackgroundLocal';
+import { BACKGROUND_SOURCE_LOCAL, BACKGROUND_SOURCE_UNSPLASH, UNSPLASH_UTM } from '../../../constant/background';
+import { BackgroundType } from '../../../types/Storage';
 import Storage from '../../../utils/Storage';
 
 import './style.css';
+
 
 type UnsplashCollectionChangeType = {
     type?: string
@@ -18,6 +21,18 @@ const BackgroundOverlay = () => {
     const bg2Ref = useRef<HTMLDivElement>(null)
     const creditRef = useRef<HTMLAnchorElement>(null)
 
+    const loadBackground = async () => {
+        const bg: BackgroundType | undefined = await Storage.sync.get("background")
+        const bgSource = bg?.source
+        if (bgSource === BACKGROUND_SOURCE_UNSPLASH) {
+            await loadLocalImage(bgOverlayRef, bg1Ref, bg2Ref, creditRef)
+        }
+        if (bgSource === BACKGROUND_SOURCE_LOCAL) {
+            await loadUnsplaceImage(bgOverlayRef, bg1Ref, bg2Ref, creditRef)
+        }
+
+    }
+
     Storage.local.watch<UnsplashCollectionChangeType>("onChangeUnsplashCollection", async (collect) => {
         if (collect) {
             setTimeout(async () => {
@@ -25,21 +40,22 @@ const BackgroundOverlay = () => {
                     await loadUnsplaceImage(bgOverlayRef, bg1Ref, bg2Ref, creditRef, collect?.type === "custom")
                     Storage.local.set("onChangeUnsplashCollection", false)
                 }
-
                 runAsync()
             }, 200)
         }
     })
 
-    Storage.local.watch("onRefreshBackground", async (load) => {
-        if (load) {
-            await loadUnsplaceImage(bgOverlayRef, bg1Ref, bg2Ref, creditRef)
+    Storage.local.watch("onRefreshBackground", async (onLoad) => {
+        if (onLoad) {
+            await loadBackground()
             Storage.local.set("onRefreshBackground", false)
         }
     })
 
     useEffect(() => {
-        loadUnsplaceImage(bgOverlayRef, bg1Ref, bg2Ref, creditRef)
+        (async () => {
+            await loadBackground()
+        })()
     }, [])
 
     return (

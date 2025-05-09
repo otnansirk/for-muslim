@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { BACKGROUND_REFRESH_FREQUENCY, BACKGROUND_SOURCE } from "../../../constant/background"
+import { BACKGROUND_REFRESH_FREQUENCY, BACKGROUND_SOURCE, BACKGROUND_SOURCE_LOCAL, BACKGROUND_SOURCE_UNSPLASH } from "../../../constant/background"
 import { BackgroundType } from "../../../types/Storage"
 import Select from "../../form/select/Select"
 import Storage from "../../../utils/Storage"
@@ -24,8 +24,8 @@ const Background = () => {
         Storage.sync.get("background", item => {
             const bg = item as BackgroundType
             if (bg) {
-                sourceRef.current!.value = bg?.source ?? "unsplash"
-                setSource(bg?.source ?? "unsplash")
+                sourceRef.current!.value = bg?.source ?? BACKGROUND_SOURCE_UNSPLASH
+                setSource(bg?.source ?? BACKGROUND_SOURCE_UNSPLASH)
             }
         })
 
@@ -79,11 +79,11 @@ const Background = () => {
                     />
                 </div>
             </div>
-            <div className={`dropshow ww ${source !== "unsplash" && "hidden"}`}>
+            <div className={`dropshow ww ${source !== BACKGROUND_SOURCE_UNSPLASH && "hidden"}`}>
                 <hr />
                 <Unsplash />
             </div>
-            <div className={`dropshow ww ${source !== "local" && "hidden"}`}>
+            <div className={`dropshow ww ${source !== BACKGROUND_SOURCE_LOCAL && "hidden"}`}>
                 <hr />
                 <Local />
             </div>

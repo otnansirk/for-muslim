@@ -9,6 +9,8 @@ export const BACKGROUND_SOURCE = [
         value: "local"
     }
 ]
+export const BACKGROUND_SOURCE_UNSPLASH = "unsplash"
+export const BACKGROUND_SOURCE_LOCAL = "local"
 export const BACKGROUND_MAX_FEATURED_INDEX = 10
 
 export const BACKGROUND_COLLECTION_ISLAMIC = "SWYjUoOuc44"
