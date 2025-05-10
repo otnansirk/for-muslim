@@ -43,7 +43,7 @@ export const cacheUnsplash = async (unsplashCache: UnsplashCollectionsType, back
 
     // Init unsplash cache if not exist
     if (!unsplashCache?.[collectType as keyof UnsplashCollectionsType]) {
-        unsplashCache = { [collectType]: [] }
+        unsplashCache = { ...unsplashCache, [collectType]: [] }
     }
 
     let currentCache = reset ? [] : (unsplashCache?.[collectType as keyof UnsplashCollectionsType] ?? []) as UnsplashType[]
