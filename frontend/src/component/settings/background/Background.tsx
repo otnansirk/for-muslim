@@ -4,6 +4,7 @@ import { BackgroundType } from "../../../types/Storage"
 import { delay } from "../../../utils/Helpers"
 import Select from "../../form/select/Select"
 import Storage from "../../../utils/Storage"
+import Loader from "../../loader/Loader"
 import Unsplash from "./Unsplash"
 import Icon from "../../Icon"
 import Local from "./Local"
@@ -19,6 +20,7 @@ const Background = () => {
 
     const [onRefreshBackground, setOnRefreshBackground] = useState<boolean>(false)
     const [source, setSource] = useState<string>("")
+    const [backgroundLoading, setBackgroundLoading] = useState<boolean>()
 
     const onChangeSourceHandler = (ev: React.ChangeEvent<HTMLSelectElement>) => {
         const value = ev.target.value
@@ -42,11 +44,15 @@ const Background = () => {
             }, 500);
         })
 
+        Storage.local.watch("backgroundLoading", (loading: boolean) => {
+            setBackgroundLoading(loading)
+        })
+
     }, [])
 
-    return <div className={`background-settings`}>
+    return <div className={`background-settings ${backgroundLoading && 'loading'}`}>
         <h2 className='settings-title'>
-            BACKGROUND
+            {backgroundLoading && <Loader />} BACKGROUND
         </h2>
         <div className='settings-items'>
             <div className='items'>

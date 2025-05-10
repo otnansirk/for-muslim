@@ -1,6 +1,7 @@
 import { BACKGROUND_COLLECTION_ISLAMIC, BACKGROUND_MAX_FEATURED_INDEX, BACKGROUND_SOURCE_UNSPLASH } from "../constant/background";
 import { BackgroundType, UnsplashCollectionsType, UnsplashType } from "../types/Storage";
 import { applyImageBackground } from "./Background";
+import { delay } from "./Helpers";
 import Request from "./Request";
 import Storage from "./Storage";
 
@@ -10,6 +11,8 @@ export const initUnsplash = async (collection_value: string = BACKGROUND_COLLECT
         collections: collection_value,
         count: BACKGROUND_MAX_FEATURED_INDEX.toString(),
     }
+    Storage.local.set("backgroundLoading", true)
+
     try {
         const response = await Request.get({
             path: "/unsplash/random",
@@ -28,6 +31,11 @@ export const initUnsplash = async (collection_value: string = BACKGROUND_COLLECT
 
         imagePreload(res.data[0].url)
         const result = res.data as UnsplashType[]
+
+        delay(() => {
+            Storage.local.set("backgroundLoading", false)
+        })
+
         return result
 
     } catch (error) {
