@@ -11,7 +11,7 @@
     .clock-digital {
         font-size: 6.5em;
         align-items: baseline;
-        font-weight: var(--font-weight-lg);
+        font-weight: var(--font-weight-sm);
         justify-content: center;
         position: relative;
 
