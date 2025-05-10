@@ -12,7 +12,7 @@
     }
 
     .hijri-date {
-        font-size: 24px;
+        font-size: 22px;
         margin-top: 10px;
         margin-bottom: 42px;
         font-weight: var(--font-weight-sm);
@@ -29,14 +29,15 @@
     }
 
     & .__pad {
-        width: 120px;
-        height: 120px;
+        width: 98px;
+        height: 98px;
         padding: 4px;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         gap: 4px;
+        /* text-align: center; */
         border-radius: 10px;
         border: 1px solid #7878784c;
         backdrop-filter: blur(30px);
@@ -59,11 +60,12 @@
         }
 
         & .pad-icon {
-            width: 32px;
+            width: 100%;
+            margin-left: 4px;
         }
 
         & .pad-time {
-            font-size: 26px;
+            font-size: 22px;
 
             & .time-meridiem {
                 font-size: 14px;
@@ -72,7 +74,7 @@
         }
 
         & .pad-name {
-            font-size: 16px;
+            font-size: 14px;
         }
     }
 }
