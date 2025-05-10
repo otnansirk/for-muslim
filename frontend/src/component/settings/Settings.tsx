@@ -1,5 +1,5 @@
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import PrayerTime from './prayer-time/PrayerTime'
 import Background from './background/Background'
@@ -12,9 +12,24 @@ import './style.css'
 
 
 const Settings = () => {
+    const settingRef = useRef<HTMLDivElement>(null)
+
     const [openSetting, setOpenSetting] = useState("")
 
-    return <div className={`settings ${openSetting}`}>
+    useEffect(() => {
+        const onOutsideClick = (ev: MouseEvent) => {
+            if (!settingRef.current?.contains(ev.target as Node)) setOpenSetting("closed")
+        }
+
+        document.addEventListener("mousedown", onOutsideClick)
+        return () => {
+            document.removeEventListener("mousedown", onOutsideClick)
+        }
+
+    }, [])
+
+
+    return <div className={`settings ${openSetting}`} ref={settingRef}>
         <div className='gear'>
             <div className='gear-icon' onClick={() => setOpenSetting(state => state === "opened" ? "closed" : "opened")}>
                 <Icon icon='gear' className={openSetting} />
