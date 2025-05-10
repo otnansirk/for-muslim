@@ -5,6 +5,10 @@
     position: relative;
     visibility: visible;
 
+    .fade-in {
+        animation: fadeIn .4s ease-in-out forwards;
+    }
+
     &.hidden {
         visibility: hidden;
         max-height: 0px;
@@ -43,6 +47,7 @@
         box-shadow: #0000003e 0 3px 8px;
         background-color: #c7c7c738;
         position: relative;
+        animation: fadeIn .4s ease-in-out forwards;
 
         &.active {
             background: #3378ff6b;

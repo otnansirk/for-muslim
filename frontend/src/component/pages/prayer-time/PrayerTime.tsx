@@ -43,7 +43,7 @@ const PrayerTime = () => {
 
 
     return (
-        <div className={`prayer-time ${show}`}>
+        <div className={`prayer-time ${show} ${prayerTimes?.last_update && 'fade-in'}`}>
             <div className='hijri-date'>
                 {prayerTimes?.hijri}
             </div>
