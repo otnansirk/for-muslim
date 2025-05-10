@@ -83,8 +83,9 @@ const PrayerTime = () => {
         Storage.sync.watch('location', async loc => {
             setPrayerLoading(true)
             const data = loc as LocationType
-            const method = CALCULATE_METHOD.find(item => item.keyword.includes(data?.timezone ?? ""))
+            if (!data) return
 
+            const method = CALCULATE_METHOD.find(item => item.keyword.includes(data?.timezone ?? ""))
             await fetchDataPrayer({
                 lat: data.lat,
                 lng: data.lng,
