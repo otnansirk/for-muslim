@@ -3,7 +3,6 @@ import { PrayerTimeType, PrayerType, TimesType } from "../../../types/Storage"
 import { PRAYER_NAMES } from "../../../constant/prayer"
 import Storage from "../../../utils/Storage"
 import Alarms from "../../../utils/Alarms"
-import Loader from "../../loader/Loader"
 import Each from "../../Each"
 import Icon from "../../Icon"
 
@@ -51,26 +50,25 @@ const PrayerTime = () => {
             <div className="times">
                 {
                     prayerTimes?.last_update // Check if exist
-                        ? <Each
-                            data={PRAYER_NAMES}
-                            render={(name, key) => {
-                                const data = prayerTimes as PrayerType
-                                const prayer = data[name as keyof TimesType] as PrayerTimeType
+                    && <Each
+                        data={PRAYER_NAMES}
+                        render={(name, key) => {
+                            const data = prayerTimes as PrayerType
+                            const prayer = data[name as keyof TimesType] as PrayerTimeType
 
-                                const isUpcoming = prayer.id === data.upcoming?.id
-                                return (
-                                    <div className={`__pad ${isUpcoming && 'active'}`} key={key}>
-                                        <span onClick={() => { if (prayer) { notifyHandler(prayer.id as keyof PrayerType, !prayer.ringing) } }}>
-                                            <Icon className="notify-icon" icon={`notify-${prayer.ringing ? "on" : "off"}`} />
-                                        </span>
-                                        <Icon className="pad-icon" icon={prayer.icon ?? ''} />
-                                        <div className="pad-time">{prayer.time} <span className="time-meridiem">{prayer.meridiem}</span></div>
-                                        <div className="pad-name">{prayer.title}</div>
-                                    </div>
-                                )
-                            }}
-                        />
-                        : <Loader />
+                            const isUpcoming = prayer.id === data.upcoming?.id
+                            return (
+                                <div className={`__pad ${isUpcoming && 'active'}`} key={key}>
+                                    <span onClick={() => { if (prayer) { notifyHandler(prayer.id as keyof PrayerType, !prayer.ringing) } }}>
+                                        <Icon className="notify-icon" icon={`notify-${prayer.ringing ? "on" : "off"}`} />
+                                    </span>
+                                    <Icon className="pad-icon" icon={prayer.icon ?? ''} />
+                                    <div className="pad-time">{prayer.time} <span className="time-meridiem">{prayer.meridiem}</span></div>
+                                    <div className="pad-name">{prayer.title}</div>
+                                </div>
+                            )
+                        }}
+                    />
                 }
             </div>
         </div>
