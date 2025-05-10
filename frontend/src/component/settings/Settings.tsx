@@ -22,10 +22,10 @@ const Settings = () => {
         </div>
         <div className={`wrapper ${openSetting}`}>
             <Greetings />
-            <DateAndTime />
-            <Weather />
             <PrayerTime />
             <Background />
+            <DateAndTime />
+            <Weather />
         </div>
     </div>
 }
