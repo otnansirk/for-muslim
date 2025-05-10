@@ -71,16 +71,15 @@
         }
 
         .settings-title {
-            margin-right: 10px;
+            margin-top: 2em;
+            margin-left: 2.5em;
             font-size: 12px;
             font-family: var(--font-family);
             font-weight: var(--font-weight-sm);
             color: rgb(164, 164, 164);
             letter-spacing: 1.5px;
             margin-bottom: 12px;
-            text-align: end;
             display: flex;
-            justify-content: end;
             align-items: center;
             gap: 10px;
         }
