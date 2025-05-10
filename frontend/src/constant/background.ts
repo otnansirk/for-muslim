@@ -16,11 +16,13 @@ export const BACKGROUND_MAX_FEATURED_INDEX = 10
 export const BACKGROUND_COLLECTION_ISLAMIC = "SWYjUoOuc44"
 export const BACKGROUND_COLLECTION_WALLPAPER = "TC8LguLGFy4"
 export const BACKGROUND_COLLECTION_ILLUSTRATION = "dUWMO3DKotM"
+export const BACKGROUND_COLLECTION_NATURAL = "HurIonyiOdc"
 
 export const BACKGROUND_COLLECTION: { [key: string]: string } = {
     "islamic": BACKGROUND_COLLECTION_ISLAMIC,
     "wallpaper": BACKGROUND_COLLECTION_WALLPAPER,
-    "illustration": BACKGROUND_COLLECTION_ILLUSTRATION
+    "illustration": BACKGROUND_COLLECTION_ILLUSTRATION,
+    "natural": BACKGROUND_COLLECTION_NATURAL
 }
 
 export const BACKGROUND_COLLECTIONS = [
@@ -31,6 +33,10 @@ export const BACKGROUND_COLLECTIONS = [
     {
         label: "Wallpaper",
         value: "wallpaper"
+    },
+    {
+        label: "Natural",
+        value: "natural"
     },
     {
         label: "Illustration",
