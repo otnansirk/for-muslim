@@ -21,12 +21,10 @@ export const initUnsplash = async (collection_value: string = BACKGROUND_COLLECT
 
         const res = await response.json()
         if (response.status !== 200) {
-            console.error("Error fetching data from Unsplash:", res)
-            return
+            throw new Error("Error fetching data from Unsplash:");
         }
         if (res.data.length < 1) {
-            console.error("No data found in Unsplash response:", res)
-            return
+            throw new Error("No data found in Unsplash response:");
         }
 
         imagePreload(res.data[0].url)
@@ -39,7 +37,8 @@ export const initUnsplash = async (collection_value: string = BACKGROUND_COLLECT
         return result
 
     } catch (error) {
-        console.error("Fetch failed /unsplash/random:", error)
+        console.error(error)
+        Storage.local.set("backgroundLoading", false)
         return
     }
 }
