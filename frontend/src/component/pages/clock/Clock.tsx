@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { DateType, TimeType } from '../../../types/Storage';
 import { TimeFormatType } from '../../../types/datetime';
 import Datetime from '../../../utils/Datetime';
@@ -14,27 +14,20 @@ const Clock = () => {
     const minutesRef = useRef<HTMLSpanElement>(null)
     const meridiemRef = useRef<HTMLSpanElement>(null)
     const secondsRef = useRef<HTMLSpanElement>(null)
-
+    const [time, setTime] = useState<TimeType | null>(null)
 
     useEffect(() => {
-        const setTime = () => {
-            Storage.sync.watch('time', (item) => {
-                const time = item as TimeType
-                const ftime = Datetime.get(time) as TimeFormatType
 
-                if (time) {
-                    timeRef.current!.style = `display: ${time.enable ? 'flex' : 'none'}`
-                    meridiemRef.current!.style = `display: ${time.show_ampm ? 'inline-block' : 'none'}`
-                    secondsRef.current!.style = `display: ${time.show_seconds ? 'inline-block' : 'none'}`
-                }
+        Storage.sync.watch('time', (item) => {
+            const time = item as TimeType
+            setTime(time)
 
-                hoursRef.current!.textContent = ftime.hours
-                minutesRef.current!.textContent = `:${ftime.minutes}` + `${time.show_seconds ? ':' : ''}`
-                secondsRef.current!.textContent = `${ftime.seconds}`
-                meridiemRef.current!.textContent = ftime.meridiem
-            })
-        }
-        setTime()
+            if (time) {
+                timeRef.current!.style = `display: ${time.enable ? 'flex' : 'none'}`
+                meridiemRef.current!.style = `display: ${time.show_ampm ? 'inline-block' : 'none'}`
+                secondsRef.current!.style = `display: ${time.show_seconds ? 'inline-block' : 'none'}`
+            }
+        })
 
         Storage.sync.watch('date', (item) => {
             const date = item as DateType
@@ -44,10 +37,27 @@ const Clock = () => {
                 dateRef.current!.textContent = ""
             }
         })
-
-        const interval = setInterval(setTime, 1000)
-        return () => clearInterval(interval);
     }, [])
+
+
+    useEffect(() => {
+
+        const loadTime = () => {
+            if (time) {
+                const ftime = Datetime.get(time) as TimeFormatType
+
+                hoursRef.current!.textContent = ftime?.hours ?? ""
+                minutesRef.current!.textContent = `:${ftime?.minutes ?? ""}` + `${time.show_seconds ? ':' : ''}`
+                secondsRef.current!.textContent = ftime?.seconds ?? ""
+                meridiemRef.current!.textContent = ftime?.meridiem ?? ""
+            }
+        }
+
+        loadTime()
+
+        const interval = setInterval(loadTime, 1000)
+        return () => { clearInterval(interval) };
+    }, [time])
 
 
     return (
