@@ -20,7 +20,7 @@ const Background = () => {
 
     const [onRefreshBackground, setOnRefreshBackground] = useState<boolean>(false)
     const [source, setSource] = useState<string>("")
-    const [backgroundLoading, setBackgroundLoading] = useState<boolean>()
+    const [backgroundLoading, setBackgroundLoading] = useState<boolean>(false)
 
     const onChangeSourceHandler = (ev: React.ChangeEvent<HTMLSelectElement>) => {
         const value = ev.target.value
