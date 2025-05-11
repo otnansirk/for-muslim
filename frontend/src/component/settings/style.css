@@ -59,7 +59,7 @@
         left: 0;
         bottom: 0;
         height: 68%;
-        width: 350px;
+        width: 340px;
         border-radius: 0px var(--border-radius-md) 0px 0px;
         transform: translateX(-100%);
         transition: .2s ease-in-out;
