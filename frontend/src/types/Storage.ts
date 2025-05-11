@@ -90,6 +90,7 @@ export type BackgroundType = {
     frequency?: string | "off" | "5_seconds" | "10_seconds" | "15_seconds" | "30_seconds" | "3600_seconds" | "86400_seconds" | "tab"
     collection_type?: string
     collection_value?: string
+    blurry?: number
 }
 
 export type UnsplashCollectionsType = {
