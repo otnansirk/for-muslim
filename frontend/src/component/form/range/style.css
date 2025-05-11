@@ -1,0 +1,31 @@
+input[type=range] {
+    -webkit-appearance: none;
+    min-width: 168px;
+    height: 3px;
+    background: var(--color-white);
+    outline: none;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    border-radius: 100px;
+
+    &:hover {
+        opacity: 1;
+    }
+
+    &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        background: #ffffff;
+        cursor: pointer;
+        border-radius: 100px;
+    }
+
+    &::-moz-range-thumb {
+        width: 20px;
+        height: 20px;
+        background: #ffffff;
+        cursor: pointer;
+    }
+}
