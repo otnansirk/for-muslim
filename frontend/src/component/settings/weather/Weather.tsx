@@ -197,7 +197,11 @@ const Weather = () => {
                                     className={`save-action ${geolocationLoading && 'loading'}`}
                                     onClick={() => !geolocationLoading && geolocationManual({ query: addressRef.current?.value ?? "" })}
                                 >
-                                    <Icon icon="check" className="check-icon" />
+                                    {
+                                        geolocationLoading
+                                            ? <Loader />
+                                            : <Icon icon="check" className="check-icon" />
+                                    }
                                 </div>
                             }
                             <Input
