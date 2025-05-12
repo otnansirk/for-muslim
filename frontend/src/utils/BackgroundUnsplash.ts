@@ -12,6 +12,7 @@ export const initUnsplash = async (collection_value: string = BACKGROUND_COLLECT
         count: BACKGROUND_MAX_FEATURED_INDEX.toString(),
     }
     Storage.local.set("backgroundLoading", true)
+    Storage.local.set("error", "")
 
     try {
         const response = await Request.get({
@@ -23,8 +24,8 @@ export const initUnsplash = async (collection_value: string = BACKGROUND_COLLECT
         if (response.status !== 200) {
             throw new Error("Error fetching data from Unsplash:");
         }
-        if (res.data.length < 1) {
-            throw new Error("No data found in Unsplash response:");
+        if (res.data.length <= 1) {
+            throw new Error("The collections can't be use : " + collection_value);
         }
 
         imagePreload(res.data[0].url)
@@ -37,9 +38,16 @@ export const initUnsplash = async (collection_value: string = BACKGROUND_COLLECT
         return result
 
     } catch (error) {
-        console.error(error)
+        let errorMessage = "Unknown error";
+        if (error instanceof Error) {
+            errorMessage = error.message;
+        } else if (typeof error === "string") {
+            errorMessage = error;
+        }
+
         Storage.local.set("backgroundLoading", false)
-        return
+        Storage.local.set("error", errorMessage)
+        return []
     }
 }
 
@@ -62,7 +70,7 @@ export const cacheUnsplash = async (unsplashCache: UnsplashCollectionsType, back
         currentCache = [...currentCache ?? [], ...photos ?? []]
     }
 
-    if (currentCache) {
+    if (currentCache.length >= 2) {
 
         unsplashCache[collectType as keyof UnsplashCollectionsType] = currentCache
         Storage.local.set(`unsplash`, unsplashCache)

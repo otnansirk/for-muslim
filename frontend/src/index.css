@@ -15,6 +15,7 @@
     --color-white: #a5aea8;
     --color-blue: #3e38f0;
     --color-green: #00ff6370;
+    --color-red: #ff000070;
 }
 
 @keyframes fadeIn {
@@ -126,10 +127,6 @@ html {
         font-size: 13px;
         font-weight: var(--font-weight-md);
         display: none;
-
-        >.show {
-            display: inherit;
-        }
     }
 
     .loading {

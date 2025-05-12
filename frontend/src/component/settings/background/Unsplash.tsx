@@ -13,6 +13,7 @@ const Unsplash = () => {
     const collectionTypeRef = useRef<HTMLSelectElement>(null)
     const collectionValueRef = useRef<HTMLInputElement>(null)
     const lastCollectionValueRef = useRef<string>("")
+    const errorNotifyRef = useRef<HTMLSpanElement>(null)
 
     const [collectionType, setCollectionType] = useState<string>()
     const [onChangeUnsplashCollection, setOnChangeUnsplashCollection] = useState<boolean | undefined>(undefined)
@@ -61,6 +62,15 @@ const Unsplash = () => {
                 }, 500);
             }
         })
+
+        Storage.local.watch("error", (error) => {
+            errorNotifyRef.current!.textContent = error as string
+            errorNotifyRef.current!.style = `display: none`
+            if (error) {
+                errorNotifyRef.current!.style = `display: inline-block`
+                setOnChangeUnsplashCollection(false)
+            }
+        })
     }, [])
 
     return <>
@@ -103,6 +113,7 @@ const Unsplash = () => {
                     />
                 </div>
             </div>
+            <span className="notify-error" ref={errorNotifyRef} />
         </div>
     </>
 }
