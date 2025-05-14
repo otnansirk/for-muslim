@@ -6,7 +6,7 @@ export const applyImageBackground = (
     bgOverlay: React.RefObject<HTMLDivElement | null>,
     bg1Ref: React.RefObject<HTMLDivElement | null>,
     bg2Ref: React.RefObject<HTMLDivElement | null>,
-    creditRef?: React.RefObject<HTMLAnchorElement | null>,
+    creditRef?: React.RefObject<HTMLDivElement | null>,
 ) => {
     const { width, height } = screen
     const dpr = window.devicePixelRatio
@@ -25,9 +25,22 @@ export const applyImageBackground = (
         bgOverlay.current!.style.opacity = '1'
 
         // Set Credit Info
-        if ("user" in data && creditRef) {
-            creditRef.current!.textContent = `Photo by ${data.user?.name}`
-            creditRef.current!.href = `https://unsplash.com/@${data.user?.username}${UNSPLASH_UTM}`
+        if (creditRef) {
+            const cuser = creditRef.current?.querySelector("#credit-user") as HTMLAnchorElement
+            const cunspalsh = creditRef.current?.querySelector("#credit-unsplash") as HTMLAnchorElement
+
+            if ("user" in data) {
+                cuser!.textContent = `Photo by ${data.user?.name}`
+                cuser!.href = `https://unsplash.com/@${data.user?.username}${UNSPLASH_UTM}`
+                // credit of unsplash
+                cunspalsh!.textContent = `on Unsplash`
+                cunspalsh!.href = `https://unsplash.com/${UNSPLASH_UTM}`
+            } else {
+                cuser!.textContent = ""
+                cuser!.href = ""
+                cunspalsh!.textContent = ""
+                cunspalsh!.href = ""
+            }
         }
 
     }

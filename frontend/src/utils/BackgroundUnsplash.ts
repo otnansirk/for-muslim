@@ -84,7 +84,7 @@ export const loadUnsplaceImage = async (
     bgOverlay: React.RefObject<HTMLDivElement | null>,
     bg1Ref: React.RefObject<HTMLDivElement | null>,
     bg2Ref: React.RefObject<HTMLDivElement | null>,
-    creditRef: React.RefObject<HTMLAnchorElement | null>,
+    creditRef: React.RefObject<HTMLDivElement | null>,
     reset: boolean = false
 ) => {
 

@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 import { loadUnsplaceImage } from '../../../utils/BackgroundUnsplash';
 import { loadLocalImage } from '../../../utils/BackgroundLocal';
-import { BACKGROUND_SOURCE_LOCAL, BACKGROUND_SOURCE_UNSPLASH, UNSPLASH_UTM } from '../../../constant/background';
+import { BACKGROUND_SOURCE_LOCAL, BACKGROUND_SOURCE_UNSPLASH } from '../../../constant/background';
 import { BackgroundType } from '../../../types/Storage';
 import { delay } from '../../../utils/Helpers';
 import Storage from '../../../utils/Storage';
@@ -20,7 +20,7 @@ const BackgroundOverlay = () => {
     const bgOverlayRef = useRef<HTMLDivElement>(null)
     const bg1Ref = useRef<HTMLDivElement>(null)
     const bg2Ref = useRef<HTMLDivElement>(null)
-    const creditRef = useRef<HTMLAnchorElement>(null)
+    const creditRef = useRef<HTMLDivElement>(null)
 
     const loadBackground = async () => {
         const bg: BackgroundType | undefined = await Storage.sync.get("background")
@@ -67,14 +67,14 @@ const BackgroundOverlay = () => {
 
     return (
         <div className='background'>
-            <div ref={bgOverlayRef} className={`background-overlay`}>
+            <div ref={bgOverlayRef} className='background-overlay'>
                 <div ref={bg1Ref} className='overlay' />
                 <div ref={bg2Ref} className='overlay otnansirk' />
             </div>
             {
-                <div className={`background-info`}>
-                    <a ref={creditRef} />&nbsp;
-                    on <a href={`https://unsplash.com/${UNSPLASH_UTM}`}>Unsplash</a>
+                <div className='background-credit' ref={creditRef}>
+                    <a id='credit-user' />&nbsp;
+                    <a id='credit-unsplash' />
                 </div>
             }
         </div >

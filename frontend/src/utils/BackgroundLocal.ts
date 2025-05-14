@@ -42,7 +42,7 @@ export const loadLocalImage = async (
     bgOverlay: React.RefObject<HTMLDivElement | null>,
     bg1Ref: React.RefObject<HTMLDivElement | null>,
     bg2Ref: React.RefObject<HTMLDivElement | null>,
-    creditRef: React.RefObject<HTMLAnchorElement | null>,
+    creditRef: React.RefObject<HTMLDivElement | null>,
     imageId?: string
 ) => {
 
