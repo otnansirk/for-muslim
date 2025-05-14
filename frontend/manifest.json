@@ -22,6 +22,21 @@
     "permissions": [
         "storage",
         "alarms",
-        "notifications"
+        "notifications",
+        "topSites",
+        "favicon"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "_favicon/*"
+            ],
+            "matches": [
+                "<all_urls>"
+            ],
+            "extension_ids": [
+                "*"
+            ]
+        }
     ]
 }

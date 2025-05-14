@@ -5,3 +5,11 @@ export const generateID = (length: number) => {
 }
 
 export const delay = (func: () => void, delay: number = 200) => setTimeout(() => func(), delay)
+
+export const faviconURL = (u: string) => {
+    const destUrl = new URL(u.startsWith("http") ? u : `https://${u}/`)
+    const url = new URL(chrome.runtime.getURL("/_favicon/"));
+    url.searchParams.set("pageUrl", destUrl.origin);
+    url.searchParams.set("size", "32");
+    return url.toString();
+}
