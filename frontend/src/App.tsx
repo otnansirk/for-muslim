@@ -18,14 +18,14 @@ function App() {
             <div className='container'>
                 <Settings />
                 <div className='header'>
-                    <Clock />
-                    {
+                    <div>
+                        <Clock />
                         <Weather />
-                    }
-                    <Greeting />
+                    </div>
                 </div>
                 <div className='content'>
-                    {<PrayerTime />}
+                    <Greeting />
+                    <PrayerTime />
                     <Notes />
                 </div>
             </div>
