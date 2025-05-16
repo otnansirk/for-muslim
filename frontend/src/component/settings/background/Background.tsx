@@ -50,6 +50,7 @@ const Background = () => {
                 blurIntensityRef.current!.value = (bg?.blur_intensity ?? blurIntensity).toString()
                 brightnessRef.current!.value = (bg?.brightness ?? brightness).toString()
                 setSource(bg?.source ?? BACKGROUND_SOURCE_UNSPLASH)
+                useBackgroundStore.setState(prev => ({ ...prev, blurIntensity: bg.blur_intensity, brightness: bg.brightness }))
             }
         })
 
