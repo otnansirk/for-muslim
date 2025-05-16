@@ -111,6 +111,7 @@
                 color: #FFF;
                 font-family: var(--font-family);
                 font-weight: var(--font-weight-sm);
+                padding: 1px 0px;
 
                 .items-title {
                     font-size: 15px;

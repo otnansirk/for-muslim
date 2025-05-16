@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { useGreetingsStore } from '../../../utils/Store'
 import { GreetingType } from '../../../types/Storage'
 import Datetime from '../../../utils/Datetime'
 import Storage from '../../../utils/Storage'
@@ -8,6 +9,9 @@ import './style.css'
 const Greeting = () => {
     const nameRef = useRef<HTMLSpanElement>(null)
     const greetingsRef = useRef<HTMLSpanElement>(null)
+
+    const fontSize = useGreetingsStore(state => state.fontSize)
+    const textShadow = useGreetingsStore(state => state.textShadow)
 
     useEffect(() => {
         Storage.sync.watch('greeting', (item) => {
@@ -22,6 +26,18 @@ const Greeting = () => {
             }
         })
     }, [])
+
+    useEffect(() => {
+        const vFontSize = `${fontSize / 20}rem`
+        greetingsRef.current!.style.fontSize = vFontSize
+        nameRef.current!.style.fontSize = vFontSize
+    }, [fontSize])
+
+    useEffect(() => {
+        const vTextShadow = `1px 2px 6px rgba(0, 0, 0, ${textShadow / 100}`
+        greetingsRef.current!.style.textShadow = vTextShadow
+        nameRef.current!.style.textShadow = vTextShadow
+    }, [textShadow])
 
     return (
         <div className="greeting">
