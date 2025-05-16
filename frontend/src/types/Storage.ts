@@ -7,7 +7,7 @@ export type StorageType = {
     location?: LocationType
     weather?: WeatherType
     prayer?: PrayerType
-    notes?: string
+    notes?: NotesType
     greeting?: GreetingType
     date?: DateType
     time?: TimeType
@@ -62,6 +62,11 @@ export type PrayerType = {
     tz?: string
     geolocation?: string
     last_update?: number
+}
+
+export type NotesType = {
+    enable?: boolean
+    content?: string
 }
 
 export type GreetingType = {

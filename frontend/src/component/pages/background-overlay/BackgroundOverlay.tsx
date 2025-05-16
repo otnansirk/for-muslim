@@ -45,8 +45,6 @@ const BackgroundOverlay = () => {
     })
 
     Storage.local.watch("onLoadBackground", async (onLoad: boolean) => {
-        console.log(onLoad, "LLLL");
-
         if (onLoad) {
             delay(async () => {
                 await loadBackground()

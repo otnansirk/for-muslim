@@ -6,6 +6,7 @@ import Background from './background/Background'
 import Greetings from './greetings/Greetings'
 import DateAndTime from './clock/DateAndTime'
 import Weather from './weather/Weather'
+import Notes from './notes/Notes'
 import Icon from '../Icon'
 
 import './style.css'
@@ -41,6 +42,7 @@ const Settings = () => {
             <Background />
             <DateAndTime />
             <Weather />
+            <Notes />
         </div>
     </div>
 }
