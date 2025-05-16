@@ -125,6 +125,8 @@ const Background = () => {
                     <Range
                         onChange={e => setBrightness(parseInt(e.target.value))}
                         ref={brightnessRef}
+                        min={10}
+                        max={200}
                     />
                 </div>
             </div>
