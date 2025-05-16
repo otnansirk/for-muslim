@@ -67,6 +67,8 @@ export type PrayerType = {
 export type GreetingType = {
     enable?: boolean
     name?: string
+    text_shadow?: number
+    font_size?: number
 }
 
 export type DateType = {
