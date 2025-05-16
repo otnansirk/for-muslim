@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react"
 import { BACKGROUND_REFRESH_FREQUENCY, BACKGROUND_SOURCE, BACKGROUND_SOURCE_LOCAL, BACKGROUND_SOURCE_UNSPLASH } from "../../../constant/background"
+import { useBackgroundStore } from "../../../utils/Store"
 import { BackgroundType } from "../../../types/Storage"
 import { delay } from "../../../utils/Helpers"
 import Select from "../../form/select/Select"
 import Storage from "../../../utils/Storage"
+import Range from "../../form/range/Range"
 import Loader from "../../loader/Loader"
 import Unsplash from "./Unsplash"
 import Icon from "../../Icon"
@@ -17,10 +19,21 @@ const Background = () => {
     const sourceRef = useRef<HTMLSelectElement>(null)
     const frequencyRef = useRef<HTMLSelectElement>(null)
     const refreshIconRef = useRef<SVGSVGElement>(null)
+    const blurIntensityRef = useRef<HTMLInputElement>(null)
+    const brightnessRef = useRef<HTMLInputElement>(null)
 
     const [onRefreshBackground, setOnRefreshBackground] = useState<boolean>(false)
     const [source, setSource] = useState<string>("")
     const [backgroundLoading, setBackgroundLoading] = useState<boolean>(false)
+
+    const {
+        blurIntensity,
+        brightness,
+
+        setBlurIntensity,
+        setBrightness
+    } = useBackgroundStore()
+
 
     const onChangeSourceHandler = (ev: React.ChangeEvent<HTMLSelectElement>) => {
         const value = ev.target.value
@@ -34,6 +47,8 @@ const Background = () => {
             const bg = item as BackgroundType
             if (bg) {
                 sourceRef.current!.value = bg?.source ?? BACKGROUND_SOURCE_UNSPLASH
+                blurIntensityRef.current!.value = (bg?.blur_intensity ?? blurIntensity).toString()
+                brightnessRef.current!.value = (bg?.brightness ?? brightness).toString()
                 setSource(bg?.source ?? BACKGROUND_SOURCE_UNSPLASH)
             }
         })
@@ -48,6 +63,7 @@ const Background = () => {
             setBackgroundLoading(loading)
         })
 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return <div className={`background-settings ${backgroundLoading && 'loading'}`}>
@@ -84,6 +100,30 @@ const Background = () => {
                         items={BACKGROUND_REFRESH_FREQUENCY}
                         ref={frequencyRef}
                         onSelect={() => { }}
+                    />
+                </div>
+            </div>
+            <hr />
+            <div className='items'>
+                <div className='items-title'>
+                    Blur intensity
+                </div>
+                <div className="items-content">
+                    <Range
+                        onChange={e => setBlurIntensity(parseInt(e.target.value))}
+                        ref={blurIntensityRef}
+                    />
+                </div>
+            </div>
+            <hr />
+            <div className='items'>
+                <div className='items-title'>
+                    Brightness
+                </div>
+                <div className="items-content">
+                    <Range
+                        onChange={e => setBrightness(parseInt(e.target.value))}
+                        ref={brightnessRef}
                     />
                 </div>
             </div>
