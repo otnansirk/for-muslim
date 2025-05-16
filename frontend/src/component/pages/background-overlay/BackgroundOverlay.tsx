@@ -1,14 +1,14 @@
 import { useEffect, useRef } from 'react';
 
+import { BACKGROUND_SOURCE_LOCAL } from '../../../constant/background';
 import { loadUnsplaceImage } from '../../../utils/BackgroundUnsplash';
 import { loadLocalImage } from '../../../utils/BackgroundLocal';
-import { BACKGROUND_SOURCE_LOCAL, BACKGROUND_SOURCE_UNSPLASH } from '../../../constant/background';
+import { useBackgroundStore } from '../../../utils/Store';
 import { BackgroundType } from '../../../types/Storage';
 import { delay } from '../../../utils/Helpers';
 import Storage from '../../../utils/Storage';
 
 import './style.css';
-import { useBackgroundStore } from '../../../utils/Store';
 
 
 type UnsplashCollectionChangeType = {
@@ -30,8 +30,7 @@ const BackgroundOverlay = () => {
         const bg: BackgroundType | undefined = await Storage.sync.get("background")
         if (bg?.source === BACKGROUND_SOURCE_LOCAL) {
             await loadLocalImage(bgOverlayRef, bg1Ref, bg2Ref, creditRef)
-        }
-        if (bg?.source === BACKGROUND_SOURCE_UNSPLASH) {
+        } else {
             await loadUnsplaceImage(bgOverlayRef, bg1Ref, bg2Ref, creditRef)
         }
     }
@@ -46,6 +45,8 @@ const BackgroundOverlay = () => {
     })
 
     Storage.local.watch("onLoadBackground", async (onLoad: boolean) => {
+        console.log(onLoad, "LLLL");
+
         if (onLoad) {
             delay(async () => {
                 await loadBackground()
