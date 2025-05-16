@@ -8,6 +8,7 @@ import { delay } from '../../../utils/Helpers';
 import Storage from '../../../utils/Storage';
 
 import './style.css';
+import { useBackgroundStore } from '../../../utils/Store';
 
 
 type UnsplashCollectionChangeType = {
@@ -21,6 +22,9 @@ const BackgroundOverlay = () => {
     const bg1Ref = useRef<HTMLDivElement>(null)
     const bg2Ref = useRef<HTMLDivElement>(null)
     const creditRef = useRef<HTMLDivElement>(null)
+
+    const { blurIntensity, brightness } = useBackgroundStore()
+
 
     const loadBackground = async () => {
         const bg: BackgroundType | undefined = await Storage.sync.get("background")
@@ -64,6 +68,16 @@ const BackgroundOverlay = () => {
             await loadBackground()
         })()
     }, [])
+
+    useEffect(() => {
+        const root = document.documentElement;
+        root.style.setProperty('--bg-blur', `${blurIntensity}px`)
+    }, [blurIntensity])
+
+    useEffect(() => {
+        const root = document.documentElement;
+        root.style.setProperty('--bg-brightness', (brightness / 100).toString())
+    }, [brightness])
 
     return (
         <div className='background'>
