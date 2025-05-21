@@ -7,6 +7,8 @@ import Switch from "../../form/switch/Switch"
 import Select from "../../form/select/Select"
 import Storage from "../../../utils/Storage"
 import Request from "../../../utils/Request"
+import Range from "../../form/range/Range"
+import { useTimeStore } from "../../../utils/Store"
 
 const DateAndTime = () => {
     const dateEnableRef = useRef<HTMLInputElement>(null)
@@ -16,12 +18,19 @@ const DateAndTime = () => {
     const time24HoursRef = useRef<HTMLInputElement>(null)
     const timeShowSecondsRef = useRef<HTMLInputElement>(null)
     const timeShowAMPMRef = useRef<HTMLInputElement>(null)
+    const timeFontSizeRef = useRef<HTMLInputElement>(null)
 
     const [showAMPM, setShowAMPM] = useState("hidden")
     const [showTimeSettings, setShowTimeSettings] = useState("hidden")
     const [showDateSettings, setShowDateSettings] = useState("hidden")
     const [timezones, setTimezones] = useState<TimezoneType[]>([])
     const [selectedTimezone, setSelectedTimezone] = useState<string | undefined>(undefined)
+
+
+    const {
+        fontSize,
+        setFontSize
+    } = useTimeStore()
 
     useEffect(() => {
         Storage.sync.watch("date", (item) => {
@@ -32,12 +41,15 @@ const DateAndTime = () => {
             setShowDateSettings(data?.enable ? "" : "hidden")
         })
 
-        Storage.sync.watch("time", (item) => {
+        Storage.sync.get("time", (item) => {
             const data = item as TimeType
             timeEnableRef.current!.checked = data?.enable ?? false
             time24HoursRef.current!.checked = data?.hour12 ?? false
             timeShowSecondsRef.current!.checked = data?.show_seconds ?? false
             timeShowAMPMRef.current!.checked = data?.show_ampm ?? false
+            timeFontSizeRef.current!.value = (data?.font_size ?? fontSize).toString()
+
+            useTimeStore.setState(prev => ({ ...prev, fontSize: data.font_size }))
 
             setShowTimeSettings(data?.enable ? "" : "hidden")
             setShowAMPM(data?.hour12 ? "" : "hidden")
@@ -58,6 +70,8 @@ const DateAndTime = () => {
             }
         };
         fetchData()
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return <>
@@ -78,6 +92,20 @@ const DateAndTime = () => {
             </div>
 
             <div className={`dropshow ${showTimeSettings}`}>
+                <hr />
+                <div className='items'>
+                    <div className='items-title'>
+                        Font size
+                    </div>
+                    <div className="items-content">
+                        <Range
+                            onChange={e => setFontSize(parseInt(e.target.value))}
+                            ref={timeFontSizeRef}
+                            min={10}
+                            max={200}
+                        />
+                    </div>
+                </div>
                 <hr />
                 <div className='items'>
                     <div className='items-title'>

@@ -90,6 +90,7 @@ export type TimeType = {
     show_ampm?: boolean
     show_seconds?: boolean
     tz?: string
+    font_size?: number
 }
 
 export type BackgroundType = {

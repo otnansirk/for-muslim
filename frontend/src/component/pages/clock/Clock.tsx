@@ -5,9 +5,11 @@ import Datetime from '../../../utils/Datetime';
 import Storage from '../../../utils/Storage';
 
 import './style.css'
+import { useTimeStore } from '../../../utils/Store';
 
 
 const Clock = () => {
+    const clockWrapperRef = useRef<HTMLDivElement>(null)
     const dateRef = useRef<HTMLDivElement>(null)
     const timeRef = useRef<HTMLDivElement>(null)
     const hoursRef = useRef<HTMLSpanElement>(null)
@@ -16,6 +18,9 @@ const Clock = () => {
     const secondsRef = useRef<HTMLSpanElement>(null)
     const [time, setTime] = useState<TimeType | null>(null)
 
+    const { fontSize } = useTimeStore()
+
+
     useEffect(() => {
 
         Storage.sync.watch('time', (item) => {
@@ -23,9 +28,9 @@ const Clock = () => {
             setTime(time)
 
             if (time) {
-                timeRef.current!.style = `display: ${time.enable ? 'flex' : 'none'}`
-                meridiemRef.current!.style = `display: ${time.show_ampm ? 'inline-block' : 'none'}`
-                secondsRef.current!.style = `display: ${time.show_seconds ? 'inline-block' : 'none'}`
+                timeRef.current!.style.display = time.enable ? 'flex' : 'none'
+                meridiemRef.current!.style.display = time.show_ampm ? 'inline-block' : 'none'
+                secondsRef.current!.style.display = time.show_seconds ? 'inline-block' : 'none'
             }
         })
 
@@ -59,11 +64,15 @@ const Clock = () => {
         return () => { clearInterval(interval) };
     }, [time])
 
+    useEffect(() => {
+        clockWrapperRef.current!.style.fontSize = `${fontSize / 10}rem`
+    }, [fontSize])
+
 
     return (
         <div className='clock'>
-            <div className='clock-wrapper'>
-                <div className="clock-digital" ref={timeRef}>
+            <div className='clock-wrapper' ref={clockWrapperRef}>
+                <div className="clock-digital" ref={timeRef} >
                     <span className="hours" ref={hoursRef} />
                     <span className="minutes" ref={minutesRef} />
                     <span className="seconds" ref={secondsRef} />

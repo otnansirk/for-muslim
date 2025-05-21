@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { GreetingsStoreType, BackgroundStoreType } from "../types/Store";
+import { GreetingsStoreType, BackgroundStoreType, TimeStoreType } from "../types/Store";
 import Storage from "./Storage";
 
 
@@ -39,6 +39,17 @@ export const useBackgroundStore = create<BackgroundStoreType>((set) => ({
     setBrightness: (brightness: number) => {
         saveToStorage(() => Storage.sync.set("background", { brightness }))
         return set(() => ({ brightness }))
+    },
+
+    removeAll: () => set({}),
+}))
+
+export const useTimeStore = create<TimeStoreType>((set) => ({
+
+    fontSize: 65,
+    setFontSize: (fontSize: number) => {
+        saveToStorage(() => Storage.sync.set("time", { font_size: fontSize }))
+        return set(() => ({ fontSize }))
     },
 
     removeAll: () => set({}),

@@ -3,13 +3,13 @@
     margin-top: 20px;
     text-align: center;
     display: flex;
+    font-size: 6.5rem;
 
     .clock-wrapper {
         min-width: 250px;
     }
 
     .clock-digital {
-        font-size: 6.5em;
         align-items: baseline;
         font-weight: var(--font-weight-sm);
         justify-content: center;
@@ -21,7 +21,7 @@
         }
 
         .meridiem {
-            font-size: 32px;
+            font-size: .22em;
             margin-left: 4px;
             font-weight: var(--font-weight-sm);
             text-transform: lowercase;
@@ -29,7 +29,7 @@
     }
 
     .clock-date {
-        font-size: 18px;
+        font-size: 0.18em;
         line-height: 1.6em;
         font-weight: var(--font-weight-sm);
         text-align: center;
