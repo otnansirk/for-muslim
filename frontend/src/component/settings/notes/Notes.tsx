@@ -26,7 +26,6 @@ const Notes = () => {
                     Enable
                 </div>
                 <Switch
-                    isChecked={false}
                     ref={isEnableRef}
                     onChange={e => Storage.sync.set('notes', { enable: e.target.checked })}
                 />
