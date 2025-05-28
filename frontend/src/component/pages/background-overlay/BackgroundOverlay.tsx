@@ -35,37 +35,39 @@ const BackgroundOverlay = () => {
         }
     }
 
-    Storage.local.watch<UnsplashCollectionChangeType>("onChangeUnsplashCollection", async (collect) => {
-        if (collect) {
-            delay(async () => {
-                await loadUnsplaceImage(bgOverlayRef, bg1Ref, bg2Ref, creditRef, collect?.type === "custom")
-                Storage.local.set("onChangeUnsplashCollection", false)
-            })
-        }
-    })
-
-    Storage.local.watch("onLoadBackground", async (onLoad: boolean) => {
-        if (onLoad) {
-            delay(async () => {
-                await loadBackground()
-                Storage.local.set("onLoadBackground", false)
-            })
-        }
-    })
-
-    Storage.local.watch("onLoadSelectedLocalBackground", async (selectedId: string) => {
-        if (selectedId) {
-            delay(async () => {
-                await loadLocalImage(bgOverlayRef, bg1Ref, bg2Ref, creditRef, selectedId)
-                Storage.local.set("onLoadSelectedLocalBackground", "")
-            })
-        }
-    })
 
     useEffect(() => {
         (async () => {
             await loadBackground()
         })()
+
+
+        Storage.local.watch<UnsplashCollectionChangeType>("onChangeUnsplashCollection", async (collect) => {
+            if (collect) {
+                delay(async () => {
+                    await loadUnsplaceImage(bgOverlayRef, bg1Ref, bg2Ref, creditRef, collect?.type === "custom")
+                    Storage.local.set("onChangeUnsplashCollection", false)
+                })
+            }
+        })
+
+        Storage.local.watch("onLoadBackground", async (onLoad: boolean) => {
+            if (onLoad) {
+                delay(async () => {
+                    await loadBackground()
+                    Storage.local.set("onLoadBackground", false)
+                })
+            }
+        })
+
+        Storage.local.watch("onLoadSelectedLocalBackground", async (selectedId: string) => {
+            if (selectedId) {
+                delay(async () => {
+                    await loadLocalImage(bgOverlayRef, bg1Ref, bg2Ref, creditRef, selectedId)
+                    Storage.local.set("onLoadSelectedLocalBackground", "")
+                })
+            }
+        })
     }, [])
 
     useEffect(() => {
