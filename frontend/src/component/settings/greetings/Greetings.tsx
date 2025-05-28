@@ -5,6 +5,9 @@ import Switch from "../../form/switch/Switch"
 import { GreetingType } from "../../../types/Storage"
 import { useGreetingsStore } from "../../../utils/Store"
 import Range from "../../form/range/Range"
+import Icon from "../../Icon"
+
+import './style.css'
 
 
 const Greetings = () => {
@@ -28,8 +31,8 @@ const Greetings = () => {
             const data = item as GreetingType
             isEnableRef.current!.checked = data?.enable ?? false
             nameRef.current!.value = data?.name ?? ""
-            fontSizeRef.current!.value = data.font_size?.toString() ?? fontSize.toString()
             textShadowRef.current!.value = data.text_shadow?.toString() ?? textShadow.toString()
+            fontSizeRef.current!.value = data.font_size?.toString() ?? fontSize.toString()
 
             setShowSettings(data?.enable ? "" : "hidden")
             useGreetingsStore.setState(prev => ({ ...prev, fontSize: data.font_size, textShadow: data.text_shadow }))
@@ -37,6 +40,14 @@ const Greetings = () => {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    useEffect(() => {
+        textShadowRef.current!.value = textShadow.toString()
+    }, [textShadow])
+
+    useEffect(() => {
+        fontSizeRef.current!.value = fontSize.toString()
+    }, [fontSize])
 
     return <>
         <h2 className='settings-title'>
@@ -71,21 +82,37 @@ const Greetings = () => {
                     <div className='items-title'>
                         Shadow
                     </div>
-                    <Range
-                        onChange={e => setShadow(parseInt(e.target.value))}
-                        ref={textShadowRef}
-                    />
+                    <div className="range-wrapper">
+                        {
+                            textShadow != 20 &&
+                            <div className="reset-icon" onClick={() => setShadow(20)}>
+                                <Icon icon="back" className="icon-back" />
+                            </div>
+                        }
+                        <Range
+                            onChange={e => setShadow(parseInt(e.target.value))}
+                            ref={textShadowRef}
+                        />
+                    </div>
                 </div>
                 <hr />
                 <div className='items'>
                     <div className='items-title'>
                         Font size
                     </div>
-                    <Range
-                        onChange={e => setFontSize(parseInt(e.target.value))}
-                        min={45}
-                        ref={fontSizeRef}
-                    />
+                    <div className="range-wrapper">
+                        {
+                            fontSize != 45 &&
+                            <div className="reset-icon" onClick={() => setFontSize(45)}>
+                                <Icon icon="back" className="icon-back" />
+                            </div>
+                        }
+                        <Range
+                            onChange={e => setFontSize(parseInt(e.target.value))}
+                            min={45}
+                            ref={fontSizeRef}
+                        />
+                    </div>
                 </div>
             </div>
         </div>

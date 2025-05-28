@@ -1,0 +1,29 @@
+.range-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    position: relative;
+}
+
+.reset-icon {
+    background-color: #9494943a;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid #78787834;
+    height: 27px;
+    width: 27px;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    /* position: absolute; */
+    left: -35px;
+
+    &:hover {
+        background-color: #e8e8e845;
+    }
+
+    .icon-back {
+        width: 16px;
+    }
+}
