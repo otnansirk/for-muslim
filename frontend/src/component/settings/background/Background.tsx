@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react"
 import { BACKGROUND_REFRESH_FREQUENCY, BACKGROUND_SOURCE, BACKGROUND_SOURCE_LOCAL, BACKGROUND_SOURCE_UNSPLASH } from "../../../constant/background"
+import { BACKGROUND_BLUR_INTENSITY, BACKGROUND_BRIGHTNESS } from "../../../constant/settings"
 import { useBackgroundStore } from "../../../utils/Store"
 import { BackgroundType } from "../../../types/Storage"
 import { delay } from "../../../utils/Helpers"
 import Select from "../../form/select/Select"
+import Button from "../../form/button/Button"
 import Storage from "../../../utils/Storage"
 import Range from "../../form/range/Range"
 import Loader from "../../loader/Loader"
@@ -88,15 +90,12 @@ const Background = () => {
                     Refresh
                 </div>
                 <div className="items-content">
-                    <div
-                        className={`save-action`}
-                        onClick={() => {
-                            setOnRefreshBackground(true)
-                            if (!onRefreshBackground) Storage.local.set("onLoadBackground", true)
-                        }}
-                    >
+                    <Button onClick={() => {
+                        setOnRefreshBackground(true)
+                        if (!onRefreshBackground) Storage.local.set("onLoadBackground", true)
+                    }}>
                         <Icon ref={refreshIconRef} icon="arrow-path" className={`refresh-icon ${onRefreshBackground && 'spin'}`} />
-                    </div>
+                    </Button>
                     <Select
                         items={BACKGROUND_REFRESH_FREQUENCY}
                         ref={frequencyRef}
@@ -110,10 +109,18 @@ const Background = () => {
                     Blur intensity
                 </div>
                 <div className="items-content">
-                    <Range
-                        onChange={e => setBlurIntensity(parseInt(e.target.value))}
-                        ref={blurIntensityRef}
-                    />
+                    <div className="range-wrapper">
+                        {
+                            blurIntensity != BACKGROUND_BLUR_INTENSITY &&
+                            <Button onClick={() => setBlurIntensity(BACKGROUND_BLUR_INTENSITY)}>
+                                <Icon icon="back" />
+                            </Button>
+                        }
+                        <Range
+                            onChange={e => setBlurIntensity(parseInt(e.target.value))}
+                            ref={blurIntensityRef}
+                        />
+                    </div>
                 </div>
             </div>
             <hr />
@@ -122,12 +129,20 @@ const Background = () => {
                     Brightness
                 </div>
                 <div className="items-content">
-                    <Range
-                        onChange={e => setBrightness(parseInt(e.target.value))}
-                        ref={brightnessRef}
-                        min={10}
-                        max={200}
-                    />
+                    <div className="range-wrapper">
+                        {
+                            brightness != BACKGROUND_BRIGHTNESS &&
+                            <Button onClick={() => setBrightness(BACKGROUND_BRIGHTNESS)}>
+                                <Icon icon="back" />
+                            </Button>
+                        }
+                        <Range
+                            onChange={e => setBrightness(parseInt(e.target.value))}
+                            ref={brightnessRef}
+                            min={10}
+                            max={200}
+                        />
+                    </div>
                 </div>
             </div>
             <div className={`dropshow ww ${source !== BACKGROUND_SOURCE_UNSPLASH && "hidden"}`}>

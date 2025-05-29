@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import { BACKGROUND_COLLECTION, BACKGROUND_COLLECTION_ISLAMIC, BACKGROUND_COLLECTIONS } from "../../../constant/background"
 import { BackgroundType } from "../../../types/Storage"
 import Select from "../../form/select/Select"
+import Button from "../../form/button/Button"
 import Storage from "../../../utils/Storage"
 import Input from "../../form/input/Input"
 import Loader from "../../loader/Loader"
@@ -96,16 +97,13 @@ const Unsplash = () => {
                 <div className="items-content">
                     {
                         (currentCollectionValue && currentCollectionValue !== lastCollectionValueRef.current) &&
-                        <div
-                            className={`save-action`}
-                            onClick={onSaveCustomCollection}
-                        >
+                        <Button onClick={onSaveCustomCollection}>
                             {
                                 onChangeUnsplashCollection
                                     ? <Loader />
                                     : <Icon icon="check" className="check-icon" />
                             }
-                        </div>
+                        </Button>
                     }
                     <Input
                         ref={collectionValueRef}

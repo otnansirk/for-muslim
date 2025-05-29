@@ -3,6 +3,7 @@ import { GEOLOCATION, GEOLOCATION_APPROXIMATE, GEOLOCATION_MANUAL, GEOLOCATION_P
 import { FetchDataLocationQueryParamType, FetchDataWeatherQueryParamType, WeatherType } from "../../../types/Weather"
 import Select from "../../form/select/Select"
 import Switch from "../../form/switch/Switch"
+import Button from "../../form/button/Button"
 import Storage from "../../../utils/Storage"
 import Request from "../../../utils/Request"
 import Input from "../../form/input/Input"
@@ -193,8 +194,7 @@ const Weather = () => {
                         <div className="items-content">
                             {
                                 (changeLocation.length > 2) &&
-                                <div
-                                    className={`save-action ${geolocationLoading && 'loading'}`}
+                                <Button
                                     onClick={() => !geolocationLoading && geolocationManual({ query: addressRef.current?.value ?? "" })}
                                 >
                                     {
@@ -202,7 +202,7 @@ const Weather = () => {
                                             ? <Loader />
                                             : <Icon icon="check" className="check-icon" />
                                     }
-                                </div>
+                                </Button>
                             }
                             <Input
                                 ref={addressRef}
