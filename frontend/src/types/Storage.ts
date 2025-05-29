@@ -79,6 +79,7 @@ export type GreetingType = {
 export type DateType = {
     enable?: boolean
     format?: {
+        label?: string,
         value?: string,
         config?: ConfigDateTypes
     }
