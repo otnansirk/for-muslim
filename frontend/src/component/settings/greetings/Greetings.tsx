@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from "react"
+import { GREETING_FONT_SIZE, GREETING_TEXT_SHADOW } from "../../../constant/settings"
+import { useGreetingsStore } from "../../../utils/Store"
+import { GreetingType } from "../../../types/Storage"
+import Switch from "../../form/switch/Switch"
 import Storage from "../../../utils/Storage"
 import Input from "../../form/input/Input"
-import Switch from "../../form/switch/Switch"
-import { GreetingType } from "../../../types/Storage"
-import { useGreetingsStore } from "../../../utils/Store"
 import Range from "../../form/range/Range"
 import Icon from "../../Icon"
 
 import './style.css'
-import { GREETING_FONT_SIZE, GREETING_TEXT_SHADOW } from "../../../constant/settings"
 
 
 const Greetings = () => {

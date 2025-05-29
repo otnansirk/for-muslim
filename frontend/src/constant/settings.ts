@@ -34,7 +34,7 @@ export const DEFAULT: DefaultSettingType[] = [
             "hour12": true,
             "show_ampm": true,
             "show_seconds": false,
-            font_size: TIME_FONT_SIZE
+            "font_size": TIME_FONT_SIZE
         }
     },
     {

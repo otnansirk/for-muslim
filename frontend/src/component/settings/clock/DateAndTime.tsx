@@ -9,6 +9,8 @@ import Storage from "../../../utils/Storage"
 import Request from "../../../utils/Request"
 import Range from "../../form/range/Range"
 import { useTimeStore } from "../../../utils/Store"
+import Icon from "../../Icon"
+import { TIME_FONT_SIZE } from "../../../constant/settings"
 
 const DateAndTime = () => {
     const dateEnableRef = useRef<HTMLInputElement>(null)
@@ -98,12 +100,20 @@ const DateAndTime = () => {
                         Font size
                     </div>
                     <div className="items-content">
-                        <Range
-                            onChange={e => setFontSize(parseInt(e.target.value))}
-                            ref={timeFontSizeRef}
-                            min={10}
-                            max={200}
-                        />
+                        <div className="range-wrapper">
+                            {
+                                fontSize != TIME_FONT_SIZE &&
+                                <div className="reset-icon" onClick={() => setFontSize(TIME_FONT_SIZE)}>
+                                    <Icon icon="back" className="icon-back" />
+                                </div>
+                            }
+                            <Range
+                                onChange={e => setFontSize(parseInt(e.target.value))}
+                                ref={timeFontSizeRef}
+                                min={10}
+                                max={200}
+                            />
+                        </div>
                     </div>
                 </div>
                 <hr />
