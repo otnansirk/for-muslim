@@ -1,0 +1,32 @@
+.action-button {
+    background-color: #9494943a;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid #78787834;
+    height: 27px;
+    width: 27px;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: white;
+    padding: 4.5px;
+
+    &:hover {
+        background-color: #e8e8e845;
+    }
+
+    &.loading {
+        cursor: progress;
+        padding: 0px;
+
+        >.loader {
+            font-size: 2.5px;
+        }
+    }
+
+    .icon {
+        width: 16px;
+        height: 16px;
+    }
+}
