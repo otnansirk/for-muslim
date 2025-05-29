@@ -8,6 +8,7 @@ import Range from "../../form/range/Range"
 import Icon from "../../Icon"
 
 import './style.css'
+import { GREETING_FONT_SIZE, GREETING_TEXT_SHADOW } from "../../../constant/settings"
 
 
 const Greetings = () => {
@@ -84,8 +85,8 @@ const Greetings = () => {
                     </div>
                     <div className="range-wrapper">
                         {
-                            textShadow != 20 &&
-                            <div className="reset-icon" onClick={() => setShadow(20)}>
+                            textShadow != GREETING_TEXT_SHADOW &&
+                            <div className="reset-icon" onClick={() => setShadow(GREETING_TEXT_SHADOW)}>
                                 <Icon icon="back" className="icon-back" />
                             </div>
                         }
@@ -102,8 +103,8 @@ const Greetings = () => {
                     </div>
                     <div className="range-wrapper">
                         {
-                            fontSize != 45 &&
-                            <div className="reset-icon" onClick={() => setFontSize(45)}>
+                            fontSize != GREETING_FONT_SIZE &&
+                            <div className="reset-icon" onClick={() => setFontSize(GREETING_FONT_SIZE)}>
                                 <Icon icon="back" className="icon-back" />
                             </div>
                         }
