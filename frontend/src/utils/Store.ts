@@ -1,8 +1,7 @@
 import { create } from "zustand";
+import { BACKGROUND_BLUR_INTENSITY, BACKGROUND_BRIGHTNESS, GREETING_FONT_SIZE, GREETING_TEXT_SHADOW, TIME_FONT_SIZE } from "../constant/settings";
 import { GreetingsStoreType, BackgroundStoreType, TimeStoreType } from "../types/Store";
 import Storage from "./Storage";
-import { getDefaultSetting } from "./Settings";
-import { BACKGROUND_BLUR_INTENSITY, BACKGROUND_BRIGHTNESS, GREETING_FONT_SIZE, GREETING_TEXT_SHADOW, TIME_FONT_SIZE } from "../constant/settings";
 
 
 let timeoutRef: number | null = null
