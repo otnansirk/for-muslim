@@ -1,10 +1,10 @@
 import { useEffect, useRef } from "react";
+import { NotesType } from "../../../types/Storage";
 import Storage from "../../../utils/Storage";
 import PocketEditor from "pocket-editor";
 import "pocket-editor/style.css";
 
 import './style.css'
-import { NotesType } from "../../../types/Storage";
 
 
 let pockerInstance: PocketEditor | null = null;
