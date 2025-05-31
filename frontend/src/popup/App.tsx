@@ -11,6 +11,7 @@ import './popup.css'
 
 function AppPopup() {
     const intervalRef = useRef<number | null>(null)
+    const prayerRef = useRef<HTMLDivElement>(null)
     const [isAdhanPlaying, setIsAdhanPlaying] = useState<boolean>(false)
     const [nowPlaying, setNowlaying] = useState<string>("")
     const [remainingTime, setRemainingTime] = useState<{ hours: string, minutes: string, seconds: string } | null>({ hours: "0", minutes: "0", seconds: "0" })
@@ -21,8 +22,10 @@ function AppPopup() {
             const adhanStatus = await getStatusAdhan(undefined, delay)
             const isPlaying = adhanStatus.status === 'playing'
             setIsAdhanPlaying(isPlaying)
+            prayerRef.current!.classList.remove('blink')
 
             if (isPlaying) {
+                prayerRef.current!.classList.add('blink')
                 setNowlaying(adhanStatus.type)
                 if (intervalRef.current) {
                     clearInterval(intervalRef.current);
@@ -68,7 +71,6 @@ function AppPopup() {
 
         })
 
-
         return () => {
             if (intervalRef.current) {
                 clearInterval(intervalRef.current)
@@ -80,8 +82,8 @@ function AppPopup() {
 
     return (
         <>{
-            <div className='notify'>
-                <div className='prayer'>
+            <div className='notify' >
+                <div ref={prayerRef} className='prayer'>
                     <h2>{firstUpper(nowPlaying)}</h2>
                     <p>{isAdhanPlaying ? "It's time" : 'Remaining'}</p>
                 </div>
@@ -90,7 +92,7 @@ function AppPopup() {
                         <div className='control'>
                             <button
                                 className='control-icon'
-                                title='STOP & CLOSE'
+                                title='STOP'
                                 onClick={() => {
                                     stopAdhan()
                                     setIsAdhanPlaying(false)

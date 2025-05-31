@@ -18,6 +18,12 @@
     --color-red: #ff0000e0;
 }
 
+@keyframes blink-visible {
+    to {
+        visibility: hidden;
+    }
+}
+
 html {
     font-family: var(--font-family);
     font-weight: 400;
@@ -33,6 +39,10 @@ html {
 
     body {
         margin: 0 auto;
+    }
+
+    .blink {
+        animation: blink-visible 1s steps(2, start) infinite;
     }
 
     .notify {

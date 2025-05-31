@@ -65,6 +65,12 @@ export const initOffscreen = async () => {
     const exists = await chrome.offscreen.hasDocument();
     if (exists) return;
 
+    try {
+        await chrome.offscreen.closeDocument();
+    } catch (err) {
+        console.warn('Offscreen document close failed or not present:', err);
+    }
+
     await chrome.offscreen.createDocument({
         url: 'offscreen.html',
         reasons: ['AUDIO_PLAYBACK'],
@@ -105,6 +111,12 @@ export const playAdhan = async (type: string) => {
             type
         }
     })
+
+    chrome.windows.getCurrent(window => {
+        if (window && window.focused) {
+            chrome.action.openPopup({ windowId: window?.id });
+        }
+    });
 }
 
 /**
