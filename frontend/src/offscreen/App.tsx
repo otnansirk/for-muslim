@@ -14,8 +14,6 @@ function AppOffscreen() {
 
             // HANDSHAKE HANDLER
             if (to === 'HANDSHAKE') {
-                console.log(item, "HANDSHAKE");
-
                 if (item.data === 'ping') {
                     sendResponse({ ready: true });
                     return true;
