@@ -21,7 +21,7 @@
         }
 
         .meridiem {
-            font-size: .22em;
+            font-size: .44em;
             margin-left: 4px;
             font-weight: var(--font-weight-sm);
             text-transform: lowercase;
