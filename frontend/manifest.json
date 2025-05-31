@@ -1,13 +1,14 @@
 {
     "name": "Mooslem° Startpage",
     "description": "Mooslem Start Page is a minimalist Chrome extension that helps you stay focused, energized, and connected to your faith.",
-    "version": "3.4.0",
+    "version": "3.5.0",
     "manifest_version": 3,
     "chrome_url_overrides": {
         "newtab": "index.html"
     },
     "action": {
-        "default_title": "__MSG_extensionName__"
+        "default_title": "__MSG_extensionName__",
+        "default_popup": "popup.html"
     },
     "icons": {
         "192": "/assets/favicon/web-app-manifest-192x192.png",
@@ -23,13 +24,13 @@
         "storage",
         "alarms",
         "notifications",
-        "topSites",
-        "favicon"
+        "favicon",
+        "offscreen"
     ],
     "web_accessible_resources": [
         {
             "resources": [
-                "_favicon/*"
+                "assets/**"
             ],
             "matches": [
                 "<all_urls>"
