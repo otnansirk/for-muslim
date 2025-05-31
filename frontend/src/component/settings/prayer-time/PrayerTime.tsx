@@ -74,6 +74,7 @@ const PrayerTime = () => {
             }
 
             Storage.sync.set("prayer", data);
+            prayer.initAlarms(prayers)
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -166,6 +167,7 @@ const PrayerTime = () => {
                 })
             })
             Storage.sync.set("prayer", { ...prayers, tz: timezone });
+            prayer.initAlarms(prayers)
         })
     }
 
@@ -185,9 +187,8 @@ const PrayerTime = () => {
         };
         fetchDataTimezone()
 
-        Storage.sync.watch("prayer", (item) => {
+        const updatePrayer = (data: PrayerType) => {
 
-            const data = item as PrayerType
             isEnableRef.current!.checked = data?.enable ?? false
             geolocationRef.current!.value = data?.geolocation ?? ""
 
@@ -204,6 +205,10 @@ const PrayerTime = () => {
                 }
             }
             setShowSettings(data?.enable ? "" : "hidden")
+        }
+        Storage.sync.watch("prayer", (item) => {
+            const data = item as PrayerType
+            updatePrayer(data)
         })
 
         // eslint-disable-next-line react-hooks/exhaustive-deps

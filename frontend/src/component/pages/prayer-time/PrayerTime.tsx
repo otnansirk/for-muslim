@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import { PrayerTimeType, PrayerType, TimesType } from "../../../types/Storage"
 import { PRAYER_NAMES } from "../../../constant/prayer"
 import Storage from "../../../utils/Storage"
-import Alarms from "../../../utils/Alarms"
 import Each from "../../Each"
 import Icon from "../../Icon"
 
@@ -31,13 +30,6 @@ const PrayerTime = () => {
                 ringing: ringing
             }
         })
-
-        if (ringing) {
-            const notifyTimePrayer = (prayerTimes[key] as PrayerTimeType).time
-            Alarms.set(key, notifyTimePrayer)
-        } else {
-            Alarms.delete(key)
-        }
     }
 
 
