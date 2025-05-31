@@ -1,0 +1,85 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Capriola&family=Inconsolata:wght@200..900&display=swap'); */
+
+:root {
+    --font-family: -apple-system, system-ui, Ubuntu, Roboto, "Open Sans", "Segoe UI", "Helvetica Neue";
+    --text-shadow-sm: 0.2;
+    --font-weight-xs: 200;
+    --font-weight-sm: 300;
+    --font-weight-md: 400;
+    --font-weight-lg: 500;
+    --border-radius-sm: 8px;
+    --border-radius-md: 10px;
+    --bg-blur: 8px;
+    --bg-brightness: .6;
+    --out-transition: cubic-bezier(.210, .61, .350, 1);
+    --color-white: #e6e6e6;
+    --color-blue: #3e38f0;
+    --color-green: #00ff6370;
+    --color-red: #ff0000e0;
+}
+
+html {
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-style: normal;
+    overflow: hidden;
+    background-image: url('/assets/popup-bg.jpg');
+    background-position: center;
+    background-size: cover;
+    color: var(--color-white);
+    width: 200px;
+    padding: 0;
+    margin: 0 auto;
+
+    body {
+        margin: 0 auto;
+    }
+
+    .notify {
+        backdrop-filter: blur(var(--bg-blur)) brightness(var(--bg-brightness));
+        padding: 6px 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .prayer {
+            font-size: 16px;
+
+            h2 {
+                font-size: 16px;
+                margin: 0px;
+            }
+
+            p {
+                font-size: 13px;
+                margin: 0px;
+            }
+        }
+
+        .remaining {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .control-icon {
+            border-radius: 10px;
+            width: 30px;
+            height: 30px;
+            background-color: var(--color-red);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: none;
+            cursor: pointer;
+
+            &:hover {
+                opacity: 0.8;
+                ;
+            }
+
+            .icon {
+                color: white;
+            }
+        }
+    }
+}
