@@ -13,3 +13,23 @@ export const faviconURL = (u: string) => {
     url.searchParams.set("size", "32");
     return url.toString();
 }
+
+export const newTab = () => {
+    const url = chrome.runtime.getURL('index.html')
+    chrome.tabs.create({ url })
+}
+
+/**
+ * Desktop Notify
+ */
+export const sendNotify = (title: string, message: string) => {
+    chrome.notifications.create(
+        Date.now().toString(),
+        {
+            title,
+            message,
+            type: "basic",
+            iconUrl: chrome.runtime.getURL(`assets/logo.png`)
+        }
+    );
+}

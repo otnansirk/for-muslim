@@ -6,7 +6,16 @@ import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
-    plugins: [svgr(), react(), webExtension({ manifest: 'manifest.json' })],
+    plugins: [
+        svgr(),
+        react(),
+        webExtension({
+            manifest: 'manifest.json',
+            additionalInputs: [
+                "offscreen.html"
+            ]
+        })
+    ],
     resolve: {
         alias: {
             '@': path.resolve(__dirname, '/src'),
