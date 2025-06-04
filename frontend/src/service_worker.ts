@@ -28,7 +28,10 @@ chrome.alarms.onAlarm.addListener(alarm => {
             sendNotify(title, message)
         }
 
-        if (isAdhanNotifyON) {
+        const inputTime = new Date(prayer.datetime as string);
+        const inputPlus5Min = new Date(inputTime.getTime() + 5 * 60 * 1000); // threshold time
+        const now = new Date();
+        if (isAdhanNotifyON && inputPlus5Min >= now) {
             playAdhan(alarm.name)
         }
 
