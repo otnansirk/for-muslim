@@ -34,7 +34,8 @@ export type PrayerTimeType = {
     time?: string
     datetime?: string
     meridiem?: string
-    ringing?: boolean
+    chrome_notify?: boolean
+    adhan_notify?: boolean
     hours_in_seconds?: number
 }
 

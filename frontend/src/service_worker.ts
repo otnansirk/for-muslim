@@ -1,12 +1,11 @@
 import {
-    IMSAK,
     NOTIF_IMSAK_DESC,
     NOTIF_IMSAK_TITLE,
     NOTIF_SHOLAT_DESC,
     NOTIF_SHOLAT_TITLE
 } from "./constant/prayer";
-import { next, playAdhan } from "./utils/Prayer";
 import { PrayerTimeType, PrayerType, StorageType, TimesType } from "./types/Storage";
+import { next, playAdhan } from "./utils/Prayer";
 import { DEFAULT } from "./constant/settings";
 import { firstUpper } from "./utils/Strings";
 import { sendNotify } from "./utils/Helpers";
@@ -22,15 +21,17 @@ chrome.alarms.onAlarm.addListener(alarm => {
         const data = item as PrayerType
         const upcoming = next(data)
         const prayer = data[alarm.name as keyof TimesType] as PrayerTimeType
-        const isRinging = prayer.ringing
+        const isChromeNotifyON = prayer.chrome_notify
+        const isAdhanNotifyON = prayer.adhan_notify
 
-        if (isRinging) {
-            if (alarm.name != IMSAK) {
-                playAdhan(alarm.name)
-            }
-
+        if (isChromeNotifyON) {
             sendNotify(title, message)
         }
+
+        if (isAdhanNotifyON) {
+            playAdhan(alarm.name)
+        }
+
         Storage.sync.set("prayer", { upcoming });
     })
 

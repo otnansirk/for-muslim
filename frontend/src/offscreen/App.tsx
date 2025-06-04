@@ -1,6 +1,6 @@
 
 import { useEffect, useRef } from 'react'
-import { FAJR, PRAYER_NAMES } from '../constant/prayer';
+import { FAJR, IMSAK, PRAYER_NAMES } from '../constant/prayer';
 import { listenAdhan } from '../utils/Prayer';
 
 
@@ -33,12 +33,17 @@ function AppOffscreen() {
                         audioRef.current!.currentTime = 0
                     }
 
-                    const url = (adhanType === FAJR)
-                        ? `assets/mp3/adhan-fajr.mp3`
-                        : `assets/mp3/adhan-yusuf-maati.mp3`
+                    let url = `assets/mp3/adhan-yusuf-maati.mp3`
+                    if (adhanType === FAJR) {
+                        url = `assets/mp3/adhan-fajr.mp3`
+                    }
+                    if (adhanType === IMSAK) {
+                        url = `assets/mp3/imsak.mp3`
+                    }
 
                     audioRef.current!.src = chrome.runtime.getURL(url)
                     audioRef.current!.play()
+                    listenAdhan("playing", adhanTypeRef.current as typeof PRAYER_NAMES[number])
                 }
 
                 if (control === 'stop') {

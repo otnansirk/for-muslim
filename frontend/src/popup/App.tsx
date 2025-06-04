@@ -68,7 +68,6 @@ function AppPopup() {
                 const data = item as PrayerType
                 updateAdhan(data)
             })
-
         })
 
         return () => {

@@ -57,10 +57,55 @@
 
         .notify-icon {
             width: 20px;
+            height: 20px;
             position: absolute;
             top: 5px;
             right: 7px;
             cursor: pointer;
+            color: #eaeaea;
+
+            &.on {
+                color: rgb(255, 213, 0);
+            }
+        }
+
+        & .adhan-icon {
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            top: 5px;
+            left: 7px;
+            cursor: pointer;
+            color: #eaeaea;
+
+            &.on {
+                color: rgb(255, 213, 0);
+            }
+        }
+
+        & .pad-btnstop {
+            color: rgb(255, 255, 255);
+            border: none;
+            border-radius: 9px;
+            width: 100%;
+            padding: 10px 0px;
+            position: absolute;
+            top: -42px;
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            /* Add this */
+            background: #3378ff6b;
+            border: 1px solid #008eec;
+            z-index: 10;
+            letter-spacing: 2px;
+            font-weight: 400;
+            animation: var(--animate-smart-blink);
+            cursor: pointer;
+
+            &:hover {
+                animation: unset;
+                background: #3377ffb6;
+            }
         }
 
         & .pad-icon {
