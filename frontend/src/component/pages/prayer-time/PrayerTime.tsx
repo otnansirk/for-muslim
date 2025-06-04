@@ -50,7 +50,9 @@ const PrayerTime = () => {
             setPrayerTimes(prayer)
 
             const adhanStatus = await getStatusAdhan(undefined, 300)
-            setIsAdhanPlaying(adhanStatus.type)
+            const playingType = adhanStatus.status == "playing" ? adhanStatus.type as string : ""
+
+            setIsAdhanPlaying(playingType)
         })
 
         chrome.runtime.onMessage.addListener(async item => {

@@ -49,6 +49,7 @@ function AppOffscreen() {
                 if (control === 'stop') {
                     audioRef.current!.pause()
                     audioRef.current!.currentTime = 0
+                    listenAdhan("stoped", adhanTypeRef.current as typeof PRAYER_NAMES[number])
                 }
 
                 if (control === 'status') {
