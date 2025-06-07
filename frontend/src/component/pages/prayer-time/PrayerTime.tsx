@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { PrayerTimeType, PrayerType, TimesType } from "../../../types/Storage"
 import { getStatusAdhan, stopAdhan } from "../../../utils/Prayer"
-import { PRAYER_NAMES } from "../../../constant/prayer"
+import { IMSAK, PRAYER_NAMES } from "../../../constant/prayer"
 import { sendNotify } from "../../../utils/Helpers"
 import { firstUpper } from "../../../utils/Strings"
 import Storage from "../../../utils/Storage"
@@ -16,6 +16,7 @@ const PrayerTime = () => {
     const [prayerTimes, setPrayerTimes] = useState<PrayerType>();
     const [show, setShow] = useState<string>("");
     const [isAdhanPlaying, setIsAdhanPlaying] = useState<string>("");
+    const audioRef = useRef<HTMLAudioElement | null>(null);
 
     const chromeNotifyHandler = (key: keyof PrayerType, notify: boolean) => {
         if (!prayerTimes) return;
@@ -33,7 +34,11 @@ const PrayerTime = () => {
     const adhanNotifyHandler = (key: keyof PrayerType, notify: boolean) => {
         if (!prayerTimes) return;
         if (notify) {
-            sendNotify(firstUpper(key), "Audio notification is ON !")
+            audioRef.current!.src = chrome.runtime.getURL("assets/mp3/notify-on.mp3")
+            audioRef.current!.play()
+            sendNotify(firstUpper(key), `ON!. Will play ${key !== IMSAK ? 'Adhan' : 'Imsak'} Audio`)
+        } else {
+            audioRef.current!.pause()
         }
 
         Storage.sync.set("prayer", {
@@ -42,6 +47,7 @@ const PrayerTime = () => {
             } as PrayerTimeType
         })
     }
+
 
     useEffect(() => {
         Storage.sync.watch('prayer', async data => {
@@ -72,6 +78,7 @@ const PrayerTime = () => {
 
     return (
         <div className={`prayer-time ${show} ${prayerTimes?.last_update && 'fade-in'}`}>
+            <audio ref={audioRef} />
             <div className='hijri-date'>
                 {prayerTimes?.hijri}
             </div>
