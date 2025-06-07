@@ -1,5 +1,6 @@
 import { DefaultSettingType } from "../types/Settings";
 import { BACKGROUND_COLLECTION_ISLAMIC } from "./background";
+import { GREETING_TYPE_AUTO } from "./greeting";
 
 export const GREETING_FONT_SIZE = 45
 export const GREETING_TEXT_SHADOW = 20
@@ -25,7 +26,8 @@ export const DEFAULT: DefaultSettingType[] = [
         "greeting": {
             "enable": true,
             "font_size": GREETING_FONT_SIZE,
-            "text_shadow": GREETING_TEXT_SHADOW
+            "text_shadow": GREETING_TEXT_SHADOW,
+            "greeting": GREETING_TYPE_AUTO
         }
     },
     {

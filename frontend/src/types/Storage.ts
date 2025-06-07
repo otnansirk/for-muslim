@@ -73,6 +73,7 @@ export type NotesType = {
 export type GreetingType = {
     enable?: boolean
     name?: string
+    greeting?: string
     text_shadow?: number
     font_size?: number
 }

@@ -1,3 +1,4 @@
+import { GREETING_TYPE_AUTO } from "../constant/greeting";
 import { ConfigDateTypes, TimeFormatType } from "../types/datetime";
 
 class Datetime {
@@ -48,18 +49,22 @@ class Datetime {
         }
     }
 
-    static greeting = (tz?: string): string => {
+    static greeting = (tz?: string, greeting: string = "auto"): string => {
         const hour = new Date().toLocaleTimeString("en-US", {
             hour: "numeric",
             hour12: false,
             timeZone: tz
         });
 
-        const hourNum = Number(hour);
-        if (hourNum >= 5 && hourNum < 12) return "السَّلاَمُ عَلَيْكُمْ"; // Semoga Allah memberkahi harimu
-        if (hourNum >= 12 && hourNum < 17) return "Jazakallahu khairan"; // Semoga Allah membalasmu dengan kebaikan
-        if (hourNum >= 17 && hourNum < 21) return "Taqabbalallahu minna wa minkum"; // Semoga Allah menerima amal kita
-        return "Barakallahu fikum"; // Semoga Allah memberkahimu
+        if (greeting === GREETING_TYPE_AUTO) {
+            const hourNum = Number(hour);
+            if (hourNum >= 5 && hourNum < 12) return "السَّلاَمُ عَلَيْكُمْ"; // Semoga Allah memberkahi harimu
+            if (hourNum >= 12 && hourNum < 17) return "Jazakallahu khairan"; // Semoga Allah membalasmu dengan kebaikan
+            if (hourNum >= 17 && hourNum < 21) return "Taqabbalallahu minna wa minkum"; // Semoga Allah menerima amal kita
+            return "Barakallahu fikum"; // Semoga Allah memberkahimu
+        }
+
+        return ""
     }
 
     static format = (format: string = "weekday, month day", config: ConfigDateTypes = {}) => {

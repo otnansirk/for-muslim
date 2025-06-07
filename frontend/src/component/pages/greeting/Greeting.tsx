@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { GREETING_TYPE_OFF } from '../../../constant/greeting'
 import { useGreetingsStore } from '../../../utils/Store'
 import { GreetingType } from '../../../types/Storage'
 import Datetime from '../../../utils/Datetime'
@@ -17,9 +18,10 @@ const Greeting = () => {
         Storage.sync.watch('greeting', (item) => {
             const great = item as GreetingType
             if (great?.enable) {
-                const name = great?.name ? ", " + great?.name : ""
+                const sparator = great?.name && great?.greeting != GREETING_TYPE_OFF ? ", " : ""
+                const name = great?.name ? sparator + great?.name : ""
                 nameRef.current!.textContent = name
-                greetingsRef.current!.textContent = Datetime.greeting()
+                greetingsRef.current!.textContent = Datetime.greeting(undefined, great.greeting)
             } else {
                 nameRef.current!.textContent = ""
                 greetingsRef.current!.textContent = ""

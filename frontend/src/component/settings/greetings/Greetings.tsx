@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react"
 import { GREETING_FONT_SIZE, GREETING_TEXT_SHADOW } from "../../../constant/settings"
+import { GREETING_TYPE_AUTO, GREETING_TYPES } from "../../../constant/greeting"
 import { useGreetingsStore } from "../../../utils/Store"
 import { GreetingType } from "../../../types/Storage"
 import Switch from "../../form/switch/Switch"
+import Select from "../../form/select/Select"
 import Storage from "../../../utils/Storage"
 import Input from "../../form/input/Input"
 import Range from "../../form/range/Range"
@@ -16,6 +18,7 @@ const Greetings = () => {
     const nameRef = useRef<HTMLInputElement>(null)
     const textShadowRef = useRef<HTMLInputElement>(null)
     const fontSizeRef = useRef<HTMLInputElement>(null)
+    const greetingTypeRef = useRef<HTMLSelectElement>(null)
 
     const [showSettings, setShowSettings] = useState("hidden")
 
@@ -34,6 +37,7 @@ const Greetings = () => {
             nameRef.current!.value = data?.name ?? ""
             textShadowRef.current!.value = data.text_shadow?.toString() ?? textShadow.toString()
             fontSizeRef.current!.value = data.font_size?.toString() ?? fontSize.toString()
+            greetingTypeRef.current!.value = data.greeting?.toString() ?? GREETING_TYPE_AUTO
 
             setShowSettings(data?.enable ? "" : "hidden")
             useGreetingsStore.setState(prev => ({ ...prev, fontSize: data.font_size, textShadow: data.text_shadow }))
@@ -69,11 +73,24 @@ const Greetings = () => {
                 <hr />
                 <div className='items'>
                     <div className='items-title'>
+                        Greeting
+                    </div>
+                    <div className="items-content">
+                        <Select
+                            items={GREETING_TYPES}
+                            ref={greetingTypeRef}
+                            onSelect={e => Storage.sync.set('greeting', { greeting: e.target.value })}
+                        />
+                    </div>
+                </div>
+                <hr />
+                <div className='items'>
+                    <div className='items-title'>
                         Name
                     </div>
                     <Input
                         onChange={e => Storage.sync.set('greeting', { name: e.target.value })}
-                        placeholder="Name"
+                        placeholder="Name or what you feels"
                         ref={nameRef}
                         datalistID="fm_greatings-name"
                     />
