@@ -1,7 +1,7 @@
 {
   "name": "mooslem",
   "description": "Mooslem Start Page is a modern, minimalist Chrome extension that transforms your new tab into a calming space to stay focused, energized, and connected to your faith.",
-  "version": "3.5.0",
+  "version": "3.6.0",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
